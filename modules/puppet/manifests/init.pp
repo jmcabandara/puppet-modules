@@ -1,0 +1,34 @@
+class puppet {
+
+    apt::source { 'puppetlabs':
+        location   => 'http://apt.puppetlabs.com',
+        repos      => 'main dependencies',
+        key        => '4BD6EC30',
+        key_server => 'pgp.mit.edu',
+    }
+
+    package { 'puppet':
+        require => Apt::Source['puppetlabs'],
+    }
+
+    file { '/etc/puppet/puppet.conf':
+        source => 'puppet:///modules/puppet/etc/puppet/puppet.conf',
+        owner  => 'root',
+        group  => 'root',
+        mode   => '0644',
+    }
+
+    cron { 'puppet':
+        ensure  => present,
+        command => '/usr/bin/puppet agent --onetime --no-daemonize --logdest syslog > /dev/null 2>&1',
+        user    => 'root',
+        minute  => fqdn_rand(60),
+    }
+
+    service { 'puppet':
+        ensure  => stopped,
+        enable  => false,
+        require => Package['puppet'],
+    }
+
+}

@@ -1,5 +1,11 @@
 class puppet {
 
+    File {
+        owner  => 'root',
+        group  => 'root',
+        mode   => '0644',
+    }
+
     apt::source { 'puppetlabs':
         location   => 'http://apt.puppetlabs.com',
         repos      => 'main dependencies',
@@ -13,9 +19,10 @@ class puppet {
 
     file { '/etc/puppet/puppet.conf':
         source => 'puppet:///modules/puppet/etc/puppet/puppet.conf',
-        owner  => 'root',
-        group  => 'root',
-        mode   => '0644',
+    }
+    
+    file { '/etc/puppet/hiera.yaml':
+        source => 'puppet:///modules/puppet/etc/puppet/hiera.yaml',
     }
 
     cron { 'puppet':

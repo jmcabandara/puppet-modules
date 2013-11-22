@@ -16,7 +16,6 @@ class ldap::client (
         $tls_checkpeer = 'yes',
         $tls_cacertfile = undef,
         $tls_cacertdir = undef,
-        $sudoers_base = undef,
         ) {
 
     # Defaults
@@ -27,7 +26,7 @@ class ldap::client (
     }
 
     # Required packages
-    package { ['libnss-ldap', 'libpam-ldap', 'unscd': }
+    package { ['libnss-ldap', 'libpam-ldap', 'unscd']: }
 
     # NSCD service
     service { 'unscd':

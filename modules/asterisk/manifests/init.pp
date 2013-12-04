@@ -1,7 +1,6 @@
 class asterisk ($odbc = true, $opus = true) {
     include asterisk::params
 
-    Package { before => Exec['asterisk::download'] }
     File { ensure => present }
 
     if !defined(Package['build-essential']) { package { 'build-essential': } }
@@ -32,7 +31,7 @@ class asterisk ($odbc = true, $opus = true) {
         command => "wget http://downloads.asterisk.org/pub/telephony/asterisk/releases/$asterisk::params::release.tar.gz",
         cwd     => '/usr/local/src',
         creates => "/usr/local/src/$asterisk::params::release.tar.gz",
-        require => Package['wget'],
+        require => Package['build-essential', 'autoconf', 'ntp', 'libncurses5-dev', 'libssl-dev', 'libxml2-dev', 'libsqlite3-dev', 'uuid-dev', 'libnewt-dev', 'libcurl4-openssl-dev', 'libsrtp0-dev', 'libiksemel-dev', 'libneon27-dev', 'libical-dev', 'wget'],
     }
 
     exec { 'asterisk::patch-18345::download':

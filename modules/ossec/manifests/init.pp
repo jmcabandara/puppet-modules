@@ -1,0 +1,121 @@
+class ossec (
+    $email_notification                 = 'no',
+    $email_to                           = {},
+    $email_from                         = undef,
+    $smtp_server                        = 'localhost',
+    $rules                              = {},
+    $directories                        = {},
+    $ignore                             = {},
+    $whitelist                          = {},
+    $log_alert_level                    = 1,
+    $email_alert_level                  = 7,
+    $active_response                    = 'disabled',
+    $active_response_level              = 10,
+    $active_response_timeout            = '600',
+    $localfile                          = {},
+) {
+    include ossec::params
+
+    File {
+        ensure => present,
+        owner  => 'root',
+        group  => 'ossec',
+        mode   => '0440',
+        notify => Service['ossec'],
+        require => Exec['ossec::install'],
+    }
+
+    if !defined(Package['build-essential']) { package { 'build-essential': } }
+    if !defined(Package['wget']) { package { 'wget': } }
+
+    user { ['ossec', 'ossecm', 'ossecr']:
+        home   => '/var/ossec',
+        shell  => '/bin/false',
+        before => Exec['ossec::download'],
+    }
+
+    exec { 'ossec::download':
+        command => "wget http://www.ossec.net/files/${ossec::params::release}.tar.gz",
+        cwd     => '/usr/local/src',
+        creates => "/usr/local/src/${ossec::params::release}.tar.gz",
+        require => Package['build-essential', 'wget'],
+    }
+
+    exec { 'ossec::unpack':
+        command => "tar -zxf ${ossec::params::release}.tar.gz",
+        cwd     => '/usr/local/src',
+        creates => "/usr/local/src/${ossec::params::release}",
+        require => Exec['ossec::download'],
+    }
+
+    # TODO googlebot patch
+
+    exec { 'ossec::make::all':
+        command => 'make all',
+        cwd     => "/usr/local/src/${ossec::params::release}/src",
+        creates => "/usr/local/src/${ossec::params::release}/src/Config.OS",
+        require => Exec['ossec::unpack'],
+    }
+
+    exec { 'ossec::make::build':
+        command => 'make build',
+        cwd     => "/usr/local/src/${ossec::params::release}/src",
+        creates => "/usr/local/src/${ossec::params::release}/bin/ossec-execd",
+        require => Exec['ossec::make::all'],
+        notify  => Exec['ossec::install'],
+    }
+
+    exec { 'ossec::install':
+        command     => "/usr/local/src/${ossec::params::release}/src/InstallServer.sh local",
+        cwd         => "/usr/local/src/${ossec::params::release}/src",
+        require     => Exec['ossec::make::build'],
+        refreshonly => true,
+        notify      => Service['ossec'],
+    }
+
+    # Generates /etc/ossec-init.conf
+    exec { 'ossec::initfile':
+        command => "echo \"DIRECTORY=/var/ossec/\" > /etc/ossec-init.conf;
+                    echo \"VERSION=`cat /usr/local/src/${ossec::params::release}/src/VERSION`\" >> /etc/ossec-init.conf;
+                    echo \"DATE=`date`\" >> /etc/ossec-init.conf;
+                    echo \"TYPE=local\" >> /etc/ossec-init.conf",
+        creates => '/etc/ossec-init.conf',
+        require => Exec['ossec::install'],
+    }
+
+    file { '/etc/ossec-init.conf':
+        mode    => '0600',
+        require => Exec['ossec::initfile'],
+    }
+
+    file { '/var/ossec/ossec-init.conf':
+        source  => '/etc/ossec-init.conf',
+        require => File['/etc/ossec-init.conf'],
+    }
+
+    file { '/etc/init.d/ossec':
+        source  => "/usr/local/src/${ossec::params::release}/src/init/ossec-hids-debian.init",
+        mode    => '0755',
+    }
+
+    file { '/var/ossec/etc/decoder.xml':
+        source => 'puppet:///modules/ossec/etc/decoder.xml',
+    }
+
+    file { '/var/ossec/active-response/bin/ferm-drop.sh':
+        source => 'puppet:///modules/ossec/active-response/bin/ferm-drop.sh',
+        mode   => '0775',
+    }
+
+    file { '/var/ossec/etc/ossec.conf':
+        content => template('ossec/etc/ossec.conf.erb'),
+    }
+
+    service { 'ossec':
+        ensure     => running,
+        enable     => true,
+        hasrestart => false,
+        require    => File['/etc/init.d/ossec'],
+    }
+
+}

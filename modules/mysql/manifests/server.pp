@@ -40,4 +40,5 @@ class mysql::server (
         notify      => Service['mysql'],
     }
 
+    # TODO run or simulate mysql_secure_installation
 }

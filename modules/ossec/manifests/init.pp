@@ -77,7 +77,7 @@ class ossec (
     exec { 'ossec::initfile':
         command => "echo \"DIRECTORY=/var/ossec/\" > /etc/ossec-init.conf;
                     echo \"VERSION=`cat /usr/local/src/${ossec::params::release}/src/VERSION`\" >> /etc/ossec-init.conf;
-                    echo \"DATE=`date`\" >> /etc/ossec-init.conf;
+                    echo \"DATE=\\\"`date`\\\"\" >> /etc/ossec-init.conf;
                     echo \"TYPE=local\" >> /etc/ossec-init.conf",
         creates => '/etc/ossec-init.conf',
         require => Exec['ossec::install'],

@@ -14,6 +14,10 @@ class mysql::server (
     $innodb_buffer_pool_size        = undef,
 ) {
 
+    if !$::memorysize_mb {
+        $memorysize_mb = $::memorysize
+    }
+
     class { 'mysql::client': }
 
     if !defined(Package['mysql-server']) { package { 'mysql-server': } }

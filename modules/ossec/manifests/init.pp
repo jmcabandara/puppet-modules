@@ -48,13 +48,23 @@ class ossec (
         require => Exec['ossec::download'],
     }
 
-    # TODO googlebot patch
+    file { '/usr/local/src/ossec-generic_samples.c.patch':
+        source  => 'puppet:///modules/ossec/usr/local/src/ossec-generic_samples.c.patch',
+        require => undef,
+    }
+
+    exec { 'ossec::patch':
+        command => 'patch -p 1 src/analysisd/compiled_rules/generic_samples.c ../ossec-generic_samples.c.patch',
+        cwd     => "/usr/local/src/${ossec::params::release}",
+        require => [File['/usr/local/src/ossec-generic_samples.c.patch'], Exec['ossec::unpack']],
+        unless  => 'grep "https://support.google.com/webmasters/answer/80553" src/analysisd/compiled_rules/generic_samples.c',
+    }
 
     exec { 'ossec::make::all':
         command => 'make all',
         cwd     => "/usr/local/src/${ossec::params::release}/src",
         creates => "/usr/local/src/${ossec::params::release}/src/Config.OS",
-        require => Exec['ossec::unpack'],
+        require => Exec['ossec::patch'],
     }
 
     exec { 'ossec::make::build':
@@ -99,11 +109,11 @@ class ossec (
     }
 
     file { '/var/ossec/etc/decoder.xml':
-        source => 'puppet:///modules/ossec/etc/decoder.xml',
+        source => 'puppet:///modules/ossec/var/ossec/etc/decoder.xml',
     }
 
     file { '/var/ossec/active-response/bin/ferm-drop.sh':
-        source => 'puppet:///modules/ossec/active-response/bin/ferm-drop.sh',
+        source => 'puppet:///modules/ossec/var/ossec/active-response/bin/ferm-drop.sh',
         mode   => '0775',
     }
 

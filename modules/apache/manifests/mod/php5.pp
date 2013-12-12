@@ -8,8 +8,6 @@ class apache::mod::php5 ($enabled = true) {
         notify  => Service['apache2'],
     }
 
-    # TODO: Include the php class here?
-
     if !defined(Package['libapache2-mod-php5']) { package { 'libapache2-mod-php5': } }
 
     file { '/etc/apache2/mods-enabled/php5.conf':
@@ -23,5 +21,14 @@ class apache::mod::php5 ($enabled = true) {
             true    => '/etc/apache2/mods-available/php5.load',
             default => 'absent',
         },
+    }
+
+    if $enabled {
+        exec { 'apache::mod::php5::restart':
+            command     => '/bin/true',
+            subscribe   => Exec['php::restart'],
+            notify      => Service['apache2'],
+            refreshonly => true,
+        }
     }
 }

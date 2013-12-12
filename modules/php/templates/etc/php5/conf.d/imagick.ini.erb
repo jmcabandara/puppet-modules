@@ -1,0 +1,5 @@
+; configuration for php imagick module
+extension=imagick.so
+<% if @locale_fix %>imagick.locale_fix=<%= @locale_fix %><% end -%>
+<% if @progress_monitor %>imagick.progress_monitor=<%= @progress_monitor %><% end -%>
+

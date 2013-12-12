@@ -1,0 +1,5 @@
+; configuration for php MCrypt module
+extension=mcrypt.so
+<% if @algorithms_dir %>mcrypt.algorithms_dir=<%= @algorithms_dir %><% end -%>
+<% if @modes_dir %>mcrypt.modes_dir=<%= @modes_dir %><% end -%>
+

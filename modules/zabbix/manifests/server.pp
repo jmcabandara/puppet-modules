@@ -1,0 +1,3 @@
+class zabbix::server {
+    # TODO
+}

@@ -132,6 +132,7 @@ class asterisk ($odbc = true, $opus = true) {
         owner   => 'asterisk',
         group   => 'asterisk',
         recurse => true,
+        ignore  => '*.sock',
         require => Exec['asterisk::make::install'],
     }
 

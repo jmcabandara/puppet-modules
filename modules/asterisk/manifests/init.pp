@@ -127,12 +127,18 @@ class asterisk ($odbc = true, $opus = true) {
         require => Exec['asterisk::make::install'],
     }
 
-    file { ['/var/lib/asterisk', '/var/spool/asterisk', '/var/log/asterisk']:
-        ensure  => directory,
-        owner   => 'asterisk',
-        group   => 'asterisk',
-        recurse => true,
-        ignore  => '*.sock',
+    exec { 'asterisk::chown::var/lib/asterisk':
+        command => 'chown -R asterisk:asterisk /var/lib/asterisk',
+        require => Exec['asterisk::make::install'],
+    }
+
+    exec { 'asterisk::chown::var/spool/asterisk':
+        command => 'chown -R asterisk:asterisk /var/spool/asterisk',
+        require => Exec['asterisk::make::install'],
+    }
+
+    exec { 'asterisk::chown::var/log/asterisk':
+        command => 'chown -R asterisk:asterisk /var/log/asterisk',
         require => Exec['asterisk::make::install'],
     }
 

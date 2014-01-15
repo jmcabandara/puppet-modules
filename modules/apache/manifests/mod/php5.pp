@@ -1,4 +1,7 @@
-class apache::mod::php5 ($enabled = true) {
+class apache::mod::php5 (
+    $enabled = true,
+    $expose_php = 'On',
+) {
     File {
         ensure  => present,
         owner   => 'root',
@@ -21,6 +24,11 @@ class apache::mod::php5 ($enabled = true) {
             true    => '/etc/apache2/mods-available/php5.load',
             default => 'absent',
         },
+    }
+
+    file { '/etc/php5/apache2/php.ini':
+        content => template('apache/etc/php5/apache2/php.ini.erb'),
+        notify  => Exec['php::restart'],
     }
 
     if $enabled {

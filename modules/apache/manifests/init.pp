@@ -9,6 +9,9 @@ class apache (
     $mod_rewrite = false,
     $mod_ssl = false,
     $mod_status = false,
+    $servertokens = 'OS',
+    $serversignature = 'On',
+    $traceenable = 'Off',
 ) {
 
     File {
@@ -38,6 +41,10 @@ class apache (
 
     file { '/etc/apache2/conf.d/logformat':
         source => 'puppet:///modules/apache/etc/apache2/conf.d/logformat',
+    }
+
+    file { '/etc/apache2/conf.d/security':
+        content => template('apache/etc/apache2/conf.d/security.erb'),
     }
 
     # Disable the default site

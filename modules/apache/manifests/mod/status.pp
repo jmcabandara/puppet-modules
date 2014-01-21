@@ -1,5 +1,4 @@
 class apache::mod::status (
-    $enabled = true,
     $location = '/server-status',
     $require_ip = {},
     $require_host = {},
@@ -14,20 +13,15 @@ class apache::mod::status (
     }
 
     file { '/etc/apache2/mods-enabled/status.load':
-        ensure  => $enabled ? {
-            true    => '/etc/apache2/mods-available/status.load',
-            default => 'absent',
-        },
+        ensure => '/etc/apache2/mods-available/status.load',
     }
 
     file { '/etc/apache2/mods-available/status.conf':
         content => template('apache/etc/apache2/mods-available/status.conf.erb'),
     }
+
     file { '/etc/apache2/mods-enabled/status.conf':
-        ensure => $enabled ? {
-            true    => '/etc/apache2/mods-available/status.conf',
-            default => 'absent',
-        },
+        ensure => '/etc/apache2/mods-available/status.conf',
     }
 
 }

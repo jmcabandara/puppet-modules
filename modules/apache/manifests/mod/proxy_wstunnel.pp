@@ -8,12 +8,9 @@ class apache::mod::proxy {
         notify  => Service['apache2'],
     }
 
-    file { '/etc/apache2/mods-enabled/proxy.load':
-        ensure => '/etc/apache2/mods-available/proxy.load',
-    }
-
-    file { '/etc/apache2/mods-enabled/proxy.conf':
-        ensure => '/etc/apache2/mods-available/proxy.conf',
+    file { '/etc/apache2/mods-enabled/proxy_wstunnel.load':
+        ensure  => '/etc/apache2/mods-available/proxy_wstunnel.load',
+        require => File['/etc/apache2/mods-enabled/proxy.load'],
     }
 
 }

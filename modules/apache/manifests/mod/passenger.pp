@@ -1,4 +1,4 @@
-class apache::mod::passenger ($enabled = true) {
+class apache::mod::passenger {
     File {
         ensure  => present,
         owner   => 'root',
@@ -14,16 +14,11 @@ class apache::mod::passenger ($enabled = true) {
     if !defined(Package['libmysql-ruby']) { package { 'libmysql-ruby': } }
 
     file { '/etc/apache2/mods-enabled/passenger.conf':
-        ensure  => $enabled ? {
-            true    => '/etc/apache2/mods-available/passenger.conf',
-            default => 'absent',
-        },
+        ensure => '/etc/apache2/mods-available/passenger.conf',
     }
+
     file { '/etc/apache2/mods-enabled/passenger.load':
-        ensure  => $enabled ? {
-            true    => '/etc/apache2/mods-available/passenger.load',
-            default => 'absent',
-        },
+        ensure => '/etc/apache2/mods-available/passenger.load',
     }
 
 }

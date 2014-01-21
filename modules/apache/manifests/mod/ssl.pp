@@ -1,4 +1,4 @@
-class apache::mod::ssl ($enabled = true) {
+class apache::mod::ssl {
     File {
         ensure  => present,
         owner   => 'root',
@@ -9,15 +9,11 @@ class apache::mod::ssl ($enabled = true) {
     }
 
     file { '/etc/apache2/mods-enabled/ssl.conf':
-        ensure  => $enabled ? {
-            true    => '/etc/apache2/mods-available/ssl.conf',
-            default => 'absent',
-        },
+        ensure => '/etc/apache2/mods-available/ssl.conf',
     }
+
     file { '/etc/apache2/mods-enabled/ssl.load':
-        ensure  => $enabled ? {
-            true    => '/etc/apache2/mods-available/ssl.load',
-            default => 'absent',
-        },
+        ensure  => '/etc/apache2/mods-available/ssl.load',
+        require => File['/etc/apache2/mods-enabled/socache_shmcb.load'],
     }
 }

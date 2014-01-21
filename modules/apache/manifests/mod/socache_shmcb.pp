@@ -1,4 +1,4 @@
-class apache::mod::headers {
+class apache::mod::socache_shmcb {
     File {
         ensure  => present,
         owner   => 'root',
@@ -8,8 +8,7 @@ class apache::mod::headers {
         notify  => Service['apache2'],
     }
 
-    file { '/etc/apache2/mods-enabled/headers.load':
-        ensure => '/etc/apache2/mods-available/headers.load',
+    file { '/etc/apache2/mods-enabled/socache_shmcb.load':
+        ensure => '/etc/apache2/mods-available/socache_shmcb.load',
     }
-
 }

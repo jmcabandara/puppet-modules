@@ -1,5 +1,4 @@
 class apache::mod::ldap (
-    $enabled = true,
     $require_ip = {},
     $require_host = {},
 ) {
@@ -13,19 +12,14 @@ class apache::mod::ldap (
     }
 
     file { '/etc/apache2/mods-enabled/ldap.load':
-        ensure => $enabled ? {
-            true    => '/etc/apache2/mods-available/ldap.load',
-            default => 'absent',
-        },
+        ensure => '/etc/apache2/mods-available/ldap.load',
     }
 
     file { '/etc/apache2/mods-available/ldap.conf':
         content => template('apache/etc/apache2/mods-available/ldap.conf.erb');
     }
+
     file { '/etc/apache2/mods-enabled/ldap.conf':
-        ensure => $enabled ? {
-            true    => '/etc/apache2/mods-available/ldap.conf',
-            default => 'absent',
-        },
+        ensure => '/etc/apache2/mods-available/ldap.conf',
     }
 }

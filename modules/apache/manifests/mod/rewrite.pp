@@ -1,4 +1,4 @@
-class apache::mod::rewrite ($enabled = true) {
+class apache::mod::rewrite {
     File {
         ensure  => present,
         owner   => 'root',
@@ -9,9 +9,7 @@ class apache::mod::rewrite ($enabled = true) {
     }
 
     file { '/etc/apache2/mods-enabled/rewrite.load':
-        ensure  => $enabled ? {
-            true    => '/etc/apache2/mods-available/rewrite.load',
-            default => 'absent',
-        },
+        ensure => '/etc/apache2/mods-available/rewrite.load',
     }
+
 }

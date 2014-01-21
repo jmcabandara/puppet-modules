@@ -1,4 +1,4 @@
-class apache::mod::authnz_ldap ($enabled = true) {
+class apache::mod::authnz_ldap {
     File {
         ensure  => present,
         owner   => 'root',
@@ -9,9 +9,6 @@ class apache::mod::authnz_ldap ($enabled = true) {
     }
 
     file { '/etc/apache2/mods-enabled/authnz_ldap.load':
-        ensure => $enabled ? {
-            true    => '/etc/apache2/mods-available/authnz_ldap.load',
-            default => 'absent',
-        },
+        ensure => '/etc/apache2/mods-available/authnz_ldap.load',
     }
 }

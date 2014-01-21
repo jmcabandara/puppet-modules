@@ -1,6 +1,7 @@
 class apache (
     $http_port = 80,
     $https_port = 443,
+    $default = false,
     $servertokens = 'OS',
     $serversignature = 'On',
     $traceenable = 'Off',
@@ -23,31 +24,32 @@ class apache (
         require => Package['apache2'],
     }
 
-    file { ['/etc/apache2/sites-available', '/etc/apache2/sites-enabled']:
-        ensure => directory,
-    }
-
     file { '/etc/apache2/ports.conf':
         content => template('apache/etc/apache2/ports.conf.erb'),
     }
 
-    file { '/etc/apache2/conf.d/logformat':
-        source => 'puppet:///modules/apache/etc/apache2/conf.d/logformat',
+    file { '/etc/apache2/conf-available/logformat.conf':
+        source => 'puppet:///modules/apache/etc/apache2/conf-available/logformat.conf',
+    }
+    file { '/etc/apache2/conf-enabled/logformat.conf':
+        ensure  => '/etc/apache2/conf-available/logformat.conf',
+        require => File['/etc/apache2/conf-available/logformat.conf'],
     }
 
-    file { '/etc/apache2/conf.d/security':
-        content => template('apache/etc/apache2/conf.d/security.erb'),
+    file { '/etc/apache2/conf-available/security.conf':
+        content => template('apache/etc/apache2/conf-available/security.conf.erb'),
+    }
+    file { '/etc/apache2/conf-enabled/security.conf':
+        ensure  => '/etc/apache2/conf-available/security.conf',
+        require => File['/etc/apache2/conf-available/security.conf'],
     }
 
     # Disable the default site
-    file { '/etc/apache2/sites-enabled/000-default':
-        ensure => absent,
-    }
-
-    # Log Rotation
-    file { '/etc/logrotate.d/apache2':
-        ensure => present,
-        source => 'puppet:///modules/apache/etc/logrotate.d/apache2',
+    file { '/etc/apache2/sites-enabled/000-default.conf':
+        ensure => $default ? {
+            true    => '/etc/apache2/sites-available/000-default.conf',
+            default => absent,
+        }
     }
 
 }

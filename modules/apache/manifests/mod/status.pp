@@ -1,4 +1,9 @@
-class apache::mod::status ($enabled = true) {
+class apache::mod::status (
+    $enabled = true,
+    $location = '/server-status',
+    $require_ip = {},
+    $require_host = {},
+) {
     File {
         ensure  => present,
         owner   => 'root',
@@ -15,7 +20,14 @@ class apache::mod::status ($enabled = true) {
         },
     }
 
-    file { '/etc/apache2/conf.d/server-status':
-        source  => 'puppet:///modules/apache/etc/apache2/conf.d/server-status',
+    file { '/etc/apache2/mods-available/status.conf':
+        content => template('apache/etc/apache2/mods-available/status.conf.erb'),
     }
+    file { '/etc/apache2/mods-enabled/status.conf':
+        ensure => $enabled ? {
+            true    => '/etc/apache2/mods-available/status.conf',
+            default => 'absent',
+        },
+    }
+
 }

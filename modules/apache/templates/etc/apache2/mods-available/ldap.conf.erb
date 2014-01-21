@@ -1,4 +1,4 @@
-<Location /ldap-status>
+<Location <%= @location %>>
         SetHandler ldap-status
         Require local
 <% @require_ip.each do |ip| -%>

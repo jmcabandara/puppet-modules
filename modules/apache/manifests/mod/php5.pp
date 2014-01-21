@@ -1,23 +1,13 @@
 class apache::mod::php5 (
     $expose_php = 'On',
 ) {
-    File {
-        ensure  => present,
-        owner   => 'root',
-        group   => 'root',
-        mode    => '0644',
-        require => Package['apache2', 'libapache2-mod-php5'],
-        notify  => Service['apache2'],
-    }
 
     if !defined(Package['libapache2-mod-php5']) { package { 'libapache2-mod-php5': } }
 
-    file { '/etc/apache2/mods-enabled/php5.conf':
-        ensure => '/etc/apache2/mods-available/php5.conf',
-    }
-
-    file { '/etc/apache2/mods-enabled/php5.load':
-        ensure => '/etc/apache2/mods-available/php5.load',
+    exec { 'a2enmod php5':
+        creates => ['/etc/apache2/mods-enabled/php5.load', '/etc/apache2/mods-enabled/php5.conf'],
+        require => Package['apache2', 'libapache2-mod-php5'],
+        notify  => Service['apache2'],
     }
 
     file { '/etc/php5/apache2/php.ini':

@@ -1,0 +1,14 @@
+<Location /ldap-status>
+        SetHandler ldap-status
+        Require local
+<% @require_ip.each do |ip| -%>
+        Require ip <%= ip %>
+<% end -%>
+<% @require_host.each do |host| -%>
+        Require host <%= host %>
+<% end -%>
+</Location>
+
+LDAPTrustedGlobalCert CA_DER /etc/ssl/certs/ca-certificates.crt
+
+# vim: syntax=apache ts=4 sw=4 sts=4 sr noet

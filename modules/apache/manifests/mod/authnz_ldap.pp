@@ -14,17 +14,4 @@ class apache::mod::authnz_ldap ($enabled = true) {
             default => 'absent',
         },
     }
-    file { '/etc/apache2/mods-enabled/ldap.load':
-        ensure => $enabled ? {
-            true    => '/etc/apache2/mods-available/ldap.load',
-            default => 'absent',
-        },
-    }
-    file { '/etc/apache2/mods-enabled/ldap.conf':
-        ensure => $enabled ? {
-            true    => 'present',
-            default => 'absent',
-        },
-        content => 'LDAPTrustedGlobalCert CA_DER /etc/ssl/certs/ca-certificates.crt',
-    }
 }

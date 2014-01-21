@@ -1,7 +1,7 @@
 class apache (
     $http_port = 80,
     $https_port = 443,
-    $default = false,
+    $default_vhost = false,
     $servertokens = 'OS',
     $serversignature = 'On',
     $traceenable = 'Off',
@@ -46,7 +46,7 @@ class apache (
 
     # Disable the default site
     file { '/etc/apache2/sites-enabled/000-default.conf':
-        ensure => $default ? {
+        ensure => $default_vhost ? {
             true    => '/etc/apache2/sites-available/000-default.conf',
             default => absent,
         }

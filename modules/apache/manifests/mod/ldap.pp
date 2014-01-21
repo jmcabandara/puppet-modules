@@ -11,7 +11,7 @@ class apache::mod::ldap (
     }
 
     file { '/etc/apache2/mods-available/ldap.conf':
-        content => template('apache/etc/apache2/mods-available/ldap.conf.erb');
+        content => template('apache/etc/apache2/mods-available/ldap.conf.erb'),
         require => Package['apache2'],
         notify  => Service['apache2'],
     }

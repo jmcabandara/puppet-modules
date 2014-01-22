@@ -3,8 +3,8 @@ class php::gd (
 ) {
     if !defined(Package['php5-gd']) { package { 'php5-gd': require => Package['php5-cli'] } }
 
-    file { '/etc/php5/conf.d/gd.ini':
-        content => template('php/etc/php5/conf.d/gd.ini.erb'),
+    file { '/etc/php5/mods-available/gd.ini':
+        content => template('php/etc/php5/mods-available/gd.ini.erb'),
         require => Package['php5-gd'],
         notify  => Exec['php::restart'],
     }

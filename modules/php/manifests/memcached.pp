@@ -15,8 +15,8 @@ class php::memcached (
 ) {
     if !defined(Package['php5-memcached']) { package { 'php5-memcached': require => Package['php5-cli'] } }
 
-    file { '/etc/php5/conf.d/memcached.ini':
-        content => template('php/etc/php5/conf.d/memcached.ini.erb'),
+    file { '/etc/php5/mods-available/memcached.ini':
+        content => template('php/etc/php5/mods-available/memcached.ini.erb'),
         require => Package['php5-memcached'],
         notify  => Exec['php::restart'],
     }

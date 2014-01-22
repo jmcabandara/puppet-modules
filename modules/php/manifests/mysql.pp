@@ -13,8 +13,8 @@ class php::mysql (
 ) {
     if !defined(Package['php5-mysql']) { package { 'php5-mysql': require => Package['php5-cli'] } }
 
-    file { '/etc/php5/conf.d/mysql.ini':
-        content => template('php/etc/php5/conf.d/mysql.ini.erb'),
+    file { '/etc/php5/mods-available/mysql.ini':
+        content => template('php/etc/php5/mods-available/mysql.ini.erb'),
         require => Package['php5-mysql'],
         notify  => Exec['php::restart'],
     }

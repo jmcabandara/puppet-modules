@@ -1,4 +1,5 @@
 ; configuration for php MySQL module
+; priority=20
 extension=mysql.so
 <% if @allow_local_infile %>mysql.allow_local_infile=<%= @allow_local_infile %><% end -%>
 <% if @allow_persistent %>mysql.allow_persistent=<%= @allow_persistent %><% end -%>

@@ -12,7 +12,8 @@ class apache::mod::php5 (
 
     file { '/etc/php5/apache2/php.ini':
         content => template('apache/etc/php5/apache2/php.ini.erb'),
-        notify  => Exec['php::restart'],
+        require => Package['libapache2-mod-php5'],
+        notify  => Exec['apache::mod::php5::restart'],
     }
 
     exec { 'apache::mod::php5::restart':

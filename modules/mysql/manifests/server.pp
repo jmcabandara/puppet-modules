@@ -19,8 +19,6 @@ class mysql::server (
         $memorysize_mb = $::memorysize
     }
 
-    class { 'mysql::client': }
-
     if !defined(Package['mysql-server']) { package { 'mysql-server': } }
 
     service { 'mysql':
@@ -41,7 +39,7 @@ class mysql::server (
         notify      => Service['mysql'],
     }
 
-    # Everything below this does the same thing as mysql_secure_installation
+    ### Everything below this does the same thing as mysql_secure_installation
 
     exec { 'mysql::flush_privileges':
         command     => 'mysql -e "FLUSH PRIVILEGES;"',
@@ -52,7 +50,7 @@ class mysql::server (
     exec { 'mysql::set_root_password':
         command => "mysql -e \"UPDATE mysql.user SET password=PASSWORD('${root_password}') WHERE user='root';\"",
         unless      => 'grep client /root/.my.cnf',
-        require => [Service['mysql'], Package['mysql-client']],
+        require => Service['mysql'],
         notify  => Exec['mysql::flush_privileges', 'mysql::root::my.cnf'],
     }
 
@@ -66,20 +64,20 @@ class mysql::server (
     exec { 'mysql::remove_anonymous_users':
         command => 'mysql --defaults-file=/root/.my.cnf -e "DELETE FROM mysql.user WHERE user=\'\';"',
         unless  => 'mysql --defaults-file=/root/.my.cnf -BN -e "SELECT COUNT(user) FROM mysql.user WHERE user=\'\';" | grep "^0$"',
-        require => [Service['mysql'], Exec['mysql::root::my.cnf'], Package['mysql-client']],
+        require => [Service['mysql'], Exec['mysql::root::my.cnf']],
     }
 
     # Remove remote root access
     exec { 'mysql::remove_remote_root':
         command => 'mysql --defaults-file=/root/.my.cnf -e "DELETE FROM mysql.user WHERE user=\'root\' AND host NOT IN (\'localhost\', \'127.0.0.1\', \'::1\');"',
         unless  => 'mysql --defaults-file=/root/.my.cnf -BN -e "SELECT COUNT(user) FROM mysql.user WHERE user=\'root\' AND host NOT IN (\'localhost\', \'127.0.0.1\', \'::1\');" | grep "^0$"',
-        require => [Service['mysql'], Exec['mysql::root::my.cnf'], Package['mysql-client']],
+        require => [Service['mysql'], Exec['mysql::root::my.cnf']],
     }
 
     # Remove test database
     exec { 'mysql::remove_test_database':
         command => 'mysql --defaults-file=/root/.my.cnf -e "DROP DATABASE test; DELETE FROM mysql.db WHERE db=\'test\' OR db=\'test_%\';"',
         onlyif  => 'mysql --defaults-file=/root/.my.cnf -e "SHOW DATABASES LIKE \'test\';" | grep test',
-        require => [Service['mysql'], Exec['mysql::root::my.cnf'], Package['mysql-client']],
+        require => [Service['mysql'], Exec['mysql::root::my.cnf']],
     }
 }

@@ -1,11 +1,14 @@
-class asterisk ($odbc = true, $opus = true) {
-    include asterisk::params
+class asterisk (
+    $version = '11.7.0',
+    $odbc = true,
+    $opus = true
+) {
 
     File { ensure => present }
 
     if !defined(Package['build-essential']) { package { 'build-essential': } }
     if !defined(Package['autoconf']) { package { 'autoconf': } }
-    if !defined(Package['ntp']) { package { 'ntp': } }
+    if !defined(Package['git']) { package { 'git': } }
     if !defined(Package['libncurses5-dev']) { package { 'libncurses5-dev': } }
     if !defined(Package['libssl-dev']) { package { 'libssl-dev': } }
     if !defined(Package['libxml2-dev']) { package { 'libxml2-dev': } }
@@ -17,10 +20,11 @@ class asterisk ($odbc = true, $opus = true) {
     if !defined(Package['libiksemel-dev']) { package { 'libiksemel-dev': } }
     if !defined(Package['libneon27-dev']) { package { 'libneon27-dev': } }
     if !defined(Package['libical-dev']) { package { 'libical-dev': } }
+    if !defined(Package['libopus-dev']) { package { 'libopus-dev': } }
+    if !defined(Package['ntp']) { package { 'ntp': } }
     if !defined(Package['wget']) { package { 'wget': } }
 
     if $odbc { class { 'asterisk::odbc': } }
-    if $opus { class { 'asterisk::opus': } }
 
     user { 'asterisk':
         home  => '/var/lib/asterisk',
@@ -28,10 +32,10 @@ class asterisk ($odbc = true, $opus = true) {
     }
 
     exec { 'asterisk::download':
-        command => "wget http://downloads.asterisk.org/pub/telephony/asterisk/releases/$asterisk::params::release.tar.gz",
+        command => "wget http://downloads.asterisk.org/pub/telephony/asterisk/releases/asterisk-${version}.tar.gz",
         cwd     => '/usr/local/src',
-        creates => "/usr/local/src/$asterisk::params::release.tar.gz",
-        require => Package['build-essential', 'autoconf', 'ntp', 'libncurses5-dev', 'libssl-dev', 'libxml2-dev', 'libsqlite3-dev', 'uuid-dev', 'libnewt-dev', 'libcurl4-openssl-dev', 'libsrtp0-dev', 'libiksemel-dev', 'libneon27-dev', 'libical-dev', 'wget'],
+        creates => "/usr/local/src/asterisk-${version}.tar.gz",
+        require => Package['build-essential', 'autoconf', 'ntp', 'libncurses5-dev', 'libssl-dev', 'libxml2-dev', 'libsqlite3-dev', 'uuid-dev', 'libnewt-dev', 'libcurl4-openssl-dev', 'libsrtp0-dev', 'libiksemel-dev', 'libneon27-dev', 'libical-dev', 'libopus-dev', 'wget'],
     }
 
     exec { 'asterisk::patch-18345::download':
@@ -49,15 +53,15 @@ class asterisk ($odbc = true, $opus = true) {
     }
 
     exec { 'asterisk::unpack':
-        command => "tar -zxf $asterisk::params::release.tar.gz",
+        command => "tar -zxf asterisk-${version}.tar.gz",
         cwd     => '/usr/local/src',
-        creates => "/usr/local/src/$asterisk::params::release",
+        creates => "/usr/local/src/asterisk-${version}",
         require => Exec['asterisk::download'],
     }
 
     exec { 'asterisk::patch-18345::apply':
         command => 'patch -p 1 main/tcptls.c ../ASTERISK-18345.patch',
-        cwd     => "/usr/local/src/$asterisk::params::release",
+        cwd     => "/usr/local/src/asterisk-${version}",
         require => Exec['asterisk::unpack', 'asterisk::patch-18345::download'],
         before  => Exec['asterisk::bootstrap'],
         unless  => 'grep "ssl_read should block and wait for the SSL layer to provide all data" main/tcptls.c',
@@ -65,27 +69,45 @@ class asterisk ($odbc = true, $opus = true) {
 
     exec { 'asterisk::patch-20827::apply':
         command => 'patch apps/app_confbridge.c ../ASTERISK-20827.patch',
-        cwd     => "/usr/local/src/$asterisk::params::release",
+        cwd     => "/usr/local/src/asterisk-${version}",
         require => Exec['asterisk::unpack', 'asterisk::patch-20827::download'],
         before  => Exec['asterisk::bootstrap'],
         unless  => 'grep "static void send_mute_event" apps/app_confbridge.c',
     }
 
+
+    if $opus {
+        exec { 'asterisk::patch-opus::download':
+            command => 'git clone https://github.com/netaskd/asterisk-opus.git',
+            cwd     => '/usr/local/src',
+            creates => '/usr/local/src/asterisk-opus',
+            require => Package['git'],
+        }
+
+        exec { 'asterisk::patch-opus::apply':
+            command => 'patch -p1 -u < ../asterisk-opus/asterisk-11.5.0_opus+vp8.diff',
+            cwd     => "/usr/local/src/asterisk-${version}",
+            require => Exec['asterisk::unpack', 'asterisk::patch-opus::download'],
+            before  => Exec['asterisk::bootstrap'],
+            unless  => 'grep AST_FORMAT_OPUS channels/chan_sip.c',
+        }
+    }
+
     exec { 'asterisk::bootstrap':
-        command => "/usr/local/src/$asterisk::params::release/bootstrap.sh",
-        cwd     => "/usr/local/src/$asterisk::params::release",
+        command => "/usr/local/src/asterisk-${version}/bootstrap.sh",
+        cwd     => "/usr/local/src/asterisk-${version}",
         require => Exec['asterisk::unpack'],
-        creates => "/usr/local/src/$asterisk::params::release/aclocal.m4",
+        creates => "/usr/local/src/asterisk-${version}/aclocal.m4",
     }
 
     exec { 'asterisk::configure':
-        command => "/usr/local/src/$asterisk::params::release/configure",
-        cwd     => "/usr/local/src/$asterisk::params::release",
+        command => "/usr/local/src/asterisk-${version}/configure",
+        cwd     => "/usr/local/src/asterisk-${version}",
         require => Exec['asterisk::bootstrap'],
-        creates => "/usr/local/src/$asterisk::params::release/config.log",
+        creates => "/usr/local/src/asterisk-${version}/config.log",
     }
 
-    file { "/usr/local/src/$asterisk::params::release/menuselect.makeopts":
+    file { "/usr/local/src/asterisk-${version}/menuselect.makeopts":
         source  => 'puppet:///modules/asterisk/menuselect.makeopts',
         require => Exec['asterisk::configure'],
         notify  => Exec['asterisk::make'],
@@ -95,15 +117,15 @@ class asterisk ($odbc = true, $opus = true) {
 
     exec { 'asterisk::make':
         command => 'make',
-        cwd     => "/usr/local/src/$asterisk::params::release",
+        cwd     => "/usr/local/src/asterisk-${version}",
         require => Exec['asterisk::configure'],
-        creates => "/usr/local/src/$asterisk::params::release/defaults.h",
+        creates => "/usr/local/src/asterisk-${version}/defaults.h",
         notify  => Exec['asterisk::make::install'],
     }
 
     exec { 'asterisk::make::install':
         command     => 'make install',
-        cwd         => "/usr/local/src/$asterisk::params::release",
+        cwd         => "/usr/local/src/asterisk-${version}",
         require     => Exec['asterisk::make'],
         refreshonly => true,
         notify      => Service['asterisk'],

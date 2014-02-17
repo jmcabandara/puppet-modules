@@ -1,5 +1,22 @@
-class vagrant ( $source = '/vhome' ) {
-    class { '::vagrant::ssh': source => $source }
-    class { '::vagrant::git': source => $source }
-    class { '::vagrant::vim': source => $source }
+class vagrant (
+    $source = '/vhome',
+    $destination = '/home/vagrant',
+    $user = 'vagrant',
+) {
+
+    vagrant::ssh { $destination:
+        source => $source,
+        user   => $user,
+    }
+
+    vagrant::git { $destination:
+        source => $source,
+        user   => $user,
+    }
+
+    vagrant::vim { $destination:
+        source => $source,
+        user   => $user,
+    }
+
 }

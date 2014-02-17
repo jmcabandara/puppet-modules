@@ -1,17 +1,16 @@
-class vagrant::git ($source = '/vhome') {
+define vagrant::git (
+    $source = '/vhome',
+    $destination = $title,
+    $user = 'vagrant',
+) {
 
-    if !defined(Package['git']) { package { 'git': } }
-
-    file { "$source/.gitconfig":
-        ensure => present,
+    exec { "vagrant::${destination}/.gitconfig":
+        command => "cp ${source}/.gitconfig ${destination}/.gitconfig || true",
     }
 
-    file { '/home/vagrant/.gitconfig':
-        ensure  => present,
-        owner   => vagrant,
-        group   => vagrant,
-        source  => "$source/.gitconfig",
-        require => File["$source/.gitconfig"],
+    exec { "vagrant::${destination}/.gitconfig::chown":
+        command => "chown ${user}: ${destination}/.gitconfig || true",
+        require => Exec["vagrant::${destination}/.gitconfig"],
     }
 
 }

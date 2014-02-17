@@ -1,30 +1,28 @@
-class vagrant::vim ( $source = '/vhome') {
+define vagrant::vim (
+    $source = '/vhome',
+    $destination = $title,
+    $user = 'vagrant',
+) {
 
+    if !defined(Package['rsync']) { package { 'rsync': } }
     if !defined(Package['vim']) { package { 'vim': } }
 
-    file { "$source/.vimrc":
-        ensure => present,
+    exec { "vagrant::${destination}/.vimrc":
+        command => "cp ${source}/.vimrc ${destination}/.vimrc || true",
     }
 
-    file { '/home/vagrant/.vimrc':
-        ensure  => present,
-        source  => "$source/.vimrc",
-        owner   => vagrant,
-        group   => vagrant,
-        require => File["$source/.vimrc"],
+    exec { "vagrant::${destination}/.vimrc::chown":
+        command => "chown ${user}: ${destination}/.vimrc || true",
+        require => Exec["vagrant::${destination}/.vimrc"],
     }
 
-    file { "$source/.vim":
-        ensure => directory,
+    exec { "vagrant::${destination}/.vim":
+        command => "rsync -a --delete ${source}/.vim/ ${destination}/.vim/ || true",
     }
 
-    file { '/home/vagrant/.vim':
-        ensure  => directory,
-        source  => "$source/.vim",
-        owner   => vagrant,
-        group   => vagrant,
-        recurse => true,
-        require => File["$source/.vim"],
+    exec { "vagrant::${destination}/.vim::chown":
+        command => "chown -R ${user}: ${destination}/.vim || true",
+        require => Exec["vagrant::${destination}/.vim"],
     }
 
 }

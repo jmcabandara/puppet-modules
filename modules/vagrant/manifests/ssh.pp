@@ -1,13 +1,18 @@
-class vagrant::ssh ( $source = '/vhome') {
+define vagrant::ssh (
+    $source = '/vhome',
+    $destination = $title,
+    $user = 'vagrant',
+) {
 
-    file { "$source/.ssh": }
-    file { '/home/vagrant/.ssh':
-        ensure  => directory,
-        owner   => vagrant,
-        group   => vagrant,
-        source  => "$source/.ssh",
-        recurse => true,
-        require => File["$source/.ssh"],
+    if !defined(Package['rsync']) { package { 'rsync': } }
+
+    exec { "vagrant::${destination}/.ssh":
+        command => "rsync -a --delete --exclude=authorized_keys ${source}/.ssh/ ${destination}/.ssh/ || true",
+    }
+
+    exec { "vagrant::${destination}/.ssh::chown":
+        command => "chown -R ${user}: ${destination}/.ssh || true",
+        require => Exec["vagrant::${destination}/.ssh"],
     }
 
 }

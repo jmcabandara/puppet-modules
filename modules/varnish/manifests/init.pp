@@ -19,7 +19,7 @@ class varnish (
         enable => true,
     }
 
-    if !defined(Package['varnsh']) { package { 'varnish': } }
+    if !defined(Package['varnish']) { package { 'varnish': } }
 
     file { '/etc/default/varnish':
         content => template('varnish/etc/default/varnish.erb'),

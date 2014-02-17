@@ -15,9 +15,7 @@ class selenium (
     service { 'xvfb':
         ensure    => running,
         enable    => true,
-        hasstatus => false,
-        status    => 'ps -h --pid `cat /var/run/xvfb.pid`',
-        require   => File['/etc/init.d/xvfb'],
+        require   => [File['/etc/init.d/xvfb'], Package['xvfb']],
     }
 
     exec { 'selenium::download':

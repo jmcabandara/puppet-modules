@@ -1,20 +1,20 @@
 class ossec (
-    $email_notification                 = 'no',
-    $email_to                           = {},
-    $email_from                         = undef,
-    $smtp_server                        = 'localhost',
-    $rules                              = {},
-    $directories                        = {},
-    $ignore                             = {},
-    $whitelist                          = {},
-    $log_alert_level                    = 1,
-    $email_alert_level                  = 7,
-    $active_response                    = 'disabled',
-    $active_response_level              = 10,
-    $active_response_timeout            = '600',
-    $localfile                          = {},
+    $version                 = '2.7.1', 
+    $email_notification      = 'no',
+    $email_to                = {},
+    $email_from              = undef,
+    $smtp_server             = 'localhost',
+    $rules                   = {},
+    $directories             = {},
+    $ignore                  = {},
+    $whitelist               = {},
+    $log_alert_level         = 1,
+    $email_alert_level       = 7,
+    $active_response         = 'disabled',
+    $active_response_level   = 10,
+    $active_response_timeout = '600',
+    $localfile               = {},
 ) {
-    include ossec::params
 
     File {
         ensure => present,
@@ -35,16 +35,16 @@ class ossec (
     }
 
     exec { 'ossec::download':
-        command => "wget http://www.ossec.net/files/${ossec::params::release}.tar.gz",
+        command => "wget http://www.ossec.net/files/ossec-hids-${version}.tar.gz",
         cwd     => '/usr/local/src',
-        creates => "/usr/local/src/${ossec::params::release}.tar.gz",
+        creates => "/usr/local/src/ossec-hids-${version}.tar.gz",
         require => Package['build-essential', 'wget'],
     }
 
     exec { 'ossec::unpack':
-        command => "tar -zxf ${ossec::params::release}.tar.gz",
+        command => "tar -zxf ossec-hids-${version}.tar.gz",
         cwd     => '/usr/local/src',
-        creates => "/usr/local/src/${ossec::params::release}",
+        creates => "/usr/local/src/ossec-hids-${version}",
         require => Exec['ossec::download'],
     }
 
@@ -55,29 +55,29 @@ class ossec (
 
     exec { 'ossec::patch':
         command => 'patch -p 1 src/analysisd/compiled_rules/generic_samples.c ../ossec-generic_samples.c.patch',
-        cwd     => "/usr/local/src/${ossec::params::release}",
+        cwd     => "/usr/local/src/ossec-hids-${version}",
         require => [File['/usr/local/src/ossec-generic_samples.c.patch'], Exec['ossec::unpack']],
         unless  => 'grep "https://support.google.com/webmasters/answer/80553" src/analysisd/compiled_rules/generic_samples.c',
     }
 
     exec { 'ossec::make::all':
         command => 'make all',
-        cwd     => "/usr/local/src/${ossec::params::release}/src",
-        creates => "/usr/local/src/${ossec::params::release}/src/Config.OS",
+        cwd     => "/usr/local/src/ossec-hids-${version}/src",
+        creates => "/usr/local/src/ossec-hids-${version}/src/Config.OS",
         require => Exec['ossec::patch'],
     }
 
     exec { 'ossec::make::build':
         command => 'make build',
-        cwd     => "/usr/local/src/${ossec::params::release}/src",
-        creates => "/usr/local/src/${ossec::params::release}/bin/ossec-execd",
+        cwd     => "/usr/local/src/ossec-hids-${version}/src",
+        creates => "/usr/local/src/ossec-hids-${version}/bin/ossec-execd",
         require => Exec['ossec::make::all'],
         notify  => Exec['ossec::install'],
     }
 
     exec { 'ossec::install':
-        command     => "/usr/local/src/${ossec::params::release}/src/InstallServer.sh local",
-        cwd         => "/usr/local/src/${ossec::params::release}/src",
+        command     => "/usr/local/src/ossec-hids-${version}/src/InstallServer.sh local",
+        cwd         => "/usr/local/src/ossec-hids-${version}/src",
         require     => Exec['ossec::make::build'],
         refreshonly => true,
         notify      => Service['ossec'],
@@ -86,7 +86,7 @@ class ossec (
     # Generates /etc/ossec-init.conf
     exec { 'ossec::initfile':
         command => "echo \"DIRECTORY=/var/ossec/\" > /etc/ossec-init.conf;
-                    echo \"VERSION=`cat /usr/local/src/${ossec::params::release}/src/VERSION`\" >> /etc/ossec-init.conf;
+                    echo \"VERSION=`cat /usr/local/src/ossec-hids-${version}/src/VERSION`\" >> /etc/ossec-init.conf;
                     echo \"DATE=\\\"`date`\\\"\" >> /etc/ossec-init.conf;
                     echo \"TYPE=local\" >> /etc/ossec-init.conf",
         creates => '/etc/ossec-init.conf',
@@ -104,7 +104,7 @@ class ossec (
     }
 
     file { '/etc/init.d/ossec':
-        source  => "/usr/local/src/${ossec::params::release}/src/init/ossec-hids-debian.init",
+        source  => "/usr/local/src/ossec-hids-${version}/src/init/ossec-hids-debian.init",
         mode    => '0755',
     }
 

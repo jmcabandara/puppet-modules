@@ -13,7 +13,6 @@ class netatalk (
     }
 
     if !defined(Package['netatalk']) { package { 'netatalk': } }
-    if !defined(Package['avahi-daemon']) { package { 'avahi-daemon': } }
 
     file { '/etc/netatalk/afpd.conf':
         content => template('netatalk/etc/netatalk/afpd.conf.erb'),

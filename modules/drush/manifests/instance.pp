@@ -5,6 +5,7 @@ define drush::instance (
 
     if !defined(Package['php5-cli']) { package { 'php5-cli': } }
     if !defined(Package['php5-dev']) { package { 'php5-dev': } }
+    if !defined(Package['php-console-table']) { package { 'php-console-table': } }
     if !defined(Package['wget']) { package { 'wget': } }
 
     exec { "drush::install::$version":

@@ -1,8 +1,6 @@
 class zabbix::agent (
-    $server = 'localhost',
+    $server = '127.0.0.1',
     $serveractive = '127.0.0.1',
-    $listenport = undef,
-    $startagents = undef,
 ) {
 
     if !defined(Package['zabbix-agent']) { package { 'zabbix-agent': } }
@@ -15,6 +13,14 @@ class zabbix::agent (
 
     file { '/etc/zabbix/zabbix_agentd.conf':
         content => template('zabbix/etc/zabbix/zabbix_agentd.conf.erb'),
+        require => Package['zabbix-agent'],
+        notify  => Service['zabbix-agent'],
+    }
+
+    file { '/etc/zabbix/zabbix_agentd.conf.d':
+        ensure  => directory,
+        source  => 'puppet:///modules/zabbix/etc/zabbix/zabbix_agentd.conf.d',
+        recurse => true,
         require => Package['zabbix-agent'],
         notify  => Service['zabbix-agent'],
     }

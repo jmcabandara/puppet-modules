@@ -1,0 +1,35 @@
+The following modules have been ported and verified to work with Ubuntu 14.04 (trusty)
+
+* apache
+* apt
+* asterisk
+* casperjs
+* drush
+* jenkins
+* lib
+* memcached
+* mysql
+* netatalk
+* nodejs
+* ntp
+* ossec
+* php
+* postfix
+* ruby
+* selenium
+* ssh
+* stdlib
+* vagrant
+* varnish
+* zabbix
+
+The following modules have yet to be ported/verified
+
+* awstats
+* ferm
+* ldap
+* lullabot
+* puppet
+* s3cmd
+* solr
+* vpn

@@ -1,5 +1,6 @@
 class ldap::server (
-    $services = 'ldap:/// ldapi:///',
+    $slapd_services = 'ldap:/// ldapi:///',
+    $slapd_options = '',
 ) {
     if !defined(Package['slapd']) { package { 'slapd': } }
     if !defined(Package['ldap-utils']) { package { 'ldap-utils': } }

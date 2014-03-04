@@ -29,6 +29,7 @@ The following modules have yet to be ported/verified
 * ferm
 * ldap
 * lullabot
+* openvpn
 * puppet
 * s3cmd
 * solr

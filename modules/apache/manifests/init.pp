@@ -5,6 +5,7 @@ class apache (
     $servertokens = 'OS',
     $serversignature = 'On',
     $traceenable = 'Off',
+    $umask = '0022',
 ) {
 
     File {
@@ -26,6 +27,10 @@ class apache (
 
     file { '/etc/apache2/ports.conf':
         content => template('apache/etc/apache2/ports.conf.erb'),
+    }
+
+    file { '/etc/apache2/envvars':
+        content => template('apache/etc/apache2/envvars.erb'),
     }
 
     file { '/etc/apache2/conf-available/logformat.conf':

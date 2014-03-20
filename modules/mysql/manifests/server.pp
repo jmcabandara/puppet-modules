@@ -55,7 +55,7 @@ class mysql::server (
     }
 
     exec { 'mysql::root::my.cnf':
-        command     => "echo \"[client]\npassword=${root_password}\" > /root/.my.cnf",
+        command     => "echo \"[client]\nuser=root\npassword=${root_password}\" > /root/.my.cnf",
         require     => Exec['mysql::flush_privileges'],
         refreshonly => true,
     }

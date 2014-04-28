@@ -2,14 +2,16 @@ The following modules have final sign-off. Any changes to these modules should b
 done in the trusty branch, and backported to the precise and/or the lullapuppet
 or DevOps repos as necessary.
 
+* apache
+* apt
+* ossec
 * postfix
 * puppet
 * ssh
+* stdlib
 
 The following modules have been ported and verified to work with Ubuntu 14.04 (trusty)
 
-* apache
-* apt
 * asterisk
 * casperjs
 * drush
@@ -20,11 +22,9 @@ The following modules have been ported and verified to work with Ubuntu 14.04 (t
 * netatalk
 * nodejs
 * ntp
-* ossec
-* php
+* php -- need to configure opcache
 * ruby
 * selenium
-* stdlib
 * vagrant
 * varnish
 * zabbix
@@ -32,7 +32,7 @@ The following modules have been ported and verified to work with Ubuntu 14.04 (t
 The following modules have yet to be ported/verified
 
 * awstats
-* ferm
+* ferm -- need IPv6 support
 * ldap
 * lullabot
 * openvpn

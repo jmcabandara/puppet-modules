@@ -6,15 +6,15 @@ class puppet {
         mode   => '0644',
     }
 
-#    apt::source { 'puppetlabs':
-#        location   => 'http://apt.puppetlabs.com',
-#        repos      => 'main dependencies',
-#        key        => '4BD6EC30',
-#        key_server => 'pgp.mit.edu',
-#    }
+    apt::source { 'puppetlabs':
+        location   => 'http://apt.puppetlabs.com',
+        repos      => 'main dependencies',
+        key        => '4BD6EC30',
+        key_server => 'pgp.mit.edu',
+    }
 
     package { 'puppet':
-#        require => Apt::Source['puppetlabs'],
+        require => Apt::Source['puppetlabs'],
     }
 
     file { '/etc/puppet/puppet.conf':

@@ -4,6 +4,7 @@ or DevOps repos as necessary.
 
 * apache
 * apt
+* awstats
 * ossec
 * postfix
 * puppet
@@ -31,7 +32,6 @@ The following modules have been ported and verified to work with Ubuntu 14.04 (t
 
 The following modules have yet to be ported/verified
 
-* awstats
 * ferm -- need IPv6 support
 * ldap
 * lullabot

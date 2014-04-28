@@ -1,3 +1,11 @@
+The following modules have final sign-off. Any changes to these modules should be
+done in the trusty branch, and backported to the precise and/or the lullapuppet
+or DevOps repos as necessary.
+
+* postfix
+* puppet
+* ssh
+
 The following modules have been ported and verified to work with Ubuntu 14.04 (trusty)
 
 * apache
@@ -14,10 +22,8 @@ The following modules have been ported and verified to work with Ubuntu 14.04 (t
 * ntp
 * ossec
 * php
-* postfix
 * ruby
 * selenium
-* ssh
 * stdlib
 * vagrant
 * varnish
@@ -30,7 +36,6 @@ The following modules have yet to be ported/verified
 * ldap
 * lullabot
 * openvpn
-* puppet
 * s3cmd
 * solr
 * vpn

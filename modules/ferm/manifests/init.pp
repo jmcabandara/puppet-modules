@@ -2,7 +2,6 @@ class ferm (
     $input      = 'DROP',
     $output     = 'DROP',
     $forward    = 'DROP',
-    $admin      = false,
     ) {
 
     # Defaults
@@ -22,13 +21,6 @@ class ferm (
     service { 'ferm':
         enable  => true,
         require => Package['ferm'],
-    }
-
-    # Create the administration firewall rule
-    if ($admin) {
-        ferm::rule { '00-admin':
-           dport => $admin,
-        }
     }
 
     # Ensure ferm rules are refreshed after the main stage

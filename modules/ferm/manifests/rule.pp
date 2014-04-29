@@ -6,8 +6,8 @@ define ferm::rule(
     $proto      = 'tcp',
     $sport      = undef,
     $dport      = undef,
-    $saddr      = '0.0.0.0/0',
-    $daddr      = '0.0.0.0/0',
+    $saddr      = '0.0.0.0/0 ::/0',
+    $daddr      = '0.0.0.0/0 ::/0',
     $action     = 'ACCEPT',
     $ossec      = undef,
     ) {

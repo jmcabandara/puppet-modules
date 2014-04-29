@@ -1,38 +1,43 @@
 # ferm.conf -- MANAGED BY PUPPET
 
-# OSSEC rules need to be first
-include 'ossec.exempt.d/';
-include 'ossec.ferm';
-table filter chain OSSEC {
-    LOG log-prefix "Blocked by OSSEC: ";
-    DROP;
-}
+# drop all IPv4 fragments
+domain ip table filter chain INPUT fragment DROP;
 
-table filter {
-    # Default Policy
-    chain (INPUT OUTPUT FORWARD) policy DROP;
+# Apply all rules to both IPv4 and IPv6
+domain (ip ip6) {
 
-    # drop all IP fragments
-    chain INPUT fragment DROP;
-
-    # loopback traffic
-    chain INPUT interface lo ACCEPT;
-    chain OUTPUT outerface lo ACCEPT;
-
-    chain (INPUT OUTPUT) {
-        # ICMP is very handy and necessary
-        proto icmp ACCEPT;
-        # allow all related and established traffic (conntrack)
-        mod state state (RELATED ESTABLISHED) ACCEPT;
+    # OSSEC rules need to be first
+    include 'ossec.exempt.d/';
+    include 'ossec.ferm';
+    table filter chain OSSEC {
+        LOG log-prefix "Blocked by OSSEC: ";
+        DROP;
     }
+
+    table filter {
+        # Default Policy
+        chain (INPUT OUTPUT FORWARD) policy DROP;
+
+        # loopback traffic
+        chain INPUT interface lo ACCEPT;
+        chain OUTPUT outerface lo ACCEPT;
+
+        chain (INPUT OUTPUT) {
+            # ICMP is very handy and necessary
+            proto icmp ACCEPT;
+            # allow all related and established traffic (connection tracking)
+            mod state state (RELATED ESTABLISHED) ACCEPT;
+        }
+    }
+
+    # local rules
+    include 'ferm.d/';
+
+    # Default actions
+    table filter {
+        chain INPUT { <%= @input %>; }
+        chain OUTPUT { <%= @output %>; }
+        chain FORWARD { <%= @forward %>; }
+    } 
+
 }
-
-# local rules
-include 'ferm.d/';
-
-# Default actions
-table filter {
-    chain INPUT { <%= @input %>; }
-    chain OUTPUT { <%= @output %>; }
-    chain FORWARD { <%= @forward %>; }
-} 

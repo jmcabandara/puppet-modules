@@ -5,6 +5,8 @@ or DevOps repos as necessary.
 * apache
 * apt
 * awstats
+* ferm
+* lib
 * ossec
 * postfix
 * puppet
@@ -17,7 +19,6 @@ The following modules have been ported and verified to work with Ubuntu 14.04 (t
 * casperjs
 * drush
 * jenkins
-* lib
 * memcached
 * mysql
 * netatalk
@@ -32,7 +33,6 @@ The following modules have been ported and verified to work with Ubuntu 14.04 (t
 
 The following modules have yet to be ported/verified
 
-* ferm -- need IPv6 support
 * ldap
 * lullabot
 * openvpn

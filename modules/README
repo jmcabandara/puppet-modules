@@ -8,6 +8,7 @@ or DevOps repos as necessary.
 * ferm
 * lib
 * ossec
+* php
 * postfix
 * puppet
 * ssh
@@ -24,7 +25,6 @@ The following modules have been ported and verified to work with Ubuntu 14.04 (t
 * netatalk
 * nodejs
 * ntp
-* php -- need to configure opcache
 * ruby
 * selenium
 * vagrant

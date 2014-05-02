@@ -7,6 +7,8 @@ or DevOps repos as necessary.
 * awstats
 * ferm
 * lib
+* memcached
+* mysql
 * ossec
 * php
 * postfix
@@ -20,8 +22,6 @@ The following modules have been ported and verified to work with Ubuntu 14.04 (t
 * casperjs
 * drush
 * jenkins
-* memcached
-* mysql
 * netatalk
 * nodejs
 * ntp

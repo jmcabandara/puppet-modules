@@ -12,6 +12,7 @@ define drush::instance (
         exec { "drush::install::${version}":
             command => "wget -q -O - https://github.com/drush-ops/drush/archive/${version}.tar.gz | tar -C ${installdir} -zxf -",
             creates => "${installdir}/drush-${version}",
+            require => Package['wget'],
         }
     }
 

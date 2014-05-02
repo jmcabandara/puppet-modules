@@ -19,6 +19,7 @@ or DevOps repos as necessary.
 * php
 * postfix
 * puppet
+* ruby
 * ssh
 * stdlib
 
@@ -26,7 +27,6 @@ The following modules have been ported and verified to work with Ubuntu 14.04 (t
 
 * asterisk
 * netatalk
-* ruby
 * selenium
 * vagrant
 * varnish

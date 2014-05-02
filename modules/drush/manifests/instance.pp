@@ -8,9 +8,11 @@ define drush::instance (
     if !defined(Package['php-console-table']) { package { 'php-console-table': } }
     if !defined(Package['wget']) { package { 'wget': } }
 
-    exec { "drush::install::$version":
-        command => "wget -q -O - https://github.com/drush-ops/drush/archive/${version}.tar.gz | tar -C ${installdir} -zxf -",
-        creates => "${installdir}/drush-${version}",
+    if !defined(Exec["drush::install::${version}"]) {
+        exec { "drush::install::${version}":
+            command => "wget -q -O - https://github.com/drush-ops/drush/archive/${version}.tar.gz | tar -C ${installdir} -zxf -",
+            creates => "${installdir}/drush-${version}",
+        }
     }
 
 }

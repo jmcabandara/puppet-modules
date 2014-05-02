@@ -12,6 +12,7 @@ or DevOps repos as necessary.
 * memcached
 * mysql
 * nodejs
+* ntp
 * openvpn
 * ossec
 * php
@@ -25,7 +26,6 @@ The following modules have been ported and verified to work with Ubuntu 14.04 (t
 * asterisk
 * casperjs
 * netatalk
-* ntp
 * ruby
 * selenium
 * vagrant

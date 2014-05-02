@@ -1,17 +1,21 @@
-class casperjs {
+class casperjs (
+    $version = '1.1-beta3',
+    $installdir = '/usr/local/share',
+) {
 
-    if !defined(Package['git']) { package { 'git': } }
-    if !defined(Package['phantomjs']) { package { 'phantomjs': } }
+    casperjs::instance { "casperjs::${version}":
+        version    => $version,
+        installdir => $installdir,
+    }
 
-    exec { 'casperjs::download':
-        command => 'git clone git://github.com/n1k0/casperjs.git /usr/local/share/casperjs',
-        creates => '/usr/local/share/casperjs',
-        require => Package['git'],
+    file { "${installdir}/casperjs":
+        ensure  => "${installdir}/casperjs-${version}",
+        require => Casperjs::Instance["casperjs::${version}"],
     }
 
     file { '/usr/local/bin/casperjs':
         ensure  => '/usr/local/share/casperjs/bin/casperjs',
-        require => Exec['casperjs::download'],
+        require => File["${installdir}/casperjs"],
     }
 
 }

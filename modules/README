@@ -5,6 +5,7 @@ or DevOps repos as necessary.
 * apache
 * apt
 * awstats
+* casperjs
 * drush
 * ferm
 * jenkins
@@ -24,7 +25,6 @@ or DevOps repos as necessary.
 The following modules have been ported and verified to work with Ubuntu 14.04 (trusty)
 
 * asterisk
-* casperjs
 * netatalk
 * ruby
 * selenium

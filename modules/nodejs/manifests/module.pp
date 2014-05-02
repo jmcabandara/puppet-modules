@@ -5,7 +5,7 @@ define nodejs::module ($module = $title) {
         exec { "nodejs::module::${module}":
             command => "npm install -g ${module}",
             require => Package['npm'],
-            creates => "/usr/lib/node_modules/${module}",
+            creates => "/usr/local/lib/node_modules/${module}",
         }
     }
 

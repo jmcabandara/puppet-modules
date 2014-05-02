@@ -10,6 +10,7 @@ or DevOps repos as necessary.
 * lib
 * memcached
 * mysql
+* nodejs
 * openvpn
 * ossec
 * php
@@ -24,7 +25,6 @@ The following modules have been ported and verified to work with Ubuntu 14.04 (t
 * casperjs
 * drush
 * netatalk
-* nodejs
 * ntp
 * ruby
 * selenium

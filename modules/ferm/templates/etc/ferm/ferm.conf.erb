@@ -1,19 +1,20 @@
 # ferm.conf -- MANAGED BY PUPPET
 
-# drop all IPv4 fragments
-domain ip table filter chain INPUT fragment DROP;
-
-# Apply all rules to both IPv4 and IPv6
+# OSSEC rules need to be first
+include 'ossec.exempt.d/';
 domain (ip ip6) {
-
-    # OSSEC rules need to be first
-    include 'ossec.exempt.d/';
     include 'ossec.ferm';
     table filter chain OSSEC {
         LOG log-prefix "Blocked by OSSEC: ";
         DROP;
     }
+}
 
+# Drop all IPv4 packet fragments
+domain ip table filter chain INPUT fragment DROP;
+
+# Default rules applied to both IPv4 and IPv6
+domain (ip ip6) {
     table filter {
         # Default Policy
         chain (INPUT OUTPUT FORWARD) policy DROP;
@@ -29,15 +30,16 @@ domain (ip ip6) {
             mod state state (RELATED ESTABLISHED) ACCEPT;
         }
     }
+}
 
-    # local rules
-    include 'ferm.d/';
+# Local rules
+include 'ferm.d/';
 
-    # Default actions
+# Default actions
+domain (ip ip6) {
     table filter {
         chain INPUT { <%= @input %>; }
         chain OUTPUT { <%= @output %>; }
         chain FORWARD { <%= @forward %>; }
     } 
-
 }

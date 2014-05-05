@@ -1,4 +1,5 @@
 define ferm::rule(
+    $domain     = 'ip ip6',
     $table      = 'filter',
     $chain      = 'INPUT',
     $interface  = undef,
@@ -6,8 +7,8 @@ define ferm::rule(
     $proto      = 'tcp',
     $sport      = undef,
     $dport      = undef,
-    $saddr      = '0.0.0.0/0 ::/0',
-    $daddr      = '0.0.0.0/0 ::/0',
+    $saddr      = undef,
+    $daddr      = undef,
     $action     = 'ACCEPT',
     $ossec      = undef,
     ) {
@@ -42,9 +43,27 @@ define ferm::rule(
         default => " proto ($proto)",
     }
 
+    $src = $saddr ? {
+        undef => $domain ? {
+            'ip'    => '0.0.0.0/0',
+            'ip6'   => '::/0',
+            default => '0.0.0.0/0 ::/0',
+        },
+        default => $saddr,
+    }
+
+    $dst = $daddr ? {
+        undef => $domain ? {
+            'ip'    => '0.0.0.0/0',
+            'ip6'   => '::/0',
+            default => '0.0.0.0/0 ::/0',
+        },
+        default => $daddr,
+    }
+
     file { "/etc/ferm/${dir}/${title}.ferm":
         ensure  => present,
-        content => "table $table chain $chain$int$out$protocol saddr ($saddr)$spt daddr ($daddr)$dpt $action;\n",
+        content => "domain ($domain) table $table chain $chain$int$out$protocol saddr ($src)$spt daddr ($dst)$dpt $action;\n",
         require => File['/etc/ferm/ferm.d'],
     }
 

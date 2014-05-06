@@ -17,4 +17,13 @@ class jenkins {
         enable  => true,
         require => Package['jenkins'],
     }
+
+    # the jenkins::plugin definition expects this directory to be present
+    file { '/var/lib/jenkins/plugins':
+        ensure  => directory,
+        require => Package['jenkins'],
+        owner   => 'jenkins',
+        group   => 'nogroup',
+    }
+
 }

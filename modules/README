@@ -36,6 +36,32 @@ The following modules have yet to be ported/verified
 
 * ldap
 * lullabot
+  * lullabot::ampersand
+  * lullabot::apache::vhost
+  * lullabot::apache
+  * lullabot::asterisk
+  * lullabot::drush
+  * lullabot::ferm
+  * lullabot::ircbot
+  * lullabot::jenkins::node
+  * lullabot::jenkins::server
+  * lullabot::ldap::client
+  * lullabot::ldap::server
+  * lullabot::mysql::server
+  * lullabot::nodejs
+  * lullabot::openvpn
+  * lullabot::ossec
+  * lullabot::php
+  * lullabot::postfix
+  * lullabot::s3cmd
+  * lullabot::ssh::server
+  * lullabot::ssl
+  * lullabot::util
+  * lullabot::varnish
+  * lullabot::vpn::ipsec
+  * lullabot::vpn::pptp
+  * lullabot::zabbix::agent
+  * lullabot::zabbix::server
 * s3cmd
 * solr
 * vpn

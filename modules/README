@@ -10,6 +10,8 @@ or DevOps repos as necessary.
 * ferm
 * jenkins
 * lib
+* lullabot
+  * lullabot::ssl
 * memcached
 * mysql
 * netatalk
@@ -55,7 +57,6 @@ The following modules have yet to be ported/verified
   * lullabot::postfix
   * lullabot::s3cmd
   * lullabot::ssh::server
-  * lullabot::ssl
   * lullabot::util
   * lullabot::varnish
   * lullabot::vpn::ipsec

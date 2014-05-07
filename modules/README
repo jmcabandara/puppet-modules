@@ -11,6 +11,7 @@ or DevOps repos as necessary.
 * jenkins
 * lib
 * lullabot
+  * lullabot::mysql::server
   * lullabot::ssl
 * memcached
 * mysql
@@ -49,7 +50,6 @@ The following modules have yet to be ported/verified
   * lullabot::jenkins::server
   * lullabot::ldap::client
   * lullabot::ldap::server
-  * lullabot::mysql::server
   * lullabot::nodejs
   * lullabot::openvpn
   * lullabot::ossec

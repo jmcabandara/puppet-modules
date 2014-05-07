@@ -12,7 +12,7 @@ class mysql::server (
     $innodb_log_file_size           = '256M',
     $innodb_file_per_table          = true,
     $innodb_buffer_pool_size        = undef,
-    $root_password                  = pwgen(32),
+    $root_password                  = mypwgen(32),
 ) {
 
     if !$::memorysize_mb {

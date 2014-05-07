@@ -1,9 +1,9 @@
 #
-# pwgen.rb
+# mypwgen.rb
 #
 
 module Puppet::Parser::Functions
-  newfunction(:pwgen, :type => :rvalue, :doc => <<-EOS
+  newfunction(:mypwgen, :type => :rvalue, :doc => <<-EOS
 Generates a random string of the given length appropriate for use as a password.
     EOS
   ) do |args|

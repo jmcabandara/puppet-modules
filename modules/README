@@ -28,13 +28,13 @@ or DevOps repos as necessary.
 * ssh
 * stdlib
 * vagrant
+* varnish
+* zabbix
 
 The following modules have been ported and verified to work with Ubuntu 14.04 (trusty)
 
 * asterisk
-* selenium
-* varnish
-* zabbix
+* selenium -- The download path for this is more complicated with the latest release. Find out if we still need it
 
 The following modules have yet to be ported/verified
 
@@ -43,6 +43,7 @@ The following modules have yet to be ported/verified
   * lullabot::ampersand
   * lullabot::apache::vhost
   * lullabot::apache
+     - configure mod_ssl
   * lullabot::asterisk
   * lullabot::drush
   * lullabot::ferm

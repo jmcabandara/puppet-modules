@@ -9,6 +9,7 @@ or DevOps repos as necessary.
 * drush
 * ferm
 * jenkins
+* ldap
 * lib
 * lullabot
   * lullabot::mysql::server
@@ -38,7 +39,6 @@ The following modules have been ported and verified to work with Ubuntu 14.04 (t
 
 The following modules have yet to be ported/verified
 
-* ldap
 * lullabot
   * lullabot::ampersand
   * lullabot::apache::vhost
@@ -67,3 +67,4 @@ The following modules have yet to be ported/verified
 * s3cmd
 * solr
 * vpn
+    - depricated

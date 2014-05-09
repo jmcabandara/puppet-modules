@@ -9,10 +9,12 @@ BASE            <%= @base %>
 URI             <%= @uri %>
 LDAP_VERSION    <%= @ldap_version %>
 
+# TLS certificates (needed for GnuTLS)
+<% if @tls_cacertfile %>TLS_CACERT      <%= @tls_cacertfile %><% end %>
+
 SSL             <%= @ssl %>
 <% if @ssl == 'start_tls' -%>
 TLS_CHECKPEER   <%= @tls_checkpeer %>
-<% if @tls_cacertfile %>TLS_CACERT      <%= @tls_cacertfile %><% end %>
 <% if @tls_cacertfile %>TLS_CACERTFILE  <%= @tls_cacertfile %><% end %>
 <% if @tls_cacertdir %>TLS_CACERTDIR    <%= @tls_cacertdir %><% end %>
 <% end -%>

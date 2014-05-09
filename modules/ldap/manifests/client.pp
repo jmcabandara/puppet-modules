@@ -14,7 +14,7 @@ class ldap::client (
         $nss_map_objectclass = undef,
         $ssl = 'off',
         $tls_checkpeer = 'yes',
-        $tls_cacertfile = undef,
+        $tls_cacertfile = '/etc/ssl/certs/ca-certificates.crt',
         $tls_cacertdir = undef,
         ) {
 
@@ -26,7 +26,9 @@ class ldap::client (
     }
 
     # Required packages
-    package { ['libnss-ldap', 'libpam-ldap', 'unscd']: }
+    if !defined(Package['libnss-ldap']) { package { 'libnss-ldap': } }
+    if !defined(Package['libpam-ldap']) { package { 'libpam-ldap': } }
+    if !defined(Package['unscd']) { package { 'unscd': } }
 
     # NSCD service
     service { 'unscd':

@@ -2,6 +2,7 @@ class ldap::server (
     $slapd_services = 'ldap:/// ldapi:///',
     $slapd_options = '',
 ) {
+
     if !defined(Package['slapd']) { package { 'slapd': } }
     if !defined(Package['ldap-utils']) { package { 'ldap-utils': } }
 
@@ -16,4 +17,5 @@ class ldap::server (
         require => Package['slapd'],
         notify  => Service['slapd'],
     }
+
 }

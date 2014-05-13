@@ -5,6 +5,7 @@ or DevOps repos as necessary.
 * apache
 * apt
 * awstats
+* bind
 * casperjs
 * drush
 * ferm
@@ -60,14 +61,19 @@ The following modules have yet to be ported/verified
   * lullabot::ssh::server
   * lullabot::util
   * lullabot::varnish
-  * lullabot::vpn::ipsec
-  * lullabot::vpn::pptp
   * lullabot::zabbix::agent
   * lullabot::zabbix::server
 * solr
 
-Depreicated
+New
 
+* znc
+
+Deprecated
+
+* lullabot
+  * lullabot::vpn::ipsec
+  * lullabot::vpn::pptp
 * selenium
     - The download path for this is more complicated with the latest release.
     - Joe was using it on lulladev, but doesn't need it any more

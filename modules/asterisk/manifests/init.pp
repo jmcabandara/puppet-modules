@@ -1,24 +1,26 @@
 class asterisk (
-    $version = '11.8.1',
+    $version = '12.2.0',
     $odbc = true,
 ) {
 
     File { ensure => present }
 
-    if !defined(Package['build-essential']) { package { 'build-essential': } }
     if !defined(Package['autoconf']) { package { 'autoconf': } }
+    if !defined(Package['build-essential']) { package { 'build-essential': } }
+    if !defined(Package['libcurl4-openssl-dev']) { package { 'libcurl4-openssl-dev': } }
+    if !defined(Package['libical-dev']) { package { 'libical-dev': } }
+    if !defined(Package['libiksemel-dev']) { package { 'libiksemel-dev': } }
+    if !defined(Package['libjansson-dev']) { package { 'libjansson-dev': } }
     if !defined(Package['libncurses5-dev']) { package { 'libncurses5-dev': } }
+    if !defined(Package['libneon27-dev']) { package { 'libneon27-dev': } }
+    if !defined(Package['libnewt-dev']) { package { 'libnewt-dev': } }
+    if !defined(Package['libpjproject-dev']) { package { 'libpjproject-dev': } }
+    if !defined(Package['libsqlite3-dev']) { package { 'libsqlite3-dev': } }
+    if !defined(Package['libsrtp0-dev']) { package { 'libsrtp0-dev': } }
     if !defined(Package['libssl-dev']) { package { 'libssl-dev': } }
     if !defined(Package['libxml2-dev']) { package { 'libxml2-dev': } }
-    if !defined(Package['libsqlite3-dev']) { package { 'libsqlite3-dev': } }
-    if !defined(Package['uuid-dev']) { package { 'uuid-dev': } }
-    if !defined(Package['libnewt-dev']) { package { 'libnewt-dev': } }
-    if !defined(Package['libcurl4-openssl-dev']) { package { 'libcurl4-openssl-dev': } }
-    if !defined(Package['libsrtp0-dev']) { package { 'libsrtp0-dev': } }
-    if !defined(Package['libiksemel-dev']) { package { 'libiksemel-dev': } }
-    if !defined(Package['libneon27-dev']) { package { 'libneon27-dev': } }
-    if !defined(Package['libical-dev']) { package { 'libical-dev': } }
     if !defined(Package['ntp']) { package { 'ntp': } }
+    if !defined(Package['uuid-dev']) { package { 'uuid-dev': } }
     if !defined(Package['wget']) { package { 'wget': } }
 
     if $odbc { class { 'asterisk::odbc': } }
@@ -32,7 +34,7 @@ class asterisk (
         command => "wget http://downloads.asterisk.org/pub/telephony/asterisk/releases/asterisk-${version}.tar.gz",
         cwd     => '/usr/local/src',
         creates => "/usr/local/src/asterisk-${version}.tar.gz",
-        require => Package['build-essential', 'autoconf', 'ntp', 'libncurses5-dev', 'libssl-dev', 'libxml2-dev', 'libsqlite3-dev', 'uuid-dev', 'libnewt-dev', 'libcurl4-openssl-dev', 'libsrtp0-dev', 'libiksemel-dev', 'libneon27-dev', 'libical-dev', 'wget'],
+        require => Package['autoconf', 'build-essential', 'libcurl4-openssl-dev', 'libical-dev', 'libiksemel-dev', 'libjansson-dev', 'libncurses5-dev', 'libneon27-dev', 'libnewt-dev', 'libpjproject-dev', 'libsqlite3-dev', 'libsrtp0-dev', 'libssl-dev', 'libxml2-dev', 'ntp', 'uuid-dev', 'wget'],
     }
 
     exec { 'asterisk::unpack':
@@ -53,18 +55,6 @@ class asterisk (
         require => [Exec['asterisk::unpack'], File['/usr/local/src/asterisk-18345.patch']],
         before  => Exec['asterisk::bootstrap'],
         unless  => 'grep "ssl_read should block and wait for the SSL layer to provide all data" main/tcptls.c',
-    }
-
-    # https://issues.asterisk.org/jira/browse/ASTERISK-20827
-    file { '/usr/local/src/asterisk-20827-11.8.x.patch':
-        source => 'puppet:///modules/asterisk/asterisk-20827-11.8.x.patch',
-    }
-    exec { 'asterisk::patch-20827::apply':
-        command => 'patch apps/app_confbridge.c ../asterisk-20827-11.8.x.patch',
-        cwd     => "/usr/local/src/asterisk-${version}",
-        require => [Exec['asterisk::unpack'], File['/usr/local/src/asterisk-20827-11.8.x.patch']],
-        before  => Exec['asterisk::bootstrap'],
-        unless  => 'grep "static void send_mute_event" apps/app_confbridge.c',
     }
 
     exec { 'asterisk::bootstrap':

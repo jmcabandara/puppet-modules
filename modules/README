@@ -4,6 +4,7 @@ or DevOps repos as necessary.
 
 * apache
 * apt
+* asterisk
 * awstats
 * bind
 * casperjs
@@ -34,10 +35,6 @@ or DevOps repos as necessary.
 * vagrant
 * varnish
 * zabbix
-
-The following modules have been ported and verified to work with Ubuntu 14.04 (trusty)
-
-* asterisk
 
 The following modules have yet to be ported/verified
 

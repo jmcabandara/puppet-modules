@@ -4,6 +4,7 @@ class netatalk (
     $password = '-nosavepassword',
     $guestname = 'nobody',
     $mimicmodel = 'Xserve',
+    $defaults = 'options:upriv,usedots',
     $volumes = { '~/' => 'Home Directory' },
 ) {
 

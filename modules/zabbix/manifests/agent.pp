@@ -24,4 +24,9 @@ class zabbix::agent (
         require => Package['zabbix-agent'],
         notify  => Service['zabbix-agent'],
     }
+
+    user { 'zabbix':
+        groups  => 'adm',
+        require => Package['zabbix-agent'],
+    }
 }

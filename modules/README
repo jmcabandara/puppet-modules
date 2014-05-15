@@ -75,3 +75,4 @@ Deprecated
     - The download path for this is more complicated with the latest release.
     - Joe was using it on lulladev, but doesn't need it any more
 * vpn
+  - superceded by openvpn

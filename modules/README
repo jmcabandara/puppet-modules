@@ -14,8 +14,11 @@ or DevOps repos as necessary.
 * ldap
 * lib
 * lullabot
+  * lullabot::apache
+  * lullabot::apache::vhost
   * lullabot::mysql::server
   * lullabot::nodejs
+  * lullabot::php
   * lullabot::s3cmd
   * lullabot::ssl
 * memcached
@@ -41,9 +44,6 @@ The following modules have yet to be ported/verified
 
 * lullabot
   * lullabot::ampersand
-  * lullabot::apache::vhost
-  * lullabot::apache
-     - configure mod_ssl
   * lullabot::asterisk
   * lullabot::drush
   * lullabot::ferm
@@ -54,7 +54,6 @@ The following modules have yet to be ported/verified
   * lullabot::ldap::server
   * lullabot::openvpn
   * lullabot::ossec
-  * lullabot::php
   * lullabot::postfix
   * lullabot::ssh::server
   * lullabot::util

@@ -24,6 +24,7 @@ or DevOps repos as necessary.
   * lullabot::s3cmd
   * lullabot::ssl
   * lullabot::ssh::server
+  * lullabot::zabbix::agent
 * memcached
 * mysql
 * netatalk
@@ -58,7 +59,6 @@ The following modules have yet to be ported/verified
   * lullabot::postfix
   * lullabot::util
   * lullabot::varnish
-  * lullabot::zabbix::agent
   * lullabot::zabbix::server
 
 New

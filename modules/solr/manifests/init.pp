@@ -16,6 +16,12 @@ class solr {
         notify  => Service['tomcat6'],
     }
 
+    exec { 'solr::solrconfig':
+        command => "sed -i '/<dataDir>.*<\\/dataDir>/d' /etc/solr/conf/solrconfig.xml",
+        onlyif  => "grep '<dataDir>.*</dataDir>' /etc/solr/conf/solrconfig.xml",
+        require => Package['solr-tomcat'],
+    }
+
     file { '/usr/local/share/solr':
         ensure => directory,
     }

@@ -30,6 +30,7 @@ or DevOps repos as necessary.
 * puppet
 * ruby
 * s3cmd
+* solr
 * ssh
 * stdlib
 * vagrant
@@ -60,7 +61,6 @@ The following modules have yet to be ported/verified
   * lullabot::varnish
   * lullabot::zabbix::agent
   * lullabot::zabbix::server
-* solr
 
 New
 

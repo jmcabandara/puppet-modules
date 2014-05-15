@@ -1,6 +1,6 @@
 The following modules have final sign-off. Any changes to these modules should be
-done in the trusty branch, and backported to the precise and/or the lullapuppet
-or DevOps repos as necessary.
+done in the trusty branch, and backported to the precise branch and/or the
+lullapuppet or DevOps repos as necessary.
 
 * apache
 * apt

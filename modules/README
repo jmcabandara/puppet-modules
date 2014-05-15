@@ -16,6 +16,7 @@ or DevOps repos as necessary.
 * lullabot
   * lullabot::apache
   * lullabot::apache::vhost
+  * lullabot::ferm
   * lullabot::mysql::server
   * lullabot::nodejs
   * lullabot::php
@@ -42,11 +43,10 @@ or DevOps repos as necessary.
 
 The following modules have yet to be ported/verified
 
-* lullabot
+* lullabot - double-check $ferm variable
   * lullabot::ampersand
   * lullabot::asterisk
   * lullabot::drush
-  * lullabot::ferm
   * lullabot::ircbot
   * lullabot::jenkins::node
   * lullabot::jenkins::server

@@ -17,6 +17,8 @@ lullapuppet or DevOps repos as necessary.
   * lullabot::apache
   * lullabot::apache::vhost
   * lullabot::ferm
+  * lullabot::jenkins::node
+  * lullabot::jenkins::server
   * lullabot::ldap::client
   * lullabot::mysql::server
   * lullabot::nodejs
@@ -51,8 +53,6 @@ The following modules have yet to be ported/verified
   * lullabot::asterisk
   * lullabot::drush
   * lullabot::ircbot
-  * lullabot::jenkins::node
-  * lullabot::jenkins::server
   * lullabot::ldap::server
   * lullabot::openvpn
   * lullabot::ossec

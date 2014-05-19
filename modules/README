@@ -14,8 +14,10 @@ lullapuppet or DevOps repos as necessary.
 * ldap
 * lib
 * lullabot
+  * lullabot::ampersand
   * lullabot::apache
   * lullabot::apache::vhost
+  * lullabot::asterisk
   * lullabot::ferm
   * lullabot::jenkins::node
   * lullabot::jenkins::server
@@ -28,6 +30,8 @@ lullapuppet or DevOps repos as necessary.
   * lullabot::s3cmd
   * lullabot::ssl
   * lullabot::ssh::server
+  * lullabot::util
+  * lullabot::varnish
   * lullabot::zabbix::agent
 * memcached
 * mysql
@@ -51,14 +55,9 @@ lullapuppet or DevOps repos as necessary.
 The following modules have yet to be ported/verified
 
 * lullabot - double-check $ferm variable
-  * lullabot::ampersand
-  * lullabot::asterisk
   * lullabot::drush
-  * lullabot::ircbot
   * lullabot::ldap::server
   * lullabot::openvpn
-  * lullabot::util
-  * lullabot::varnish
   * lullabot::zabbix::server
 
 New
@@ -68,6 +67,7 @@ New
 Deprecated
 
 * lullabot
+  * lullabot::ircbot
   * lullabot::vpn::ipsec
   * lullabot::vpn::pptp
 * selenium

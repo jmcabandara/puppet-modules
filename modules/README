@@ -22,6 +22,7 @@ lullapuppet or DevOps repos as necessary.
   * lullabot::ldap::client
   * lullabot::mysql::server
   * lullabot::nodejs
+  * lullabot::ossec
   * lullabot::php
   * lullabot::postfix
   * lullabot::s3cmd
@@ -56,7 +57,6 @@ The following modules have yet to be ported/verified
   * lullabot::ircbot
   * lullabot::ldap::server
   * lullabot::openvpn
-  * lullabot::ossec
   * lullabot::util
   * lullabot::varnish
   * lullabot::zabbix::server

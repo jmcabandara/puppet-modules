@@ -14,6 +14,7 @@ define openvpn::server (
     $comp_lzo = true,
     $user = 'nobody',
     $group = 'nogroup',
+    $verb = 3,
     $server_ipv6 = undef,
     $route_ipv6 = [],
     $client_cert_not_required = false,

@@ -22,7 +22,7 @@
 
 # Which local IP address should OpenVPN
 # listen on? (optional)
-local <%= @local %>
+<% if @local %>local <%= @local %><% else %>;local a.b.c.d<% end %>
 
 # Which TCP/UDP port should OpenVPN listen on?
 # If you want to run multiple OpenVPN instances

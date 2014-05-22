@@ -1,5 +1,5 @@
 define openvpn::server (
-    $local = '0.0.0.0',
+    $local = undef,
     $port = 1194,
     $proto = 'udp',
     $dev = 'tun',

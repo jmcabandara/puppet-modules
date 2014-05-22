@@ -24,6 +24,7 @@ lullapuppet or DevOps repos as necessary.
   * lullabot::ldap::client
   * lullabot::mysql::server
   * lullabot::nodejs
+  * lullabot::openvpn::ca
   * lullabot::ossec
   * lullabot::php
   * lullabot::postfix
@@ -57,7 +58,6 @@ The following modules have yet to be ported/verified
 * lullabot - double-check $ferm variable
   * lullabot::drush
   * lullabot::ldap::server
-  * lullabot::openvpn
   * lullabot::zabbix::server
 
 New

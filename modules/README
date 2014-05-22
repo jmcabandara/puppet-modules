@@ -34,6 +34,7 @@ lullapuppet or DevOps repos as necessary.
   * lullabot::util
   * lullabot::varnish
   * lullabot::zabbix::agent
+  * lullabot::zabbix::server
 * memcached
 * mysql
 * netatalk
@@ -58,7 +59,6 @@ The following modules have yet to be ported/verified
 * lullabot - double-check $ferm variable
   * lullabot::drush
   * lullabot::ldap::server
-  * lullabot::zabbix::server
 
 New
 

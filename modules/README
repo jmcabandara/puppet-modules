@@ -30,6 +30,7 @@ lullapuppet or DevOps repos as necessary.
   * lullabot::php
   * lullabot::postfix
   * lullabot::s3cmd
+  * lullabot::sasl
   * lullabot::ssl
   * lullabot::ssh::server
   * lullabot::util
@@ -48,21 +49,19 @@ lullapuppet or DevOps repos as necessary.
 * puppet
 * ruby
 * s3cmd
+* sasl
 * solr
 * ssh
 * stdlib
 * vagrant
 * varnish
 * zabbix
+* znc
 
 The following modules have yet to be ported/verified
 
 * lullabot - double-check $ferm variable in all lullabot::* classes/definitions
   * lullabot::drush
-
-New
-
-* znc
 
 Deprecated
 

@@ -35,6 +35,14 @@ class znc (
         before  => Service['znc'],
     }
 
+    if $ssl {
+        exec { 'znc::ssl::pem':
+            command => 'openssl req -x509 -newkey rsa:2048 -keyout znc.pem -out znc.pem -days 3650 -nodes -batch',
+            cwd     => '/var/lib/znc',
+            creates => '/var/lib/znc/znc.pem',
+        }
+    }
+
     service { 'znc':
         ensure  => running,
         enable  => true,

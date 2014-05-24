@@ -18,6 +18,7 @@ lullapuppet or DevOps repos as necessary.
   * lullabot::apache
   * lullabot::apache::vhost
   * lullabot::asterisk
+  * lullabot::drush
   * lullabot::ferm
   * lullabot::jenkins::node
   * lullabot::jenkins::server
@@ -61,7 +62,6 @@ lullapuppet or DevOps repos as necessary.
 The following modules have yet to be ported/verified
 
 * lullabot - double-check $ferm variable in all lullabot::* classes/definitions
-  * lullabot::drush
 
 Deprecated
 

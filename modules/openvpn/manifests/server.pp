@@ -41,7 +41,10 @@ define openvpn::server (
             "/etc/openvpn/easy-rsa/keys/${title}.csr",
             "/etc/openvpn/easy-rsa/keys/${title}.crt",
         ],
-        require => File['/etc/openvpn/easy-rsa/vars'],
+        require => [
+            File['/etc/openvpn/easy-rsa/vars'],
+            Exec['openvpn::ca::build-ca'],
+        ],
         notify  => Service['openvpn'],
     }
 

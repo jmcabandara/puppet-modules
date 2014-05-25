@@ -304,14 +304,18 @@ verb <%= @verb %>
 # IPv6 Settings
 server-ipv6 <%= @server_ipv6 %>
 <% @route_ipv6.each do |r| -%>
-push "route-ipv6 <%= @r %>"
+push "route-ipv6 <%= r %>"
 <% end -%>
 <% end -%>
 
 # Plugins
 <% @plugin.each do |p| -%>
-plugin <%= @p %>
+plugin <%= p %>
 <% end -%>
 
-<% if @client_cert_not_required %>client-cert-not-required<% end -%>
-<% if @username_as_common_name %>username-as-common-name<% end -%>
+<% if @client_cert_not_required -%>
+client-cert-not-required
+<% end -%>
+<% if @username_as_common_name -%>
+username-as-common-name
+<% end -%>

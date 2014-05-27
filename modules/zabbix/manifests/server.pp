@@ -1,4 +1,5 @@
 class zabbix::server (
+    $start = 'yes',
     $dbhost = 'localhost',
     $dbname = 'zabbix',
     $dbuser = 'zabbix',
@@ -20,6 +21,12 @@ class zabbix::server (
 
     file { '/etc/zabbix/zabbix_server.conf':
         content => template('zabbix/etc/zabbix/zabbix_server.conf.erb'),
+        require => Package['zabbix-server-mysql'],
+        notify  => Service['zabbix-server'],
+    }
+
+    file { '/etc/default/zabbix-server':
+        content => template('zabbix/etc/default/zabbix-server.erb'),
         require => Package['zabbix-server-mysql'],
         notify  => Service['zabbix-server'],
     }

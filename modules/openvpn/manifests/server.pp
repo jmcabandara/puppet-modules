@@ -29,7 +29,7 @@ define openvpn::server (
 
     file { "/etc/openvpn/${title}.conf":
         content => template('openvpn/etc/openvpn/server.conf.erb'),
-        require => Package['openvpn'],
+        require => Package['openvpn', 'openvpn-auth-ldap', 'openvpn-auth-radius'],
         notify  => Service['openvpn'],
     }
 

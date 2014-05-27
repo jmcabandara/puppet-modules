@@ -19,6 +19,7 @@ define openvpn::server (
     $route_ipv6 = [],
     $client_cert_not_required = false,
     $username_as_common_name = false,
+    $topology = 'subnet',
     $plugin = [],
 ) {
 

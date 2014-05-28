@@ -13,4 +13,10 @@ class bind {
         notify  => Service['bind9'],
     }
 
+    # Get a fresh copy of the active zones
+    exec { 'bind::dump.db':
+        command => "rndc dumpdb -zones",
+        require => Service['bind9'],
+    }
+
 }

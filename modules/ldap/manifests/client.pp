@@ -28,6 +28,14 @@ class ldap::client (
     # Required packages
     if !defined(Package['libnss-ldap']) { package { 'libnss-ldap': } }
     if !defined(Package['libpam-ldap']) { package { 'libpam-ldap': } }
+    if !defined(Package['unscd']) { package { 'unscd': } }
+
+    # NSCD service
+    service { 'unscd':
+        ensure  => running,
+        enable  => true,
+        require => Package['unscd'],
+    }
 
     # LDAP Configuration
     file { '/etc/ldap/ldap.conf':

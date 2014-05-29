@@ -1,9 +1,10 @@
 class puppet {
 
     File {
-        owner  => 'root',
-        group  => 'root',
-        mode   => '0644',
+        require => Package['puppet'],
+        owner   => 'root',
+        group   => 'root',
+        mode    => '0644',
     }
 
     apt::source { 'puppetlabs':
@@ -11,11 +12,10 @@ class puppet {
         repos      => 'main dependencies',
         key        => '4BD6EC30',
         key_server => 'pgp.mit.edu',
+        before     => Package['puppet'],
     }
 
-    package { 'puppet':
-        require => Apt::Source['puppetlabs'],
-    }
+    if !defined(Package['puppet']) { package { 'puppet': } }
 
     file { '/etc/puppet/puppet.conf':
         source => 'puppet:///modules/puppet/etc/puppet/puppet.conf',

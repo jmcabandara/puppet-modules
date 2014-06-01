@@ -18,4 +18,7 @@ VARNISHNCSA_ENABLED=<% if @varnishncsa then %>1<% else %>0<% end %>
 # from /etc/init.d/varnishncsa here.
 # DAEMON_OPTS="-a -w ${LOGFILE} -D -P ${PIDFILE}"
 
+# You can override the default varnishncsa log format here. For example, to
+# replicate the Apache vhost_combined log format use
+# %{Host}i %h %l %u %t "%r" %s %b "%{Referer}i" "%{User-agent}i"
 LOG_FORMAT='<%= @varnishncsa_logformat %>'

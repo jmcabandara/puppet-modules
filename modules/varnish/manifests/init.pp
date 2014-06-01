@@ -1,12 +1,13 @@
 class varnish (
-    $address     = ':80',
-    $management  = 'localhost:6082',
-    $storage     = 'malloc,256m',
-    $user        = 'varnish',
-    $group       = 'varnish',
-    $nfiles      = 131072,
-    $memlock     = 82000,
+    $address = ':80',
+    $management = 'localhost:6082',
+    $storage = 'malloc,256m',
+    $user = 'varnish',
+    $group = 'varnish',
+    $nfiles = 131072,
+    $memlock = 82000,
     $varnishncsa = true,
+    $varnishncsa_logformat = '%h %l %u %t "%r" %s %b "%{Referer}i" "%{User-agent}i"',
     $varnishlog  = false,
 ) {
 
@@ -33,6 +34,11 @@ class varnish (
 
     file { '/etc/default/varnishncsa':
         content => template('varnish/etc/default/varnishncsa.erb'),
+        notify  => Service['varnishncsa'],
+    }
+
+    file { '/etc/init.d/varnishncsa':
+        content => template('varnish/etc/init.d/varnishncsa.erb'),
         notify  => Service['varnishncsa'],
     }
 

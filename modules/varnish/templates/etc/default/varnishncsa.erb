@@ -17,3 +17,5 @@ VARNISHNCSA_ENABLED=<% if @varnishncsa then %>1<% else %>0<% end %>
 # a different log format, you can override the DAEMON_OPTS variable
 # from /etc/init.d/varnishncsa here.
 # DAEMON_OPTS="-a -w ${LOGFILE} -D -P ${PIDFILE}"
+
+LOG_FORMAT='<%= @varnishncsa_logformat %>'

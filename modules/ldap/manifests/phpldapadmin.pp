@@ -28,10 +28,7 @@ class ldap::phpldapadmin (
     if !defined(Package['git']) { package { 'git': } }
 
     exec { 'ldap::phpldapadmin::install':
-        ## TODO: Switch back to the official repo as soon as
-        ## https://github.com/leenooks/phpLDAPadmin/pull/3 is resolved.
-        #command => "git clone https://github.com/leenooks/phpLDAPadmin.git ${installdir}",
-        command => "git clone https://github.com/bchavet/phpLDAPadmin.git ${installdir}",
+        command => "git clone https://github.com/leenooks/phpLDAPadmin.git ${installdir}",
         creates => "${installdir}",
         require => Package['git'],
     }

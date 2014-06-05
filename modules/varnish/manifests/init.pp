@@ -16,8 +16,9 @@ class varnish (
     }
 
     Service {
-        ensure => running,
-        enable => true,
+        require => Package['varnish'],
+        ensure  => running,
+        enable  => true,
     }
 
     if !defined(Package['varnish']) { package { 'varnish': } }

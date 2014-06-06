@@ -1,0 +1,7 @@
+## THIS DIRECTORY IS MANAGED BY PUPPET
+## modules<%= template_source.gsub(Regexp.new("^#{Puppet::Node::Environment.current[:modulepath].gsub(':','|')}"),"") %>
+
+# Any files manually added to this directory will automatically be deleted
+# by puppet.
+#
+# Any changes to an existing file will automatically be reverted by puppet.

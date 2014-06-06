@@ -9,6 +9,9 @@
 # Description:       This is the init-Script for znc.
 ### END INIT INFO
 
+## THIS FILE IS MANAGED BY PUPPET
+## modules<%= template_source.gsub(Regexp.new("^#{Puppet::Node::Environment.current[:modulepath].gsub(':','|')}"),"") %>
+
 # Author: Ben Chavet <ben.chavet@lullabot.com>
 
 # Do NOT "set -e"

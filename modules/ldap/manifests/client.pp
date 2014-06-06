@@ -55,19 +55,19 @@ class ldap::client (
     }
     
     file { '/etc/nsswitch.conf':
-        source => 'puppet:///modules/ldap/etc/nsswitch.conf',
+        content => template('ldap/etc/nsswitch.conf.erb'),
     }
 
     file { '/etc/pam.d/common-password':
-        source => 'puppet:///modules/ldap/etc/pam.d/common-password',
+        content => template('ldap/etc/pam.d/common-password.erb'),
     }
 
     file { '/etc/pam.d/common-session':
-        source => 'puppet:///modules/ldap/etc/pam.d/common-session',
+        content => template('ldap/etc/pam.d/common-session.erb'),
     }
 
     file { '/etc/pam.d/common-session-noninteractive':
-        source => 'puppet:///modules/ldap/etc/pam.d/common-session-noninteractive',
+        content => template('ldap/etc/pam.d/common-session-noninteractive.erb'),
     }
 
 }

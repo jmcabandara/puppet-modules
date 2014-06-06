@@ -1,3 +1,6 @@
+## THIS FILE IS MANAGED BY PUPPET
+## modules<%= template_source.gsub(Regexp.new("^#{Puppet::Node::Environment.current[:modulepath].gsub(':','|')}"),"") %>
+
 # Default location of the slapd.conf file or slapd.d cn=config directory. If
 # empty, use the compiled-in default (/etc/ldap/slapd.d with a fallback to
 # /etc/ldap/slapd.conf).

@@ -1,10 +1,5 @@
-###DEBCONF###
-##
-## Configuration of this file will be managed by debconf as long as the
-## first line of the file says '###DEBCONF###'
-##
-## You should use dpkg-reconfigure to configure this file via debconf
-##
+## THIS FILE IS MANAGED BY PUPPET
+## modules<%= template_source.gsub(Regexp.new("^#{Puppet::Node::Environment.current[:modulepath].gsub(':','|')}"),"") %>
 
 #
 # @(#)$Id: ldap.conf,v 1.38 2006/05/15 08:13:31 lukeh Exp $

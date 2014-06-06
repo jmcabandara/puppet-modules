@@ -1,5 +1,8 @@
 #! /bin/sh
 
+## THIS FILE IS MANAGED BY PUPPET
+## modules<%= template_source.gsub(Regexp.new("^#{Puppet::Node::Environment.current[:modulepath].gsub(':','|')}"),"") %>
+
 ### BEGIN INIT INFO
 # Provides:          varnishncsa
 # Required-Start:    $local_fs $remote_fs $network

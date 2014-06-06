@@ -1,4 +1,5 @@
-# ferm.conf -- MANAGED BY PUPPET
+## THIS FILE IS MANAGED BY PUPPET
+## modules<%= template_source.gsub(Regexp.new("^#{Puppet::Node::Environment.current[:modulepath].gsub(':','|')}"),"") %>
 
 # OSSEC rules need to be first
 include 'ossec.exempt.d/';

@@ -34,7 +34,7 @@ class apache (
     }
 
     file { '/etc/apache2/conf-available/logformat.conf':
-        source => 'puppet:///modules/apache/etc/apache2/conf-available/logformat.conf',
+        content => template('apache/etc/apache2/conf-available/logformat.conf.erb'),
     }
     file { '/etc/apache2/conf-enabled/logformat.conf':
         ensure  => '/etc/apache2/conf-available/logformat.conf',

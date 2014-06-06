@@ -1,3 +1,6 @@
+## THIS FILE IS MANAGED BY PUPPET
+## modules<%= template_source.gsub(Regexp.new("^#{Puppet::Node::Environment.current[:modulepath].gsub(':','|')}"),"") %>
+
 #
 # Disable access to the entire file system except for the directories that
 # are explicitly allowed later.

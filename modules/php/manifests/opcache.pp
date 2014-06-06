@@ -38,7 +38,7 @@ class php::opcache (
     }
 
     file { '/usr/local/share/php/opcache.php':
-        source  => 'puppet:///modules/php/usr/local/share/php/opcache.php',
+        content => template('php/usr/local/share/php/opcache.php.erb'),
         require => File['/usr/local/share/php'],
         mode    => 0755,
     }

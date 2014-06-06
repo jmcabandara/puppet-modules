@@ -1,3 +1,6 @@
+;; THIS FILE IS MANAGED BY PUPPET
+;; modules<%= template_source.gsub(Regexp.new("^#{Puppet::Node::Environment.current[:modulepath].gsub(':','|')}"),"") %>
+
 ; uncomment the next line to enable the module
 extension=memcached.so
 <% if @sess_locking %>memcached.sess_locking=<%= @sess_locking %><% end -%>

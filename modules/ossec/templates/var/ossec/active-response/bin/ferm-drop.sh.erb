@@ -1,4 +1,8 @@
 #!/bin/sh
+
+## THIS FILE IS MANAGED BY PUPPET
+## modules<%= template_source.gsub(Regexp.new("^#{Puppet::Node::Environment.current[:modulepath].gsub(':','|')}"),"") %>
+
 # Adds an IP to the /etc/ferm/ferm.d/ossec.ferm file, and reloads ferm.
 # Prerequisites: ferm, with a main config file at /etc/ferm/ferm.conf,
 #                which in turn includes /etc/ferm/ossec.ferm as the first

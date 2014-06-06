@@ -109,12 +109,12 @@ class ossec (
     }
 
     file { '/var/ossec/etc/decoder.xml':
-        source => 'puppet:///modules/ossec/var/ossec/etc/decoder.xml',
+        content => template('ossec/var/ossec/etc/decoder.xml.erb'),
     }
 
     file { '/var/ossec/active-response/bin/ferm-drop.sh':
-        source => 'puppet:///modules/ossec/var/ossec/active-response/bin/ferm-drop.sh',
-        mode   => '0775',
+        content => template('ossec/var/ossec/active-response/bin/ferm-drop.sh.erb'),
+        mode    => '0775',
     }
 
     file { '/var/ossec/etc/ossec.conf':

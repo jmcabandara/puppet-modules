@@ -32,4 +32,14 @@ class php::opcache (
         require => Package['php5-cli'],
         notify  => Exec['php::restart'],
     }
+
+    file { '/usr/local/share/php':
+        ensure => directory,
+    }
+
+    file { '/usr/local/share/php/opcache.php':
+        source  => 'puppet:///modules/php/usr/local/share/php/opcache.php',
+        require => File['/usr/local/share/php'],
+        mode    => 0755,
+    }
 }

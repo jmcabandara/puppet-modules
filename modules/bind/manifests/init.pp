@@ -8,7 +8,7 @@ class bind {
     }
 
     file { '/etc/bind/named.conf.options':
-        source  => 'puppet:///modules/bind/etc/bind/named.conf.options',
+        content => template('bind/etc/bind/named.conf.options.erb'),
         require => Package['bind9'],
         notify  => Service['bind9'],
     }

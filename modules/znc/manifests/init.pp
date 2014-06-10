@@ -16,6 +16,7 @@ class znc (
 
     file { '/etc/init.d/znc':
         content => template('znc/etc/init.d/znc.erb'),
+        mode    => 0755,
     }
 
     file { ['/var/lib/znc/configs', '/var/lib/znc/modules', '/var/lib/znc/users']:

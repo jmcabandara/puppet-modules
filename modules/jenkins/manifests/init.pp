@@ -1,4 +1,8 @@
-class jenkins {
+class jenkins (
+    $http_port = 8080,
+    $ajp_port = '-1',
+    $prefix = undef,
+) {
 
     apt::source { 'jenkins':
         location    => 'http://pkg.jenkins-ci.org/debian',
@@ -24,6 +28,12 @@ class jenkins {
         require => Package['jenkins'],
         owner   => 'jenkins',
         group   => 'nogroup',
+    }
+
+    file { '/etc/default/jenkins':
+        content => template('jenkins/etc/default/jenkins.erb'),
+        require => Package['jenkins'],
+        notify  => Service['jenkins'],
     }
 
 }

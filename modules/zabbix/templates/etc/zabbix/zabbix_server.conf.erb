@@ -119,7 +119,9 @@ DBUser=<%= @dbuser %>
 # Default:
 # DBPassword=
 
-<% if @dbpassword %>DBPassword=<%= @dbpassword %><% end -%>
+<% if @dbpassword -%>
+DBPassword=<%= @dbpassword %>
+<% end -%>
 
 ### Option: DBSocket
 #	Path to MySQL socket.
@@ -214,7 +216,9 @@ DBUser=<%= @dbuser %>
 # Default:
 # JavaGateway=
 
-<% if @javagateway %>JavaGateway=<%= @javagateway %><% end -%>
+<% if @javagateway -%>
+JavaGateway=<%= @javagateway %>
+<% end -%>
 
 ### Option: JavaGatewayPort
 #	Port that Zabbix Java gateway listens on.
@@ -224,7 +228,9 @@ DBUser=<%= @dbuser %>
 # Default:
 # JavaGatewayPort=10052
 
-<% if @javagatewayport %>JavaGatewayPort=<%= @javagatewayport %><% end -%>
+<% if @javagatewayport -%>
+JavaGatewayPort=<%= @javagatewayport %>
+<% end -%>
 
 ### Option: StartJavaPollers
 #	Number of pre-forked instances of Java pollers.
@@ -234,7 +240,9 @@ DBUser=<%= @dbuser %>
 # Default:
 # StartJavaPollers=0
 
-<% if @startjavapollers %>StartJavaPollers=<%= @startjavapollers %><% end -%>
+<% if @startjavapollers -%>
+StartJavaPollers=<%= @startjavapollers %>
+<% end -%>
 
 ### Option: StartVMwareCollectors
 #	Number of pre-forked vmware collector instances.

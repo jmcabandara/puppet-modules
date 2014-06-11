@@ -1,4 +1,5 @@
 class mysql::server (
+    $server_id                      = undef,
     $max_allowed_packet             = '64M',
     $skip_name_resolve              = true,
     $max_connections                = 100,

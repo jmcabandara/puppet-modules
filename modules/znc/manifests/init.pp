@@ -5,12 +5,14 @@ class znc (
     $host = undef,
     $partyline = true,
     $webadmin = true,
+    $groups = undef,
 ) {
 
     if !defined(Package['znc']) { package { 'znc': } }
 
     user { 'znc':
         home       => '/var/lib/znc',
+        groups     => $groups,
         managehome => true,
     }
 

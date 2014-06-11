@@ -1,5 +1,9 @@
 class apache::mod::php5 (
     $expose_php = 'On',
+    $post_max_size = '8M',
+    $max_execution_time = 30,
+    $max_input_time = 60,
+    $timezone = undef,
 ) {
 
     if !defined(Package['libapache2-mod-php5']) { package { 'libapache2-mod-php5': } }

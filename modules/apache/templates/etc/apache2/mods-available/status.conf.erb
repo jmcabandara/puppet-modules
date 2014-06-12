@@ -8,11 +8,11 @@
         <Location <%= @location %>>
                 SetHandler server-status
                 Require local
-<% @require_ip.each do |ip| -%>
-                Require ip <%= ip %>
+<% if @require_ip -%>
+                Require ip <%= @require_ip %>
 <% end -%>
-<% @require_host.each do |host| -%>
-                Require host <%= host %>
+<% if @require_host -%>
+                Require host <%= @require_host %>
 <% end -%>
         </Location>
 

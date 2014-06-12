@@ -1,7 +1,7 @@
 class apache::mod::status (
     $location = '/server-status',
-    $require_ip = {},
-    $require_host = {},
+    $require_ip = undef,
+    $require_host = undef,
 ) {
 
     exec { 'a2enmod status':

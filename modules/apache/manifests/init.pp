@@ -33,14 +33,6 @@ class apache (
         content => template('apache/etc/apache2/envvars.erb'),
     }
 
-    file { '/etc/apache2/conf-available/logformat.conf':
-        content => template('apache/etc/apache2/conf-available/logformat.conf.erb'),
-    }
-    file { '/etc/apache2/conf-enabled/logformat.conf':
-        ensure  => '/etc/apache2/conf-available/logformat.conf',
-        require => File['/etc/apache2/conf-available/logformat.conf'],
-    }
-
     file { '/etc/apache2/conf-available/security.conf':
         content => template('apache/etc/apache2/conf-available/security.conf.erb'),
     }

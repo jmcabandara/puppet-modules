@@ -98,14 +98,14 @@ class asterisk (
     }
 
     file { '/etc/init.d/asterisk':
-        source => 'puppet:///modules/asterisk/rc.debian.asterisk',
-        mode   => 0755,
-        notify => Service['asterisk'],
+        content => template('asterisk/etc/init.d/asterisk.erb'),
+        mode    => 0755,
+        notify  => Service['asterisk'],
     }
 
     file { '/etc/default/asterisk':
-        source => 'puppet:///modules/asterisk/asterisk.default',
-        notify => Service['asterisk'],
+        content => template('asterisk/etc/default/asterisk.erb'),
+        notify  => Service['asterisk'],
     }
 
     file { '/var/run/asterisk': 

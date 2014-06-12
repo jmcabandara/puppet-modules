@@ -9,7 +9,7 @@ class asterisk::odbc {
     }
 
     file { '/etc/odbcinst.ini':
-        content => template('asterisk/odbcinst.ini.erb'),
+        content => template('asterisk/etc/odbcinst.ini.erb'),
         owner   => 'root',
         group   => 'root',
         require => Package['unixodbc'],
@@ -17,7 +17,7 @@ class asterisk::odbc {
     }
 
     file { '/etc/odbc.ini':
-        source  => 'puppet:///modules/asterisk/odbc.ini',
+        content => template('asterisk/etc/odbc.ini.erb'),
         owner   => 'root',
         group   => 'root',
         require => Package['unixodbc'],

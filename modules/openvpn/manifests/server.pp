@@ -21,6 +21,9 @@ define openvpn::server (
     $username_as_common_name = false,
     $topology = 'subnet',
     $plugin = [],
+    $management = undef,
+    $management_client_user = undef,
+    $management_client_group = undef,
 ) {
 
     if !defined(Package['openvpn']) { package { 'openvpn': } }

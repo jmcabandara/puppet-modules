@@ -24,7 +24,7 @@ domain (ip ip6) {
         chain INPUT interface lo ACCEPT;
         chain OUTPUT outerface lo ACCEPT;
 
-        chain (INPUT OUTPUT) {
+        chain (INPUT OUTPUT FORWARD) {
             # ICMP is very handy and necessary
             proto icmp ACCEPT;
             # allow all related and established traffic (connection tracking)

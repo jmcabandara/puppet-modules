@@ -1,7 +1,7 @@
 class apache::mod::cgi {
 
     exec { 'a2enmod cgi':
-        creates => '/etc/apache2/mods-enabled/cgi.load',
+        unless  => 'a2query -m cgi || a2query -m cgid',
         require => Package['apache2'],
         notify  => Service['apache2'],
     }

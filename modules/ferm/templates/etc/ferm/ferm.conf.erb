@@ -28,7 +28,7 @@ domain (ip ip6) {
             # ICMP is very handy and necessary
             proto icmp ACCEPT;
             # allow all related and established traffic (connection tracking)
-            mod state state (RELATED ESTABLISHED) ACCEPT;
+            mod conntrack ctstate (RELATED ESTABLISHED) ACCEPT;
         }
     }
 }

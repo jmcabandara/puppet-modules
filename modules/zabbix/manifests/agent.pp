@@ -6,10 +6,9 @@ class zabbix::agent (
     if !defined(Package['zabbix-agent']) { package { 'zabbix-agent': } }
 
     service { 'zabbix-agent':
-        ensure   => running,
-        enable   => true,
-        provider => 'init',
-        require  => Package['zabbix-agent'],
+        ensure  => running,
+        enable  => true,
+        require => Package['zabbix-agent'],
     }
 
     file { '/etc/zabbix/zabbix_agentd.conf':

@@ -1,3 +1,6 @@
+## THIS FILE IS MANAGED BY PUPPET
+## modules<%= template_source.gsub(Regexp.new("^#{Puppet::Node::Environment.current[:modulepath].gsub(':','|')}"),"") %>
+
 [default]
 access_key = <%= @access_key %>
 acl_public = False

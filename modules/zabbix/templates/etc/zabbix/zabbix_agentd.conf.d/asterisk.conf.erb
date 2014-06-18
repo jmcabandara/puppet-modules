@@ -1,3 +1,6 @@
+## THIS FILE IS MANAGED BY PUPPET
+## modules<%= template_source.gsub(Regexp.new("^#{Puppet::Node::Environment.current[:modulepath].gsub(':','|')}"),"") %>
+
 # Asterisk Keys
 UserParameter=asterisk.channels[*],/usr/sbin/asterisk -x "core show channels" | grep "$1" | awk '{print $$1}'
 UserParameter=asterisk.confbridge,/usr/sbin/asterisk -x "confbridge list" | sed -n 3~1p | wc -l

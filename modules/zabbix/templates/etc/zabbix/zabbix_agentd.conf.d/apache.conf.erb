@@ -1,0 +1,5 @@
+## THIS FILE IS MANAGED BY PUPPET
+## modules<%= template_source.gsub(Regexp.new("^#{Puppet::Node::Environment.current[:modulepath].gsub(':','|')}"),"") %>
+
+# Apache Keys
+UserParameter=apache.status[*],wget --no-check-certificate -q -O - "http://localhost/server-status?auto" | awk '/$1: / {print $NF}'

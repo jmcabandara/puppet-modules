@@ -1,0 +1,5 @@
+## THIS FILE IS MANAGED BY PUPPET
+## modules<%= template_source.gsub(Regexp.new("^#{Puppet::Node::Environment.current[:modulepath].gsub(':','|')}"),"") %>
+
+# Puppet Keys
+UserParameter=puppet.runtime,fgrep "Finished catalog run in" /var/log/syslog | tail -n 1 | awk '{print $(NF-1)}'

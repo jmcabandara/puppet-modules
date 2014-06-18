@@ -1,3 +1,6 @@
+## THIS FILE IS MANAGED BY PUPPET
+## modules<%= template_source.gsub(Regexp.new("^#{Puppet::Node::Environment.current[:modulepath].gsub(':','|')}"),"") %>
+
 # MySQL Keys
 UserParameter=mysql.status[*],mysqladmin -u$1 -p$2 extended-status 2>/dev/null | awk '/ $3 /{print $$4}'
 UserParameter=mysql.ping[*],mysqladmin -u$1 -p$2 ping | grep alive | wc -l

@@ -52,7 +52,7 @@ class ferm (
     }
 
     file { '/etc/ferm/ferm.d/README':
-        content => "# This directory is managed by puppet. Anything added here manually will be deleted\n",
+        content => "## THIS DIRECTORY IS MANAGED BY PUPPET\n## Anything added here manually will automatically be deleted\n",
         require => File['/etc/ferm/ferm.d'],
     }
 

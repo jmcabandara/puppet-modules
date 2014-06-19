@@ -474,7 +474,7 @@ AlertScriptsPath=/etc/zabbix/alert.d/
 # Default:
 # FpingLocation=/usr/bin/fping
 
-FpingLocation=/usr/bin/fping
+FpingLocation=<%= @fpinglocation %>
 
 ### Option: Fping6Location
 #	Location of fping6.
@@ -484,6 +484,10 @@ FpingLocation=/usr/bin/fping
 # Mandatory: no
 # Default:
 # Fping6Location=/usr/bin/fping6
+<% if @fping6location -%>
+
+Fping6Location=<%= @fping6location %>
+<% end -%>
 
 ### Option: SSHKeyLocation
 #	Location of public and private keys for SSH checks and actions.

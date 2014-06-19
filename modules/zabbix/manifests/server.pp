@@ -8,6 +8,8 @@ class zabbix::server (
     $javagatewayport = undef,
     $startjavapollers = undef,
     $timeout = 3,
+    $fpinglocation = '/usr/bin/fping',
+    $fping6location = undef,
 ) {
 
     if !defined(Package['zabbix-frontend-php']) { package { 'zabbix-frontend-php': } }

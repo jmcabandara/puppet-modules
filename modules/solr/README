@@ -1,0 +1,14 @@
+## Solr Indexes
+
+Crate a solr index with one of
+
+solr::index { 'indexname': }
+solr::index::drupal { 'indexname': }
+
+Then, the solr index is available at
+
+http://localhost:8080/solr/indexname
+
+The admin interface is available at
+
+http://localhost:8080/solr/indexname/admin/

@@ -1,5 +1,5 @@
 class asterisk (
-    $version = '12.2.0',
+    $version = '12.3.2',
     $odbc = true,
 ) {
 
@@ -43,18 +43,6 @@ class asterisk (
         creates => "/usr/local/src/asterisk-${version}",
         require => Exec['asterisk::download'],
         notify  => Exec['asterisk::bootstrap'],
-    }
-
-    # https://issues.asterisk.org/jira/browse/ASTERISK-18345
-    file { '/usr/local/src/asterisk-18345.patch':
-        source => 'puppet:///modules/asterisk/asterisk-18345.patch',
-    }
-    exec { 'asterisk::patch-18345::apply':
-        command => 'patch -p 1 main/tcptls.c ../asterisk-18345.patch',
-        cwd     => "/usr/local/src/asterisk-${version}",
-        require => [Exec['asterisk::unpack'], File['/usr/local/src/asterisk-18345.patch']],
-        before  => Exec['asterisk::bootstrap'],
-        unless  => 'grep "ssl_read should block and wait for the SSL layer to provide all data" main/tcptls.c',
     }
 
     exec { 'asterisk::bootstrap':

@@ -1,0 +1,28 @@
+## THIS FILE IS MANAGED BY PUPPET
+## modules<%= template_source.gsub(Regexp.new("^#{Puppet::Node::Environment.current[:modulepath].gsub(':','|')}"),"") %>
+
+description "etherpad-lite"
+
+start on started networking
+stop on runlevel [!2345]
+
+env EPHOME=/opt/etherpad-lite
+env EPLOGS=/var/log/etherpad-lite
+env EPUSER=etherpad-lite
+
+respawn
+
+pre-start script
+    cd $EPHOME
+    mkdir -p $EPLOGS
+    chown -R $EPUSER:adm $EPLOGS
+    chmod 0750 $EPLOGS
+    su -s /bin/sh -c $EPHOME/bin/installDeps.sh $EPUSER >> $EPLOGS/error.log || { stop; exit 1; }
+end script
+
+script
+  cd $EPHOME
+  exec su -s /bin/sh -c 'exec "$0" "$@"' $EPUSER -- node node_modules/ep_etherpad-lite/node/server.js \
+                        >> $EPLOGS/access.log \
+                        2>> $EPLOGS/error.log
+end script

@@ -10,14 +10,14 @@ class etherpad-lite (
         shell => '/bin/false',
     }
 
-    exec { 'etherpad::download':
+    exec { 'etherpad-lite::download':
         command => "git clone https://github.com/ether/etherpad-lite.git ${path}/etherpad-lite && chown -R etherpad-lite:etherpad-lite ${path}/etherpad-lite",
         creates => "${path}/etherpad-lite",
         require => [User['etherpad-lite'], Package['git']],
         before  => Service['etherpad-lite'],
     }
 
-    exec { 'etherpad::version':
+    exec { 'etherpad-lite::version':
         command => $version ? {
             undef   => 'git checkout develop',
             default => "git checkout ${version}",
@@ -26,9 +26,10 @@ class etherpad-lite (
             undef   => 'git branch --no-color | grep ^\* | awk \'{$1="";$0=substr($0,2)}1\' | grep ^develop$',
             default => "test \"${version}\" = \"$(git describe --tags)\"",
         },
-        cwd    => "${path}/etherpad-lite",
-        user   => 'etherpad-lite',
-        notify => Service['etherpad-lite'],
+        cwd     => "${path}/etherpad-lite",
+        user    => 'etherpad-lite',
+        require => Exec['etherpad-lite::download'],
+        notify  => Service['etherpad-lite'],
     }
 
     file { '/var/log/etherpad-lite':

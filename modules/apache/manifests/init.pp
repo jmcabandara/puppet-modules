@@ -18,6 +18,7 @@ class apache (
     }
 
     if !defined(Package['apache2']) { package { 'apache2': } }
+    if !defined(Package['apache2-utils']) { package { 'apache2-utils': } }
 
     service { 'apache2':
         ensure  => running,

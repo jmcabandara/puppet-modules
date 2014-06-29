@@ -73,8 +73,16 @@ class asterisk (
         command     => 'make',
         cwd         => "/usr/local/src/asterisk-${version}",
         require     => Exec['asterisk::configure'],
-        notify      => Exec['asterisk::make::install'],
+        notify      => Exec['asterisk::make::install', 'asterisk::cleanup'],
         refreshonly => true,
+    }
+
+    exec { 'asterisk::cleanup':
+        command     => 'rm /usr/lib/asterisk/modules/*',
+        onlyif      => 'test -d /usr/lib/asterisk/modules',
+        unless      => "test -x /usr/sbin/asterisk && /usr/sbin/asterisk -V | grep 'Asterisk ${version}'",
+        require     => Exec['asterisk::make'],
+        before      => Exec['asterisk::make::install'],
     }
 
     exec { 'asterisk::make::install':

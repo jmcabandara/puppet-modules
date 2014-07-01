@@ -2,7 +2,7 @@
 ## modules<%= template_source.gsub(Regexp.new("^#{Puppet::Node::Environment.current[:modulepath].gsub(':','|')}"),"") %>
 
 # Asterisk Keys
-UserParameter=asterisk.channels[*],/usr/sbin/asterisk -x "core show channels" | grep "$1" | awk '{print $$1}'
-UserParameter=asterisk.confbridge,/usr/sbin/asterisk -x "confbridge list" | sed -n 3~1p | wc -l
-UserParameter=asterisk.sip.registry,/usr/sbin/asterisk -x "sip show registry" | grep Registered | wc -l
-UserParameter=asterisk.sip.peers[*],/usr/sbin/asterisk -x "sip show peers" | tail -n 1 | awk '{print $$$1}'
+UserParameter=asterisk.channels[*],sudo /usr/sbin/asterisk -x core\ show\ channels | grep "$1" | awk '{print $$1}'
+UserParameter=asterisk.confbridge,sudo /usr/sbin/asterisk -x confbridge\ list | sed -n 3~1p | wc -l
+UserParameter=asterisk.sip.registry,sudo /usr/sbin/asterisk -x sip\ show\ registry | grep Registered | wc -l
+UserParameter=asterisk.sip.peers[*],sudo /usr/sbin/asterisk -x sip\ show\ peers | tail -n 1 | awk '{print $$$1}'

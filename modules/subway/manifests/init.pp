@@ -23,7 +23,7 @@ class subway (
     if $branch {
         exec { 'subway::branch':
             command => "git checkout ${branch}",
-            unless  => "git branch --no-color | grep ^\\* | awk '{$1=\"\";$0=substr($0,2)}1' | grep ^${branch}$",
+            unless  => "git branch --no-color | grep ^\\* | awk '{\$1=\"\";\$0=substr(\$0,2)}1' | grep ^${branch}$",
             cwd     => "${path}/subway",
             user    => 'subway',
             require => Exec['subway::download'],

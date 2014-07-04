@@ -28,6 +28,11 @@ class varnish (
         notify  => Service['varnish'],
     }
 
+    file { '/etc/varnish/vcl.d':
+        ensure => directory,
+        before => Service['varnish'],
+    }
+
     file { '/etc/default/varnishlog':
         content => template('varnish/etc/default/varnishlog.erb'),
         notify  => Service['varnishlog'],

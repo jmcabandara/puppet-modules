@@ -116,3 +116,9 @@ DAEMON_OPTS="-a <%= @address %> \
 ## Alternative 4, Do It Yourself
 #
 # DAEMON_OPTS=""
+
+## Generate a list of includes from /etc/varnish/vcl.d
+sed -i '/^include /d' /etc/varnish/default.vcl
+for vcl in `ls /etc/varnish/vcl.d/*.vcl 2>/dev/null`; do
+  echo "include \"$vcl\";" >> /etc/varnish/default.vcl
+done

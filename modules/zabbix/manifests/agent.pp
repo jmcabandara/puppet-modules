@@ -1,6 +1,7 @@
 class zabbix::agent (
     $server = '127.0.0.1',
     $serveractive = '127.0.0.1',
+    $timeout = 3,
 ) {
 
     if !defined(Package['zabbix-agent']) { package { 'zabbix-agent': } }

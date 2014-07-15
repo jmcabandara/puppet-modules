@@ -2,4 +2,4 @@
 ## modules<%= template_source.gsub(Regexp.new("^#{Puppet::Node::Environment.current[:modulepath].gsub(':','|')}"),"") %>
 
 # Apache Keys
-UserParameter=apache.status[*],wget --no-check-certificate -q -O - "http://localhost/server-status?auto" | awk '/$1: / {print $NF}'
+UserParameter=apache.status[*],wget --no-check-certificate -q -O - "http://localhost:61709/server-status?auto" | awk '/$1: / {print $NF}'

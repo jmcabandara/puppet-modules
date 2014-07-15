@@ -1,6 +1,7 @@
 class apache (
     $http_port = 80,
     $https_port = 443,
+    $admin_port = 61709,
     $default_vhost = false,
     $servertokens = 'OS',
     $serversignature = 'On',
@@ -34,12 +35,20 @@ class apache (
         content => template('apache/etc/apache2/envvars.erb'),
     }
 
+    # Security Settings
     file { '/etc/apache2/conf-available/security.conf':
         content => template('apache/etc/apache2/conf-available/security.conf.erb'),
     }
     file { '/etc/apache2/conf-enabled/security.conf':
         ensure  => '/etc/apache2/conf-available/security.conf',
-        require => File['/etc/apache2/conf-available/security.conf'],
+    }
+
+    # Admin virtualhost
+    file { '/etc/apache2/conf-available/admin.conf':
+        content => template('apache/etc/apache2/conf-available/admin.conf.erb'),
+    }
+    file { '/etc/apache2/conf-enabled/admin.conf':
+        ensure => '/etc/apache2/conf-available/admin.conf',
     }
 
     # Disable the default site

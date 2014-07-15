@@ -33,6 +33,14 @@ class php::opcache (
         notify  => Exec['php::restart'],
     }
 
+    exec { 'php::opcache::enable':
+        provider => 'shell',
+        command  => 'php5enmod -s ALL opcache',
+        onlyif   => 'for x in `php5query -S`; do if [ ! -f /etc/php5/$x/conf.d/05-opcache.ini ]; then echo "onlyif"; fi; done | grep onlyif',
+        require  => File['/etc/php5/mods-available/opcache.ini'],
+        notify   => Exec['php::restart'],
+    }
+
     file { '/usr/local/share/php':
         ensure => directory,
     }
@@ -42,4 +50,5 @@ class php::opcache (
         require => File['/usr/local/share/php'],
         mode    => 0755,
     }
+
 }

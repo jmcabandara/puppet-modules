@@ -11,12 +11,21 @@ class php::mysql (
     $default_password = undef,
     $connect_timeout = undef,
 ) {
+
     if !defined(Package['php5-mysql']) { package { 'php5-mysql': require => Package['php5-cli'] } }
 
     file { '/etc/php5/mods-available/mysql.ini':
         content => template('php/etc/php5/mods-available/mysql.ini.erb'),
         require => Package['php5-mysql'],
         notify  => Exec['php::restart'],
+    }
+
+    exec { 'php::mysql::enable':
+        provider => 'shell',
+        command  => 'php5enmod -s ALL mysql',
+        onlyif   => 'for x in `php5query -S`; do if [ ! -f /etc/php5/$x/conf.d/20-mysql.ini ]; then echo "onlyif"; fi; done | grep onlyif',
+        require  => File['/etc/php5/mods-available/mysql.ini'],
+        notify   => Exec['php::restart'],
     }
 
 }

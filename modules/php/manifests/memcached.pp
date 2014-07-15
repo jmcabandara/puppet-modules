@@ -13,6 +13,7 @@ class php::memcached (
     $serializer = undef,
     $use_sasl = undef,
 ) {
+
     if !defined(Package['php5-memcached']) { package { 'php5-memcached': require => Package['php5-cli'] } }
 
     file { '/etc/php5/mods-available/memcached.ini':
@@ -20,4 +21,13 @@ class php::memcached (
         require => Package['php5-memcached'],
         notify  => Exec['php::restart'],
     }
+
+    exec { 'php::memcached::enable':
+        provider => 'shell',
+        command  => 'php5enmod -s ALL memcached',
+        onlyif   => 'for x in `php5query -S`; do if [ ! -f /etc/php5/$x/conf.d/20-memcached.ini ]; then echo "onlyif"; fi; done | grep onlyif',
+        require  => File['/etc/php5/mods-available/memcached.ini'],
+        notify   => Exec['php::restart'],
+    }
+
 }

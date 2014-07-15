@@ -7,4 +7,5 @@ class php::composer {
         creates => '/usr/local/bin/composer',
         require => Package['curl', 'php5-cli'],
     }
+
 }

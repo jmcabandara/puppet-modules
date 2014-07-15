@@ -30,4 +30,5 @@ class php::uploadprogress {
         onlyif  => 'test -f /etc/php5/cli/conf.d/20-uploadprogress.ini',
         require => Exec['php::uploadprogress:enable'],
     }
+
 }

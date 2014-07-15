@@ -4,11 +4,8 @@
 <Location <%= @location %>>
         SetHandler ldap-status
         Require local
-<% if @require_ip -%>
-        Require ip <%= @require_ip %>
-<% end -%>
-<% if @require_host -%>
-        Require host <%= @require_host %>
+<% if @authz_require -%>
+        Require <%= @authz_require %>
 <% end -%>
 </Location>
 

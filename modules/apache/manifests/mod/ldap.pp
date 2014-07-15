@@ -1,7 +1,6 @@
 class apache::mod::ldap (
     $location = '/ldap-status',
-    $require_ip = undef,
-    $require_host = undef,
+    $authz_require = undef,
 ) {
 
     exec { 'a2enmod ldap':

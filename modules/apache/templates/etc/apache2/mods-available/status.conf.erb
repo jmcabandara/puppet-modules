@@ -8,11 +8,8 @@
         <Location <%= @location %>>
                 SetHandler server-status
                 Require local
-<% if @require_ip -%>
-                Require ip <%= @require_ip %>
-<% end -%>
-<% if @require_host -%>
-                Require host <%= @require_host %>
+<% if @authz_require -%>
+                Require <%= @authz_require %>
 <% end -%>
         </Location>
 
@@ -29,7 +26,6 @@
                 # Show Proxy LoadBalancer status in mod_status
                 ProxyStatus On
         </IfModule>
-
 
 </IfModule>
 

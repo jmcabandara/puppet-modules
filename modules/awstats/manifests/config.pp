@@ -175,7 +175,7 @@ define awstats::config (
         owner   => 'root',
         group   => 'root',
         mode    => 0644,
-        require => Package['awstats'],
+        require => [File['/etc/awstats'], Package['awstats']],
     }
 
 }

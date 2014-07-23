@@ -35,7 +35,7 @@ class ossec (
     }
 
     exec { 'ossec::download':
-        command => "wget http://www.ossec.net/files/ossec-hids-${version}.tar.gz",
+        command => "wget --user-agent='Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:30.0) Gecko/20100101 Firefox/30.0' http://www.ossec.net/files/ossec-hids-${version}.tar.gz",
         cwd     => '/usr/local/src',
         creates => "/usr/local/src/ossec-hids-${version}.tar.gz",
         require => Package['build-essential', 'wget'],

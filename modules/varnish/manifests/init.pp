@@ -29,8 +29,10 @@ class varnish (
     }
 
     file { '/etc/varnish/vcl.d':
-        ensure => directory,
-        before => Service['varnish'],
+        ensure  => directory,
+        purge   => true,
+        recurse => true,
+        before  => Service['varnish'],
     }
 
     file { '/etc/default/varnishlog':

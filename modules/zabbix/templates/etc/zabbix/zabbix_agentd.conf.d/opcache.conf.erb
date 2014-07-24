@@ -2,4 +2,4 @@
 ## modules<%= template_source.gsub(Regexp.new("^#{Puppet::Node::Environment.current[:modulepath].gsub(':','|')}"),"") %>
 
 # PHP OPcache Keys
-UserParameter=opcache.status[*],wget --no-check-certificate -q -O - "http://localhost/opcache.php?q=$1"
+UserParameter=opcache.status[*],wget -q -O - "http://localhost:61709/opcache.php?q=$1"

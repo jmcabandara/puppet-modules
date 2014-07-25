@@ -1,11 +1,11 @@
-define solr::index::drupal (
+define solr::index::drupal::apachesolr (
     $index = $title,
     $version = '7.x-1.6',
 ) {
 
     solr::index { $index: }
 
-    exec { "solr::index::drupal::${index}":
+    exec { "solr::index::drupal::apachesolr::${index}":
         command => "wget -q -O- http://ftp.drupal.org/files/projects/apachesolr-${version}.tar.gz | tar --strip 3 -zxf - --no-same-owner --wildcards \"apachesolr/solr-conf/solr-3.x/*\" && echo ${version} > version.txt",
         unless  => "grep ${version} version.txt",
         cwd     => "/usr/local/share/solr/${index}/conf",

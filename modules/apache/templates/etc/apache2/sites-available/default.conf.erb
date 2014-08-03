@@ -27,7 +27,7 @@
     ProxyPreserveHost On
     ProxyAddHeaders <%= @proxyaddheaders %>
     ProxyPass /socket.io/1/websocket/ <%= @proxy.gsub(/^https?/,'ws').gsub(/\/$/,'') %>/socket.io/1/websocket/ retry=0
-    ProxyPass / <%= @proxy.gsub(/\/$/, '') %>/
+    ProxyPass / <%= @proxy.gsub(/\/$/, '') %>/ retry=0 nocanon
     ProxyPassReverse / <%= @proxy.gsub(/\/$/, '') %>/
 <% else -%>
     DocumentRoot <%= @docroot.gsub(/\/$/, '') %>

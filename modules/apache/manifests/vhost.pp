@@ -30,7 +30,7 @@ define apache::vhost (
 
     $site = $priority ? {
         undef   => "${servername}",
-        default => "${priority}-${servername}",
+        default => "${priority}-${title}",
     }
 
     $template_file = $template ? {

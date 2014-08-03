@@ -8,6 +8,7 @@ define apache::vhost (
     $allowoverride = 'All',
     $directoryindex = 'index.html index.cgi index.pl index.php index.xhtml index.htm',
     $proxy = undef,
+    $proxyaddheaders = 'On',
     $authz_require = undef,
     $http_port = 80,
     $https_port = 443,

@@ -65,6 +65,10 @@
     </Location>
 <% end -%>
 
+<% if @allowencodedslashes -%>
+    AllowEncodedSlashes <%= @allowencodedslashes %>
+<% end -%>
+
 <% if @php_value || @php_flag -%>
     # PHP Settings
 <% if @php_value -%>
@@ -124,6 +128,10 @@
 <% end -%>
     ProxyPass / http://localhost/ retry=0 nocanon
     ProxyPassReverse / http://localhost/
+
+<% if @allowencodedslashes -%>
+    AllowEncodedSlashes <%= @allowencodedslashes %>
+<% end -%>
 
     RequestHeader set X-Forwarded-Proto "https"
     Header edit Location ^http: https:

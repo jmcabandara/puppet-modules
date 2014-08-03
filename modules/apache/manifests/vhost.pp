@@ -18,6 +18,7 @@ define apache::vhost (
     $hsts = 15552000,
     $php_value = undef,
     $php_flag = undef,
+    $allowencodedslashes = undef,
     $sslcertificatefile = undef,
     $sslcertificatekeyfile = undef,
     $sslcertificatechainfile = undef, 

@@ -1,7 +1,7 @@
 class php::opcache (
     $enable = undef,
     $enable_cli = undef,
-    $memory_consumption = undef,
+    $memory_consumption = 64,
     $interned_strings_buffer = undef,
     $max_accelerated_files = undef,
     $max_wasted_percentage = undef,
@@ -49,6 +49,16 @@ class php::opcache (
         content => template('php/usr/local/share/php/opcache.php.erb'),
         require => File['/usr/local/share/php'],
         mode    => 0755,
+    }
+
+    file { '/etc/sysctl.d/60-php-opcache.conf':
+        content => template('php/etc/sysctl.d/60-php-opcache.conf.erb'),
+        notify  => Exec['php::opcache::procps'],
+    }
+
+    exec { 'php::opcache::procps':
+        command     => 'service procps start',
+        refreshonly => true,
     }
 
 }

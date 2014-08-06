@@ -40,7 +40,7 @@
 
 <% if (@htpasswd || @authz_require) && @https != 'force' -%>
     <Location />
-<% if @htpasswd -%>
+  <%- if @htpasswd -%>
         AuthType Basic
         AuthName "<%= @servername %>"
         AuthBasicProvider file ldap
@@ -53,10 +53,10 @@
         AuthLDAPBindAuthoritative off
 
         Require valid-user
-<% end -%>
-<% if @authz_require -%>
+  <%- end -%>
+  <%- if @authz_require -%>
         Require <%= @authz_require %>
-<% end -%>
+  <%- end -%>
 
         # Restricted access should not be cached
         Header set Cache-Control "private, no-cache, no-store, max-age=0, must-revalidate, proxy-revalidate"
@@ -70,16 +70,16 @@
 
 <% if @php_value || @php_flag -%>
     # PHP Settings
-<% if @php_value -%>
-<% @php_value.each do |value| -%>
+  <%- if @php_value -%>
+    <%- @php_value.each do |value| -%>
     php_value <%= value[0] %> <%= value[1] %>
-<% end -%>
-<% end -%>
-<% if @php_flag -%>
-<% @php_flag.each do |flag| -%>
+    <%- end -%>
+  <%- end -%>
+  <%- if @php_flag -%>
+    <%- @php_flag.each do |flag| -%>
     php_flag <%= flag[0] %> <%= flag[1] %>
-<% end -%>
-<% end -%>
+    <%- end -%>
+  <%- end -%>
 <% end -%>
 
     RewriteEngine On
@@ -120,11 +120,11 @@
     SSLCertificateChainFile <%= @sslcertificatechainfile %>
 <% end -%>
 
-<%# If HTTPS is forced, access restrictions should be done here to get around -%>
-<%# any reverse proxy caching.                                                -%>
+<%# If HTTPS is forced, access restrictions should be done here to allow -%>
+<%# any reverse proxy caching.                                           -%>
 <% if @https == 'force' && (@htpasswd || @authz_require) -%>
     <Location />
-<% if @htpasswd -%>
+  <%- if @htpasswd -%>
         AuthType Basic
         AuthName "<%= @servername %>"
         AuthBasicProvider file ldap
@@ -137,10 +137,10 @@
         AuthLDAPBindAuthoritative off
 
         Require valid-user
-<% end -%>
-<% if @authz_require -%>
+  <%- end -%>
+  <%- if @authz_require -%>
         Require <%= @authz_require %>
-<% end -%>
+  <%- end -%>
     </Location>
 <% end -%>
 

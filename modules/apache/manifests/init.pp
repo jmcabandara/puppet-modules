@@ -59,4 +59,11 @@ class apache (
         }
     }
 
+    # Force vhost configuration through puppet
+    file { ['/etc/apache2/sites-available', '/etc/apache2/sites-enabled']:
+        ensure  => directory,
+        recurse => true,
+        purge   => true,
+        require => Package['apache2'],
+    }
 }

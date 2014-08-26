@@ -21,7 +21,9 @@
 
 <% if @proxy -%>
     # Proxy to Backend
+  <%- if @proxy =~ /^https/i -%>
     SSLProxyEngine On
+  <%- end -%>
     ProxyRequests Off
     ProxyPreserveHost On
     ProxyAddHeaders <%= @proxyaddheaders %>

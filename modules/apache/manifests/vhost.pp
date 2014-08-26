@@ -13,6 +13,7 @@ define apache::vhost (
     $http_port = 80,
     $https_port = 443,
     $normalize = true,
+    $rewrite = undef,
     $https = 'force',
     $htpasswd = false,
     $hsts = 15552000,

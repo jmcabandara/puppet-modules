@@ -90,6 +90,10 @@
     RewriteRule ^ %{REQUEST_SCHEME}://<%= @servername %>%{REQUEST_URI} [L,R=301]
 <% end -%>
 
+<% if @rewrite -%>
+    <%= @rewrite %>
+<% end -%>
+
 <% if @https == 'force' -%>
     # Force HTTPS
     RewriteCond %{HTTP:X-Forwarded-Proto} !https

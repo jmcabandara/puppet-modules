@@ -1567,8 +1567,8 @@
 
 <decoder name="vhost-accesslog">
   <type>web-log</type>
-  <prematch>^\S+:\d+ \d+.\d+.\d+.\d+ |^\S+:\d+ ::ffff:\d+.\d+.\d+.\d+ </prematch>
-  <regex>^\S+:\d+ (\d+.\d+.\d+.\d+) \S+ \S+ [\S+ \S\d+] </regex>
+  <prematch>^\S+:\d+ \S+ </prematch>
+  <regex>^\S+:\d+ (\S+) \S+ \S+ [\S+ \S\d+] </regex>
   <regex>"\w+ (\S+) HTTP\S+ (\d+) </regex>
   <order>srcip, url, id</order>
 </decoder>

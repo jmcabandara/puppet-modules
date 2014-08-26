@@ -1,20 +1,10 @@
 ## THIS FILE IS MANAGED BY PUPPET
 ## modules<%= template_source.gsub(Regexp.new("^#{Puppet::Node::Environment.current[:modulepath].gsub(':','|')}"),"") %>
 
-# OSSEC rules need to be first
-include 'ossec.exempt.d/';
-domain (ip ip6) {
-    include 'ossec.ferm';
-    table filter chain OSSEC {
-        LOG log-prefix "Blocked by OSSEC: ";
-        DROP;
-    }
-}
-
 # Drop all IPv4 packet fragments
 domain ip table filter chain INPUT fragment DROP;
 
-# Default rules applied to both IPv4 and IPv6
+# Default rules
 domain (ip ip6) {
     table filter {
         # Default Policy
@@ -23,7 +13,17 @@ domain (ip ip6) {
         # loopback traffic
         chain INPUT interface lo ACCEPT;
         chain OUTPUT outerface lo ACCEPT;
+    }
+}
 
+# Local rules that are exempt from OSSEC filtering
+include 'ossec.exempt.d/';
+
+domain (ip ip6) {
+    # OSSEC blocks
+    include 'ossec.ferm';
+
+    table filter {
         chain (INPUT OUTPUT FORWARD) {
             # ICMP is very handy and necessary
             proto icmp ACCEPT;
@@ -42,5 +42,9 @@ domain (ip ip6) {
         chain INPUT { <%= @input %>; }
         chain OUTPUT { <%= @output %>; }
         chain FORWARD { <%= @forward %>; }
+        chain OSSEC {
+            LOG log-prefix "Blocked by OSSEC: ";
+            DROP;
+        }
     } 
 }

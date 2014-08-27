@@ -100,7 +100,7 @@ class ossec (
 
     file { '/var/ossec/ossec-init.conf':
         source  => '/etc/ossec-init.conf',
-        require => Exec['ossec::install'],
+        require => [File['/etc/ossec-init.conf'], Exec['ossec::install']],
     }
 
     file { '/etc/init.d/ossec':

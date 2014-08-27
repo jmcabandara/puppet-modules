@@ -76,7 +76,7 @@ class ossec (
     }
 
     exec { 'ossec::install':
-        command     => "sed 's/cp/cp -f/ /usr/local/src/ossec-hids-${version}/src/InstallServer.sh | bash /dev/stdin local",
+        command     => "sed 's/cp -/cp -f/' /usr/local/src/ossec-hids-${version}/src/InstallServer.sh | bash /dev/stdin local",
         cwd         => "/usr/local/src/ossec-hids-${version}/src",
         require     => Exec['ossec::make::build'],
         refreshonly => true,

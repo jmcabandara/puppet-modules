@@ -1,5 +1,5 @@
 class ossec (
-    $version                 = '2.7.1', 
+    $version                 = '2.8', 
     $email_notification      = 'no',
     $email_to                = {},
     $email_from              = undef,
@@ -76,7 +76,7 @@ class ossec (
     }
 
     exec { 'ossec::install':
-        command     => "/usr/local/src/ossec-hids-${version}/src/InstallServer.sh local",
+        command     => "sed 's/cp -/cp -f/' /usr/local/src/ossec-hids-${version}/src/InstallServer.sh | bash /dev/stdin local",
         cwd         => "/usr/local/src/ossec-hids-${version}/src",
         require     => Exec['ossec::make::build'],
         refreshonly => true,
@@ -85,11 +85,11 @@ class ossec (
 
     # Generates /etc/ossec-init.conf
     exec { 'ossec::initfile':
-        command => "echo \"DIRECTORY=/var/ossec/\" > /etc/ossec-init.conf;
-                    echo \"VERSION=`cat /usr/local/src/ossec-hids-${version}/src/VERSION`\" >> /etc/ossec-init.conf;
+        command => "echo \"DIRECTORY=\\\"/var/ossec/\\\"\" > /etc/ossec-init.conf;
+                    echo \"VERSION=\\\"`cat /usr/local/src/ossec-hids-${version}/src/VERSION`\\\"\" >> /etc/ossec-init.conf;
                     echo \"DATE=\\\"`date`\\\"\" >> /etc/ossec-init.conf;
-                    echo \"TYPE=local\" >> /etc/ossec-init.conf",
-        creates => '/etc/ossec-init.conf',
+                    echo \"TYPE=\\\"local\\\"\" >> /etc/ossec-init.conf",
+        unless  => "grep \"VERSION=\\\"`cat /usr/local/src/ossec-hids-${version}/src/VERSION`\\\"\" /etc/ossec-init.conf",
         require => Exec['ossec::install'],
     }
 
@@ -100,7 +100,7 @@ class ossec (
 
     file { '/var/ossec/ossec-init.conf':
         source  => '/etc/ossec-init.conf',
-        require => File['/etc/ossec-init.conf'],
+        require => [File['/etc/ossec-init.conf'], Exec['ossec::install']],
     }
 
     file { '/etc/init.d/ossec':
@@ -118,7 +118,7 @@ class ossec (
     }
 
     file { '/var/ossec/etc/ossec.conf':
-        content => template('ossec/etc/ossec.conf.erb'),
+        content => template('ossec/var/ossec/etc/ossec.conf.erb'),
     }
 
     service { 'ossec':

@@ -159,9 +159,6 @@
     ProxyPass / http://localhost/ retry=0 nocanon
     ProxyPassReverse / http://localhost/
 
-    # http://httpd.apache.org/docs/2.4/mod/mod_proxy.html#request-bodies
-    SetEnv proxy-sendchunked 1
-
 <% if @allowencodedslashes -%>
     AllowEncodedSlashes <%= @allowencodedslashes %>
 <% end -%>

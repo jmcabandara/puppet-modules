@@ -54,6 +54,14 @@ DAEMON_OPTS="-a <%= @address %> \
              -g <%= @group %> \
              -f /etc/varnish/default.vcl \
              -S /etc/varnish/secret \
+             -p between_bytes_timeout=<%= @between_bytes_timeout %> \
+             -p connect_timeout=<%= @connect_timeout %> \
+             -p first_byte_timeout=<%= @first_byte_timeout %> \
+             -p idle_send_timeout=<%= @idle_send_timeout %> \
+             -p pipe_timeout=<%= @pipe_timeout %> \
+             -p send_timeout=<%= @send_timeout %> \
+             -p timeout_idle=<%= @timeout_idle %> \
+             -p timeout_req=<%= @timeout_req %> \
              -s <%= @storage %>"
 
 

@@ -30,9 +30,8 @@
     ProxyPass /socket.io/1/websocket/ <%= @proxy.gsub(/^https?/,'ws').gsub(/\/$/,'') %>/socket.io/1/websocket/ retry=0
     ProxyPass / <%= @proxy.gsub(/\/$/, '') %>/ retry=0 nocanon
     ProxyPassReverse / <%= @proxy.gsub(/\/$/, '') %>/
-<% end -%>
-
-<% if @docroot -%>
+<% else -%>
+  <%- if @docroot -%>
     DocumentRoot <%= @docroot.gsub(/\/$/, '') %>
     <Directory <%= @docroot.gsub(/\/$/, '') %>>
         Options <%= @options %>
@@ -40,6 +39,7 @@
         DirectoryIndex <%= @directoryindex %>
         Require all granted
     </Directory>
+  <%- end -%>
 <% end -%>
 
 <% if (@htpasswd || @authz_require) && @https != 'force' -%>

@@ -12,14 +12,14 @@
     ErrorLog ${APACHE_LOG_DIR}/<%= @servername %>_error.log
     CustomLog ${APACHE_LOG_DIR}/<%= @servername %>_access.log vhost_combined
 
-<% if @proxy && @awstats -%>
+<% if @proxy -%>
+  <%- if @awstats -%>
     # Do not proxy awstats
     ProxyPass /awstats.pl !
     ProxyPass /awstats-icon !
     ProxyPass /awstatsclasses !
-<% end -%>
+  <%- end -%>
 
-<% if @proxy -%>
     # Proxy to Backend
   <%- if @proxy =~ /^https/i -%>
     SSLProxyEngine On
@@ -30,7 +30,9 @@
     ProxyPass /socket.io/1/websocket/ <%= @proxy.gsub(/^https?/,'ws').gsub(/\/$/,'') %>/socket.io/1/websocket/ retry=0
     ProxyPass / <%= @proxy.gsub(/\/$/, '') %>/ retry=0 nocanon
     ProxyPassReverse / <%= @proxy.gsub(/\/$/, '') %>/
-<% else -%>
+<% end -%>
+
+<% if @docroot -%>
     DocumentRoot <%= @docroot.gsub(/\/$/, '') %>
     <Directory <%= @docroot.gsub(/\/$/, '') %>>
         Options <%= @options %>

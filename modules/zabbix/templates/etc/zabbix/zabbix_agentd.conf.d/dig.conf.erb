@@ -1,0 +1,6 @@
+## THIS FILE IS MANAGED BY PUPPET
+## modules<%= template_source.gsub(Regexp.new("^#{Puppet::Node::Environment.current[:modulepath].gsub(':','|')}"),"") %>
+
+# DNS Keys
+UserParameter=dig.soa[*],dig $1 +nssearch
+UserParameter=dig.serial[*],dig $1 +nssearch | awk '{ print $$4 }' | sort -u | wc -l

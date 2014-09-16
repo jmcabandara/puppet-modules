@@ -2,6 +2,7 @@ class mysql::server (
     $server_id                      = undef,
     $max_allowed_packet             = '64M',
     $skip_name_resolve              = true,
+    $bind_address                   = '127.0.0.1',
     $max_connections                = 100,
     $table_open_cache               = 400,
     $query_cache_size               = '16M',

@@ -91,4 +91,10 @@ class zabbix::agent (
         notify  => Service['zabbix-agent'],
     }
 
+    file { '/etc/zabbix/zabbix_agentd.conf.d/varnish.conf':
+        content => template('zabbix//etc/zabbix/zabbix_agentd.conf.d/varnish.conf.erb'),
+        require => File['/etc/zabbix/zabbix_agentd.conf.d'],
+        notify  => Service['zabbix-agent'],
+    }
+
 }

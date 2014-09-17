@@ -23,6 +23,7 @@ define apache::vhost (
     $sslcertificatefile = undef,
     $sslcertificatekeyfile = undef,
     $sslcertificatechainfile = undef, 
+    $sslusestapling = 'On',
 ) {
 
     $docroot = $documentroot ? {

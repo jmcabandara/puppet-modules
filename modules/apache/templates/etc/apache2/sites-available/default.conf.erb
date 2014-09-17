@@ -122,6 +122,7 @@
     CustomLog ${APACHE_LOG_DIR}/<%= @servername %>_access.log vhost_combined
 
     SSLEngine On
+    SSLUseStapling <%= @sslusestapling %>
     SSLCertificateFile <%= @sslcertificatefile %>
     SSLCertificateKeyFile <%= @sslcertificatekeyfile %>
 <% if @sslcertificatechainfile -%>

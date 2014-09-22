@@ -2,9 +2,9 @@
 ## modules<%= template_source.gsub(Regexp.new("^#{Puppet::Node::Environment.current[:modulepath].gsub(':','|')}"),"") %>
 
 # MySQL Keys
-UserParameter=mysql.status[*],mysqladmin -u$1 -p$2 extended-status 2>/dev/null | awk '/ $3 /{print $$4}'
-UserParameter=mysql.ping[*],mysqladmin -u$1 -p$2 ping | grep alive | wc -l
+UserParameter=mysql.status[*],mysqladmin --defaults-file=/etc/zabbix/my.cnf extended-status 2>/dev/null | awk '/ $1 /{print $$4}'
+UserParameter=mysql.ping[*],mysqladmin --defaults-file=/etc/zabbix/my.cnf ping | grep alive | wc -l
 UserParameter=mysql.version,mysqladmin -V
 
 # MySQL Slave Keys
-UserParameter=mysql.slave[*],mysql -u$1 -p$2 -e "show slave status\G" | awk '/$3:/ {print $NF}' | sed s/Yes/1/ | sed s/No/0/
+UserParameter=mysql.slave[*],mysql --defaults-file=/etc/zabbix/my.cnf -e "show slave status\G" | awk '/$1:/ {print $NF}' | sed s/Yes/1/ | sed s/No/0/

@@ -169,13 +169,22 @@ define awstats::config (
 
     if !defined(Package['awstats']) { package { 'awstats': } }
 
+    if !defined(File['/etc/awstats']) {
+        file { '/etc/awstats':
+            ensure  => directory,
+            recurse => true,
+            purge   => true,
+            require => Package['awstats'],
+        }
+    }
+
     file { "/etc/awstats/awstats.${sitedomain}.conf":
         ensure  => $ensure,
         content => template('awstats/etc/awstats/awstats.conf.erb'),
         owner   => 'root',
         group   => 'root',
         mode    => 0644,
-        require => [File['/etc/awstats'], Package['awstats']],
+        require => File['/etc/awstats'],
     }
 
 }

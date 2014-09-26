@@ -510,8 +510,8 @@
   -->
 
 <decoder name="pure-transfer">
-  <prematch>^\S+ - \S+ [\d\d/\S\S\S/\d\d\d\d:\d\d:\d\d:\d\d -\d\d\d\d] </prematch>
-  <regex>^(\S+) - (\S+) [\d\d/\S\S\S/\d\d\d\d:\d\d:\d\d:\d\d -\d\d\d\d] "(\S+) (\.+) (\d+) \d+$</regex>
+  <prematch>^\S+ - \S+ [\d\d/\S\S\S/\d\d\d\d:\d\d:\d\d:\d\d \S\d\d\d\d] "\w+ \S+" </prematch>
+  <regex>^(\S+) - (\S+) [\d\d/\S\S\S/\d\d\d\d:\d\d:\d\d:\d\d \S\d\d\d\d] "(\S+) (\.+) (\d+) \d+$</regex>
   <order>extra_data,dstuser,action,url,status</order>
 </decoder>
 
@@ -1559,7 +1559,7 @@
   -->
 <decoder name="vhost-accesslog">
   <type>web-log</type>
-  <prematch>^\S+:\d+ \S+ \S+ \S+ [\S+ \S\d+] </prematch>
+  <prematch>^\S+:\d+ \S+ \S+ \S+ [\S+ \S\d+] "\w+ \S+ HTTP\S+" </prematch>
   <regex>^\S+:\d+ (\S+) \S+ \S+ [\S+ \S\d+] </regex>
   <regex>"\w+ (\S+) HTTP\S+" (\d+) </regex>
   <order>srcip, url, id</order>
@@ -1567,7 +1567,7 @@
 
 <decoder name="web-accesslog">
   <type>web-log</type>
-  <prematch>^\S+ \S+ \S+ [\S+ \S\d+] </prematch>
+  <prematch>^\S+ \S+ \S+ [\S+ \S\d+] "\w+ \S+ HTTP\S+" </prematch>
   <regex>^(\S+) \S+ \S+ [\S+ \S\d+] </regex>
   <regex>"\w+ (\S+) HTTP\S+" (\d+) </regex>
   <order>srcip, url, id</order>

@@ -109,6 +109,10 @@
     RewriteCond %{QUERY_STRING} ^$
     RewriteRule ^/awstats(\.pl)?$ https://<%= @fqdn %>/awstats.pl?config=<%= @servername %> [L,R=301]
 <% end -%>
+
+<% if @modpagespeed -%>
+    <%= @modpagespeed %>
+<% end -%>
 </VirtualHost>
 
 <% if @https -%>

@@ -14,6 +14,7 @@ define apache::vhost (
     $https_port = 443,
     $normalize = true,
     $rewrite = undef,
+    $modpagespeed = undef,
     $https = 'force',
     $htpasswd = false,
     $hsts = 15552000,

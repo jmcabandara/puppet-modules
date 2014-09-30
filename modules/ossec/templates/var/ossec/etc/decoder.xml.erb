@@ -2493,4 +2493,25 @@ Author and (c): Michael Starks, 2014 -->
  <order>action, id</order>
 </decoder>
 
+
+<!-- OpenVPN decoder. -->
+<decoder name="openvpn">
+    <program_name>^ovpn-</program_name>
+</decoder>
+
+<decoder name="openvpn-username">
+    <parent>openvpn</parent>
+    <prematch>^\S+/\S+:\d+ </prematch>
+    <regex>^\S+/(\S+):\d+ </regex>
+    <order>srcip</order>
+</decoder>
+
+<decoder name="openvpn-ip">
+    <parent>openvpn</parent>
+    <prematch>^\S+:\d+ </prematch>
+    <regex>^(\S+):\d+ </regex>
+    <order>srcip</order>
+</decoder>
+
+
 <!-- EOF -->

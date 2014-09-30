@@ -1,4 +1,6 @@
-class apache::mod::pagespeed {
+class apache::mod::pagespeed (
+    $authz_require = undef,
+) {
 
     if !defined(Package['wget']) { package { 'wget': } }
 

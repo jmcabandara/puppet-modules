@@ -7,6 +7,21 @@ class apache (
     $serversignature = 'On',
     $traceenable = 'Off',
     $umask = '0022',
+
+    # Applies to all MPMs
+    $startservers = 2,
+    $maxrequestworkers = 150,
+    $maxconnectionsperchild = 0,
+
+    # Applies to Prefork MPM
+    $minspareservers = 5,
+    $maxspareservers = 10,
+
+    # Applies to Event and Worker MPMs
+    $minsparethreads = 25,
+    $maxsparethreads = 75,
+    $threadlimit = 64,
+    $threadsperchild = 25,
 ) {
 
     File {
@@ -66,4 +81,18 @@ class apache (
         purge   => true,
         require => Package['apache2'],
     }
+
+    # MPM Configuration
+    file { '/etc/apache2/mods-available/mpm_event.conf':
+        content => template('apache/etc/apache2/mods-available/mpm_event.conf.erb'),
+    }
+
+    file { '/etc/apache2/mods-available/mpm_prefork.conf':
+        content => template('apache/etc/apache2/mods-available/mpm_prefork.conf.erb'),
+    }
+
+    file { '/etc/apache2/mods-available/mpm_worker.conf':
+        content => template('apache/etc/apache2/mods-available/mpm_worker.conf.erb'),
+    }
+
 }

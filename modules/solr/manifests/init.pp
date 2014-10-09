@@ -1,4 +1,6 @@
-class solr {
+class solr (
+    $xmx = '128m',
+) {
 
     if !defined(Package['solr-tomcat']) { package { 'solr-tomcat': } }
 
@@ -6,6 +8,14 @@ class solr {
         service { 'tomcat6':
             ensure => running,
             enable => true,
+        }
+    }
+
+    if !defined(File['/etc/default/tomcat6']) {
+        file { '/etc/default/tomcat6':
+            content => template('solr/etc/default/tomcat6.erb'),
+            require => Package['solr-tomcat'],
+            notify  => Service['tomcat6'],
         }
     }
 

@@ -125,6 +125,30 @@
     ErrorLog ${APACHE_LOG_DIR}/<%= @servername %>_error.log
     CustomLog ${APACHE_LOG_DIR}/<%= @servername %>_access.log vhost_combined
 
+<%- if @docroot -%>
+    DocumentRoot <%= @docroot.gsub(/\/$/, '') %>
+    <Directory <%= @docroot.gsub(/\/$/, '') %>>
+        Options <%= @options %>
+        AllowOverride <%= @allowoverride %>
+        DirectoryIndex <%= @directoryindex %>
+        Require all granted
+    </Directory>
+
+<% if @php_value || @php_flag -%>
+    # PHP Settings
+  <%- if @php_value -%>
+    <%- @php_value.each do |value| -%>
+    php_value <%= value[0] %> <%= value[1] %>
+    <%- end -%>
+  <%- end -%>
+  <%- if @php_flag -%>
+    <%- @php_flag.each do |flag| -%>
+    php_flag <%= flag[0] %> <%= flag[1] %>
+    <%- end -%>
+  <%- end -%>
+<% end -%>
+<%- end -%>
+
     SSLEngine On
     SSLUseStapling <%= @sslusestapling %>
     SSLCertificateFile <%= @sslcertificatefile %>
@@ -160,10 +184,20 @@
     ProxyRequests Off
     ProxyPreserveHost On
     ProxyAddHeaders <%= @proxyaddheaders %>
+
 <% if @proxy -%>
+    # Proxy websockets directly to the destination
     ProxyPass /socket.io/1/websocket/ <%= @proxy.gsub(/^https?/,'ws').gsub(/\/$/,'') %>/socket.io/1/websocket/ retry=0
 <% end -%>
-    ProxyPass / http://localhost/ retry=0 disablereuse=On nocanon
+
+<% if !@proxy && @docroot -%>
+    # Proxy everything except POST requests
+    RewriteEngine On
+    RewriteCond %{REQUEST_METHOD} !POST
+    RewriteRule ^/(.*) http://localhost/$1 [P]
+<% else -%>
+    ProxyPass / http://localhost/ retry=0 nocanon
+<% end -%>
     ProxyPassReverse / http://localhost/
 
 <% if @allowencodedslashes -%>

@@ -72,6 +72,13 @@
     AllowEncodedSlashes <%= @allowencodedslashes %>
 <% end -%>
 
+<% if @errordocument -%>
+    # Custom Error Pages
+  <%- @errordocument.each do |value| -%>
+    ErrorDocument <%= value[0] %> <%= value[1] %>
+  <%- end -%>
+<% end -%>
+
 <% if @php_value || @php_flag -%>
     # PHP Settings
   <%- if @php_value -%>
@@ -133,6 +140,13 @@
         DirectoryIndex <%= @directoryindex %>
         Require all granted
     </Directory>
+
+<% if @errordocument -%>
+    # Custom Error Pages
+  <%- @errordocument.each do |value| -%>
+    ErrorDocument <%= value[0] %> <%= value[1] %>
+  <%- end -%>
+<% end -%>
 
 <% if @php_value || @php_flag -%>
     # PHP Settings

@@ -4,6 +4,7 @@ define apache::vhost (
     $servername = $title,
     $serveralias = undef,
     $documentroot = undef,
+    $errordocument = undef,
     $options = 'FollowSymLinks',
     $allowoverride = 'All',
     $directoryindex = 'index.html index.cgi index.pl index.php index.xhtml index.htm',

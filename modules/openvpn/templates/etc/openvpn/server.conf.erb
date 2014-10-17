@@ -250,6 +250,10 @@ keepalive 10 120
 ;cipher DES-EDE3-CBC  # Triple-DES
 cipher <%= @cipher %>
 
+<% if @tls_cipher -%>
+tls-cipher <%= @tls_cipher %>
+<% end -%>
+
 # Enable compression on the VPN link.
 # If you enable it here, you must also
 # enable it in the client config file.

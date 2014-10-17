@@ -9,7 +9,7 @@ define openvpn::server (
     $dhcp_option = [],
     $client_to_client = false,
     $duplicate_cn = false,
-    $tls_auth = false,
+    $tls_auth = true,
     $cipher = 'BF-CBC',
     $comp_lzo = true,
     $user = 'nobody',

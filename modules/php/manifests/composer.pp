@@ -1,5 +1,7 @@
 class php::composer {
 
+    require ::php::dev
+
     if !defined(Package['curl']) { package { 'curl': } }
 
     exec { 'php::composer::install':

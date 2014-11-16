@@ -2,12 +2,15 @@ class php::composer {
 
     require ::php::dev
 
-    if !defined(Package['curl']) { package { 'curl': } }
+    file { '/tmp/composer.installer':
+        source => 'puppet:///modules/php/installer',
+        mode   => 0755,
+    }
 
     exec { 'php::composer::install':
-        command => 'curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer',
+        command => 'php /tmp/composer.installer --install-dir=/usr/local/bin --filename=composer',
         creates => '/usr/local/bin/composer',
-        require => Package['curl', 'php5-cli'],
+        require => File['/tmp/composer.installer'],
     }
 
 }

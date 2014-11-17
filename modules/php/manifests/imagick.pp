@@ -3,6 +3,8 @@ class php::imagick (
     $progress_monitor = undef,
 ) {
 
+    require ::imagemagick
+
     if !defined(Package['php5-imagick']) { package { 'php5-imagick': require => Package['php5-cli'] } }
 
     file { '/etc/php5/mods-available/imagick.ini':

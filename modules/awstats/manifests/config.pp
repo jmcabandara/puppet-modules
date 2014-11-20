@@ -167,14 +167,13 @@ define awstats::config (
     $extratrackedrowslimit = 500,
 ) {
 
-    if !defined(Package['awstats']) { package { 'awstats': } }
+    require ::awstats
 
     if !defined(File['/etc/awstats']) {
         file { '/etc/awstats':
             ensure  => directory,
             recurse => true,
             purge   => true,
-            require => Package['awstats'],
         }
     }
 

@@ -1,4 +1,5 @@
 class zabbix::agent (
+    $listenip = '0.0.0.0',
     $server = '127.0.0.1',
     $serveractive = '127.0.0.1',
     $timeout = 3,

@@ -27,7 +27,8 @@ define openvpn::server (
     $management_client_group = undef,
 ) {
 
-    if !defined(Package['openvpn']) { package { 'openvpn': } }
+    include ::openvpn
+
     if !defined(Package['openvpn-auth-ldap']) { package { 'openvpn-auth-ldap': } }
     if !defined(Package['openvpn-auth-radius']) { package { 'openvpn-auth-radius': } }
 

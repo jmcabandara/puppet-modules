@@ -10,6 +10,8 @@ class openvpn::ca (
     $key_ou = 'MyOrganizationalUnit',
 ) {
 
+    include ::openvpn
+
     if !defined(Package['easy-rsa']) { package { 'easy-rsa': } }
 
     exec { 'openvpn::ca::make-cadir':

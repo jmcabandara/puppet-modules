@@ -1,4 +1,8 @@
 ## THIS FILE IS MANAGED BY PUPPET
 ## modules<%= template_source.gsub(Regexp.new("^#{Puppet::Node::Environment.current[:modulepath].gsub(':','|')}"),"") %>
 
+<% if @comment -%>
+# <%= @comment %>
+<% end -%>
+
 domain (<%= @domain %>) table <%= @table %> chain <%= @chain %><%= @int %><%= @out %><%= @protocol %> saddr (<%= @src %>)<%= @spt %> daddr (<%= @dst %>)<%= @dpt %> <%= @action %>;

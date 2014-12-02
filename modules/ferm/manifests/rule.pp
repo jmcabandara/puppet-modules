@@ -11,6 +11,7 @@ define ferm::rule(
     $daddr      = undef,
     $action     = 'ACCEPT',
     $ossec      = undef,
+    $comment    = undef,
     ) {
 
     $dir = $ossec ? {

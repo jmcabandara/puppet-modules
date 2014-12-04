@@ -64,7 +64,6 @@ define ferm::rule(
 
     file { "/etc/ferm/${dir}/${title}.ferm":
         ensure  => present,
-        #content => "domain ($domain) table $table chain $chain$int$out$protocol saddr ($src)$spt daddr ($dst)$dpt $action;\n",
         content => template('ferm/etc/ferm/rule.ferm.erb'),
         require => File['/etc/ferm/ferm.d'],
     }

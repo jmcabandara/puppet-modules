@@ -208,8 +208,15 @@
 
 <decoder name="ssh-scan2">
   <parent>sshd</parent>
-  <prematch>^Did not receive identification|^Bad protocol version</prematch>
+  <prematch>^Did not receive identification</prematch>
   <regex offset="after_prematch"> from (\S+)$</regex>
+  <order>srcip</order>
+</decoder>
+
+<decoder name="ssh-scan3">
+  <parent>sshd</parent>
+  <prematch>^Bad protocol version</prematch>
+  <regex offset="after_prematch"> from (\S+) port \d+$</regex>
   <order>srcip</order>
 </decoder>
 

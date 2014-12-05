@@ -2,6 +2,7 @@ class jenkins (
     $http_port = 8080,
     $ajp_port = '-1',
     $prefix = undef,
+    $java_args = '-Djava.awt.headless=true',
 ) {
 
     apt::source { 'jenkins':

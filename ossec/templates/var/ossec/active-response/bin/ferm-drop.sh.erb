@@ -31,7 +31,7 @@ fi
 
 # Adding the ip to ferm
 if [ "x${ACTION}" = "xadd" ]; then
-    echo "table filter chain INPUT saddr ${IP} mod comment comment \"Added by OSSEC rule ${RULE}: ${NOW}\" jump OSSEC;" >> ${FERM}
+    echo "domain (ip ip6) table filter chain INPUT saddr ${IP} mod comment comment \"Added by OSSEC rule ${RULE}: ${NOW}\" jump OSSEC;" >> ${FERM}
 
 # Deleting the ip from ferm
 elif [ "x${ACTION}" = "xdelete" ]; then

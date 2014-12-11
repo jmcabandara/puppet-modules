@@ -1,7 +1,7 @@
 class ferm (
-    $input      = 'DROP',
-    $output     = 'DROP',
-    $forward    = 'DROP',
+    $input = 'DROP',
+    $output = 'DROP',
+    $forward = 'DROP',
     ) {
 
     # Defaults
@@ -23,7 +23,8 @@ class ferm (
         require => Package['ferm'],
     }
 
-    # Ensure ferm rules are refreshed after the main stage
+    # Ensure ferm rules are refreshed after the main stage, so other manifests
+    # have an opportunity to add their own ferm rules.
     stage { ferm: require => Stage[main] }
     class { 'ferm::enforce': stage => ferm }
 
@@ -37,23 +38,10 @@ class ferm (
         content => template('ferm/etc/ferm/ferm.conf.erb'),
     }
 
-    file { '/etc/ferm/ossec.ferm': }
-
-    file { '/etc/ferm/ossec.exempt.d':
-        ensure => directory,
-        recurse => true,
-        purge   => true,
-    }
-
     file { '/etc/ferm/ferm.d':
         ensure  => directory,
         recurse => true,
         purge   => true,
-    }
-
-    file { '/etc/ferm/ferm.d/README':
-        content => "## THIS DIRECTORY IS MANAGED BY PUPPET\n## Anything added here manually will automatically be deleted\n",
-        require => File['/etc/ferm/ferm.d'],
     }
 
 }

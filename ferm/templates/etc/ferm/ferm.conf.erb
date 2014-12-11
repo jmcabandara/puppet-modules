@@ -16,13 +16,10 @@ domain (ip ip6) {
     }
 }
 
-# Local rules that are exempt from OSSEC filtering
-include 'ossec.exempt.d/';
+# Local rules
+include 'ferm.d/';
 
 domain (ip ip6) {
-    # OSSEC blocks
-    include 'ossec.ferm';
-
     table filter {
         chain (INPUT OUTPUT FORWARD) {
             # ICMP is very handy and necessary
@@ -33,18 +30,11 @@ domain (ip ip6) {
     }
 }
 
-# Local rules
-include 'ferm.d/';
-
 # Default actions
 domain (ip ip6) {
     table filter {
         chain INPUT { <%= @input %>; }
         chain OUTPUT { <%= @output %>; }
         chain FORWARD { <%= @forward %>; }
-        chain OSSEC {
-            LOG log-prefix "Blocked by OSSEC: ";
-            DROP;
-        }
     } 
 }

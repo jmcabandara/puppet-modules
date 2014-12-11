@@ -5,4 +5,31 @@
 # <%= @comment %>
 <% end -%>
 
-domain (<%= @domain %>) table <%= @table %> chain (<%= @chain %>)<%= @int %><%= @out %><%= @protocol %> saddr (<%= @src %>)<%= @spt %> daddr (<%= @dst %>)<%= @dpt %> <%= @action %>;
+domain (<%= @domain %>)
+    table <%= @table %>
+    chain (<%= @chain %>)
+  <%- if @interface -%>
+    interface (<%= @interface %>)
+  <%- end -%>
+  <%- if @outerface -%>
+    outerface (<%= @outerface %>)
+  <%- end -%>
+  <%- if @proto -%>
+    proto (<%= @proto %>)
+  <%- end -%>
+  <%- if @saddr -%>
+    saddr (<%= @saddr %>)
+  <%- end -%>
+  <%- if @sport -%>
+    sport (<%= @spt %>)
+  <%- end -%>
+  <%- if @daddr -%>
+    daddr (<%= @daddr %>)
+  <%- end -%>
+  <%- if @dport -%>
+    dport (<%= @dport %>)
+  <%- end -%>
+  <%- if @comment -%>
+    mod comment comment "<%= @comment %>"
+  <%- end -%>
+    <%= @action %>;

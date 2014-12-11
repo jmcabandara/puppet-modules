@@ -1,4 +1,5 @@
 define ferm::rule(
+    $priority   = 20,
     $domain     = 'ip ip6',
     $table      = 'filter',
     $chain      = 'INPUT',
@@ -10,59 +11,10 @@ define ferm::rule(
     $saddr      = undef,
     $daddr      = undef,
     $action     = 'ACCEPT',
-    $ossec      = undef,
     $comment    = undef,
     ) {
 
-    $dir = $ossec ? {
-        exempt  => 'ossec.exempt.d',
-        default => 'ferm.d',
-    }
-
-    $int = $interface ? {
-        undef   => '',
-        default => " interface ($interface)",
-    }
-
-    $out = $outerface ? {
-        undef   => '',
-        default => " outerface ($outerface)",
-    }
-
-    $spt = $sport ? {
-        undef   => '',
-        default => " sport ($sport)",
-    }
-
-    $dpt = $dport ? {
-        undef   => '',
-        default => " dport ($dport)",
-    }
-
-    $protocol = $proto ? {
-        any   => '',
-        default => " proto ($proto)",
-    }
-
-    $src = $saddr ? {
-        undef => $domain ? {
-            'ip'    => '0.0.0.0/0',
-            'ip6'   => '::/0',
-            default => '0.0.0.0/0 ::/0',
-        },
-        default => $saddr,
-    }
-
-    $dst = $daddr ? {
-        undef => $domain ? {
-            'ip'    => '0.0.0.0/0',
-            'ip6'   => '::/0',
-            default => '0.0.0.0/0 ::/0',
-        },
-        default => $daddr,
-    }
-
-    file { "/etc/ferm/${dir}/${title}.ferm":
+    file { "/etc/ferm/ferm.d/${priority}-${title}.ferm":
         ensure  => present,
         content => template('ferm/etc/ferm/rule.ferm.erb'),
         require => File['/etc/ferm/ferm.d'],

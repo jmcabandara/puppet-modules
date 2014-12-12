@@ -5,7 +5,7 @@ define openvpn::server (
     $dev = 'tun',
     $dh = '/etc/openvpn/easy-rsa/keys/dh2048.pem',
     $server = '10.8.0.0 255.255.255.0',
-    $ifconfig_pool_persist = 'ipp.txt',
+    $ifconfig_pool_persist = true,
     $redirect_gateway = false,
     $dhcp_option = [],
     $client_to_client = false,

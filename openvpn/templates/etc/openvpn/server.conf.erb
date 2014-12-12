@@ -102,7 +102,7 @@ server <%= @server %>
 # is restarted, reconnecting clients can be assigned
 # the same virtual IP address from the pool that was
 # previously assigned.
-ifconfig-pool-persist <%= @ifconfig_pool_persist %>
+ifconfig-pool-persist <%= @title %>.ipp
 <% end -%>
 
 # Configure server mode for ethernet bridging.

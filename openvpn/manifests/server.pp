@@ -56,9 +56,9 @@ define openvpn::server (
     }
 
     if $tls_auth {
-        exec { "openvpn::server::${title}::ta.key":
-            command => "openvpn --genkey --secret /etc/openvpn/${title}.ta.key",
-            creates => "/etc/openvpn/${title}.ta.key",
+        exec { "openvpn::server::${title}::ta":
+            command => "openvpn --genkey --secret /etc/openvpn/${title}.ta",
+            creates => "/etc/openvpn/${title}.ta",
             require => Package['openvpn'],
             notify  => Service['openvpn'],
         }

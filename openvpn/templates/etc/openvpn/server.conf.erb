@@ -242,7 +242,7 @@ keepalive 10 120
 # a copy of this key.
 # The second parameter should be '0'
 # on the server and '1' on the clients.
-<% if !@tls_auth %>;<% end %>tls-auth <%= @title %>.ta.key 0 # This file is secret
+<% if !@tls_auth %>;<% end %>tls-auth <%= @title %>.ta 0 # This file is secret
 
 # Select a cryptographic cipher.
 # This config item must be copied to

@@ -21,9 +21,11 @@ include 'ferm.d/';
 
 domain (ip ip6) {
     table filter {
-        chain (INPUT OUTPUT FORWARD) {
+        chain (INPUT OUTPUT) {
             # ICMP is very handy and necessary
             proto icmp ACCEPT;
+        }
+        chain (INPUT OUTPUT FORWARD) {
             # allow all related and established traffic (connection tracking)
             mod conntrack ctstate (RELATED ESTABLISHED) ACCEPT;
         }

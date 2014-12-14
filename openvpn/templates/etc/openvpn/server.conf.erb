@@ -341,3 +341,23 @@ management-client-user <%= @management_client_user %>
 <% if @management_client_group -%>
 management-client-group <%= @management_client_group %>
 <% end -%>
+
+<% if @up -%>
+# Run command cmd after successful TUN/TAP
+# device open (pre --user UID change).
+up "<%= @up %>"
+<% end -%>
+
+<% if @down -%>
+# Run command cmd after TUN/TAP device close
+# (post --user UID change and/or --chroot ).
+down "<%= @down %>"
+<% end -%>
+
+<% if @script_security -%>
+# This directive offers policy-level control
+# over OpenVPN's usage of external programs
+# and scripts. Lower level values are more
+# restrictive, higher values are more permissive.
+script-security <%= @secript_security %>
+<% end -%>

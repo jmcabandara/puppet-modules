@@ -26,6 +26,9 @@ define openvpn::server (
     $management = undef,
     $management_client_user = undef,
     $management_client_group = undef,
+    $up = undef,
+    $down = undef,
+    $script_security = undef,
 ) {
 
     include ::openvpn

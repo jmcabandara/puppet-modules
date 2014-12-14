@@ -3,7 +3,7 @@ class ferm (
     $output = 'DROP',
     $forward = 'DROP',
     $fast = 'yes',
-    $cache = 'no',
+    $cache = 'yes',
     $options = undef,
     $enabled = 'yes',
     ) {

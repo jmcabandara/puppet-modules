@@ -1,0 +1,16 @@
+## THIS FILE IS MANAGED BY PUPPET
+## modules<%= template_source.gsub(Regexp.new("^#{Puppet::Node::Environment.current[:modulepath].gsub(':','|')}"),"") %>
+
+# configuration for /etc/init.d/ferm
+
+# use iptables-restore for fast firewall initialization?
+FAST=<%= @fast %>
+
+# cache the output of ferm --lines in /var/cache/ferm?
+CACHE=<%= @cache %>
+
+# additional paramaters for ferm (like --def '=bar')
+OPTIONS=<%= @options %>
+
+# Enable the ferm init script? (i.e. run on bootup)
+ENABLED="<%= @enabled %>"

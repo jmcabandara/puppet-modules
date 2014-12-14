@@ -2,6 +2,10 @@ class ferm (
     $input = 'DROP',
     $output = 'DROP',
     $forward = 'DROP',
+    $fast = 'yes',
+    $cache = 'no',
+    $options = undef,
+    $enabled = 'yes',
     ) {
 
     # Defaults
@@ -44,4 +48,7 @@ class ferm (
         purge   => true,
     }
 
+    file { '/etc/default/ferm':
+        content => template('ferm/etc/default/ferm.erb'),
+    }
 }

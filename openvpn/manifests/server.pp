@@ -42,6 +42,10 @@ define openvpn::server (
         notify  => Service['openvpn'],
     }
 
+    file { "/etc/openvpn/${title}.ccd":
+        ensure  => directory,
+    }
+
     exec { "openvpn::server::${title}::build-key-server":
         command  => ". ./vars && ./pkitool --server ${title}",
         cwd      => '/etc/openvpn/easy-rsa',

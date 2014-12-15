@@ -361,3 +361,10 @@ down "<%= @down %>"
 # restrictive, higher values are more permissive.
 script-security <%= @script_security %>
 <% end -%>
+
+# Specify a directory dir for custom client
+# config files. After a connecting client has
+# been authenticated, OpenVPN will look in
+# this directory for a file having the same
+# name as the client's X509 common name.
+client-config-dir <%= @title %>.ccd

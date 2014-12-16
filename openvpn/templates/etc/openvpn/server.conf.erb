@@ -234,10 +234,11 @@ cipher <%= @cipher %>
 tls-cipher <%= @tls_cipher %>
 <% end -%>
 
+<% if @comp_lzo -%>
 # Enable compression on the VPN link.
-# If you enable it here, you must also
-# enable it in the client config file.
-<% if !@comp_lzo %>;<% end %>comp-lzo
+comp-lzo yes
+push "comp-lzo yes"
+<% end -%>
 
 # The maximum number of concurrently connected
 # clients we want to allow.

@@ -18,7 +18,6 @@ define openvpn::server (
     $group = 'nogroup',
     $verb = 3,
     $server_ipv6 = undef,
-    $route_ipv6 = [],
     $client_cert_not_required = false,
     $username_as_common_name = false,
     $topology = 'subnet',
@@ -29,6 +28,9 @@ define openvpn::server (
     $up = undef,
     $down = undef,
     $script_security = undef,
+    $push = [],
+    $route = [],
+    $route_ipv6 = [],
 ) {
 
     include ::openvpn

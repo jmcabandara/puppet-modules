@@ -58,6 +58,9 @@ ca /etc/openvpn/easy-rsa/keys/ca.crt
 cert /etc/openvpn/easy-rsa/keys/<%= @title %>.crt
 key /etc/openvpn/easy-rsa/keys/<%= @title %>.key  # This file should be kept secret
 
+# Check peer certificate against the list of revoked certificates
+crl-verify crl.pem
+
 # Diffie hellman parameters.
 # Generate your own with:
 #   openssl dhparam -out dh1024.pem 1024

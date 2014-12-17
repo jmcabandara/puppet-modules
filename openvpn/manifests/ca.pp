@@ -57,4 +57,17 @@ class openvpn::ca (
         notify   => Service['openvpn'],
     }
 
+    exec { 'openvpn::ca::crl':
+        command  => '. ./vars && KEY_CN="" KEY_OU="" KEY_NAME="" KEY_ALTNAMES="" openssl ca -gencrl -out "keys/crl.pem" -config "$KEY_CONFIG"',
+        cwd      => '/etc/openvpn/easy-rsa',
+        provider => 'shell',
+        creates  => '/etc/openvpn/easy-rsa/keys/crl.pem',
+        require  => Exec['openvpn::ca::build-ca'],
+    }
+
+    file { '/etc/openvpn/crl.pem':
+        source  => '/etc/openvpn/easy-rsa/keys/crl.pem',
+        require => Exec['openvpn::ca::crl'],
+    }
+
 }

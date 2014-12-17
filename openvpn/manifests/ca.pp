@@ -57,4 +57,13 @@ class openvpn::ca (
         notify   => Service['openvpn'],
     }
 
+    file { '/etc/openvpn/easy-rsa/keys/crl.pem':
+        ensure  => present,
+        require => Exec['openvpn::ca::build-ca'],
+    }
+
+    file { '/etc/openvpn/crl.pem':
+        source  => '/etc/openvpn/easy-rsa/keys/crl.pem',
+        require => File['/etc/openvpn/easy-rsa/keys/crl.pem'],
+    }
 }

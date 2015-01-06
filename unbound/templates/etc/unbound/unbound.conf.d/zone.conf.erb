@@ -1,0 +1,10 @@
+## THIS FILE IS MANAGED BY PUPPET
+## modules<%= template_source.gsub(Regexp.new("^#{Puppet::Node::Environment.current[:modulepath].gsub(':','|')}"),"") %>
+
+local-zone: <%= @zone %> <%= @type %>
+<% @local_data.each do |d| -%>
+    local-data: "<%= d %>"
+<% end -%>
+<% @local_data_ptr.each do |d| -%>
+    local-data_ptr: "<%= d %>"
+<% end -%>

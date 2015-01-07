@@ -1,4 +1,7 @@
-class bind {
+class bind (
+    $allow_new_zones = true,
+    $response_policy = undef,
+) {
 
     if !defined(Package['bind9']) { package { 'bind9': } }
 

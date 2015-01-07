@@ -6,6 +6,9 @@ define openvpn::client (
     $tls_auth = undef,
     $key = undef,
     $cert = undef,
+    $script_security = 1,
+    $up = undef,
+    $down = undef,
 ) {
 
     include ::openvpn

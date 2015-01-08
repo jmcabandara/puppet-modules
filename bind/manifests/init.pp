@@ -1,4 +1,5 @@
 class bind (
+    $forwarders = [],
     $allow_new_zones = true,
     $response_policy = undef,
 ) {

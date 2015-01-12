@@ -12,12 +12,14 @@ class openvpn::ca (
 
     include ::openvpn
 
-    if !defined(Package['easy-rsa']) { package { 'easy-rsa': } }
+    if !defined(Package['easy-rsa']) {
+        package { 'easy-rsa': }
+    }
 
     exec { 'openvpn::ca::make-cadir':
         command => 'make-cadir /etc/openvpn/easy-rsa',
         creates => '/etc/openvpn/easy-rsa',
-        require => Package['easy-rsa'],
+        require => Package['easy-rsa', 'openvpn'],
         notify  => Service['openvpn'],
     }
 

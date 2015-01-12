@@ -33,15 +33,20 @@ define openvpn::server (
     $route_ipv6 = [],
 ) {
 
-    include ::openvpn
+    require ::openvpn
 
-    if !defined(Package['openvpn-auth-ldap']) { package { 'openvpn-auth-ldap': } }
-    if !defined(Package['openvpn-auth-radius']) { package { 'openvpn-auth-radius': } }
+    if !defined(Package['openvpn-auth-ldap']) {
+        package { 'openvpn-auth-ldap': }
+    }
+
+    if !defined(Package['openvpn-auth-radius']) {
+        package { 'openvpn-auth-radius': }
+    }
 
     file { "/etc/openvpn/${title}.conf":
         content => template('openvpn/etc/openvpn/server.conf.erb'),
         require => Package['openvpn', 'openvpn-auth-ldap', 'openvpn-auth-radius'],
-        notify  => Service['openvpn'],
+        notify  => Service["openvpn::server::${title}"],
     }
 
     file { "/etc/openvpn/${title}.ccd":
@@ -61,7 +66,7 @@ define openvpn::server (
             File['/etc/openvpn/easy-rsa/vars'],
             Exec['openvpn::ca::build-ca'],
         ],
-        notify  => Service['openvpn'],
+        notify => Service["openvpn::server::${title}"],
     }
 
     if $tls_auth {
@@ -69,8 +74,16 @@ define openvpn::server (
             command => "openvpn --genkey --secret /etc/openvpn/${title}.ta",
             creates => "/etc/openvpn/${title}.ta",
             require => Package['openvpn'],
-            notify  => Service['openvpn'],
+            notify  => Service["openvpn::server::${title}"],
         }
     }
 
+    service { "openvpn::server::${title}":
+        provider => 'base',
+        start    => "/usr/sbin/service openvpn start ${title}",
+        stop     => "/usr/sbin/service openvpn stop ${title}",
+        restart  => "/usr/sbin/service openvpn restart ${title}",
+        status   => "/usr/sbin/service openvpn status ${title}",
+        ensure   => running,
+    }
 }

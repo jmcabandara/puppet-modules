@@ -11,12 +11,20 @@ define openvpn::client (
     $down = undef,
 ) {
 
-    include ::openvpn
+    require ::openvpn
 
     file { "/etc/openvpn/${title}.conf":
         content => template('openvpn/etc/openvpn/client.conf.erb'),
-        require => Package['openvpn'],
-        notify  => Service['openvpn'],
+        notify  => Service["openvpn::client::${title}"],
+    }
+
+    service { "openvpn::client::${title}":
+        provider => 'base',
+        start    => "/usr/sbin/service openvpn start ${title}",
+        stop     => "/usr/sbin/service openvpn stop ${title}",
+        restart  => "/usr/sbin/service openvpn restart ${title}",
+        status   => "/usr/sbin/service openvpn status ${title}",
+        ensure   => running,
     }
 
 }

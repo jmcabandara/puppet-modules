@@ -53,6 +53,10 @@ define openvpn::server (
         ensure  => directory,
     }
 
+    file { "/etc/openvpn/${title}.auth":
+        ensure => directory,
+    }
+
     exec { "openvpn::server::${title}::build-key-server":
         command  => ". ./vars && ./pkitool --server ${title}",
         cwd      => '/etc/openvpn/easy-rsa',

@@ -12,11 +12,10 @@
                 Require <%= @authz_require %>
 <% end -%>
 
-        # Make sure mod_rewrite does not override /server-status
-        <IfModule mod_rewrite.c>
-                RewriteEngine Off
-        </IfModule>
-
+                # Make sure mod_rewrite does not override /server-status
+                <IfModule mod_rewrite.c>
+                        RewriteEngine Off
+                </IfModule>
         </Location>
 
         # Keep track of extended status information for each request

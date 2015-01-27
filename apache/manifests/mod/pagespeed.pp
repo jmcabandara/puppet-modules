@@ -17,6 +17,7 @@ class apache::mod::pagespeed (
             '/usr/lib/apache2/modules/mod_pagespeed_ap24.so',
             '/etc/apache2/mods-available/pagespeed.load',
             '/etc/apache2/mods-available/pagespeed.conf',
+            '/etc/apache2/conf.d/pagespeed_libraries.conf',
         ],
         require => [
             Package['apache2'],
@@ -40,6 +41,12 @@ class apache::mod::pagespeed (
     file { '/etc/apache2/mods-available/pagespeed.conf':
         content => template('apache/etc/apache2/mods-available/pagespeed.conf.erb'),
         require => Exec['apache::mod::pagespeed::enable'],
+        notify  => Service['apache2'],
+    }
+
+    file { '/etc/apache2/conf-enabled/pagespeed_libraries.conf':
+        ensure  => '/etc/apache2/conf.d/pagespeed_libraries.conf',
+        require => Exec['apache::mod::pagespeed::install'],
         notify  => Service['apache2'],
     }
 

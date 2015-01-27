@@ -334,6 +334,11 @@
         Require <%= @authz_require %>
       <%- end -%>
         SetHandler pagespeed_admin
+
+        # Make sure mod_rewrite does not override /pagespeed_admin
+        <IfModule mod_rewrite.c>
+            RewriteEngine Off
+        </IfModule>
     </Location>
     <Location /pagespeed_global_admin>
         Require local
@@ -341,6 +346,11 @@
         Require <%= @authz_require %>
       <%- end -%>
         SetHandler pagespeed_global_admin
+
+        # Make sure mod_rewrite does not override /pagespeed_global_admin
+        <IfModule mod_rewrite.c>
+            RewriteEngine Off
+        </IfModule>
     </Location>
 
     # Enable logging of mod_pagespeed statistics, needed for the console.

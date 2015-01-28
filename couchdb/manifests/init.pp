@@ -20,12 +20,16 @@ class couchdb (
         content => template('couchdb/etc/couchdb/local.d/httpd.ini.erb'),
         require => Package['couchdb'],
         notify  => Service['couchdb'],
+        owner   => 'couchdb',
+        group   => 'couchdb',
     }
 
     file { '/etc/couchdb/local.d/cors.ini':
         content => template('couchdb/etc/couchdb/local.d/cors.ini.erb'),
         require => Package['couchdb'],
         notify  => Service['couchdb'],
+        owner   => 'couchdb',
+        group   => 'couchdb',
     }
 
 }

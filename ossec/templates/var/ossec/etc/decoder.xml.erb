@@ -1527,6 +1527,13 @@
   <order>srcip,id</order>
 </decoder> 
 
+<decoder name="apache-errorlog-id">
+  <parent>apache-errorlog</parent>
+
+  <prematch offset="after_parent">[pid \d+] </prematch>
+  <regex offset="after_prematch">^(AH\d+): </regex>
+  <order>id</order>
+</decoder>
 
 
 

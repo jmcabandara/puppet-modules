@@ -140,7 +140,7 @@
     ErrorLog ${APACHE_LOG_DIR}/<%= @servername %>_error.log
     CustomLog ${APACHE_LOG_DIR}/<%= @servername %>_access.log vhost_combined
 
-<%- if @docroot -%>
+<%- if @docroot && !@proxy -%>
     DocumentRoot <%= @docroot.gsub(/\/$/, '') %>
     <Directory <%= @docroot.gsub(/\/$/, '') %>>
         Options <%= @options %>

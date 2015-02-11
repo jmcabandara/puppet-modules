@@ -15,13 +15,16 @@ define duply::profile (
 
     file { "/etc/duply/$profile":
         ensure => directory,
+        mode   => 0700,
     }
 
     file { "/etc/duply/$profile/conf":
         content => template('duply/etc/duply/conf.erb'),
+        mode    => 0644,
     }
 
     file { "/etc/duply/$profile/exclude":
+        mode => 0644,
     }
 
 }

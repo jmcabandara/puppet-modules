@@ -16,7 +16,7 @@ define apache::vhost (
     $normalize = true,
     $rewrite = undef,
     $modpagespeed = undef,
-    $https = 'force',
+    $https = true,
     $hsts = 15552000,
     $htpasswd = false,
     $authbasicprovider = 'file',

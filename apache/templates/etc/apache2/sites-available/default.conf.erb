@@ -45,7 +45,7 @@
 <%# If HTTPS is forced, access restriction should not be done here. Instead, -%>
 <%# we should redirect immediately, so any authentication can be done over   -%>
 <%# HTTPS                                                                    -%>
-<% if (@htpasswd || @authz_require) && @https != 'force' -%>
+<% if (@htpasswd || @authz_require) && !@https -%>
     <Location />
   <%- if @htpasswd -%>
         AuthType Basic
@@ -117,7 +117,7 @@
     RewriteRule ^ %{REQUEST_SCHEME}://<%= @servername %>%{REQUEST_URI} [L,R=301]
 <% end -%>
 
-<% if @https == 'force' -%>
+<% if @https -%>
     # Force HTTPS
     RewriteCond %{HTTP:X-Forwarded-Proto} !https
     RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
@@ -184,7 +184,7 @@
 <% end -%>
 
 <%# If HTTPS is forced, access restrictions should be done here -%>
-<% if (@htpasswd || @authz_require) && @https == 'force' -%>
+<% if (@htpasswd || @authz_require) && @https -%>
     <Location />
   <%- if @htpasswd -%>
         AuthType Basic

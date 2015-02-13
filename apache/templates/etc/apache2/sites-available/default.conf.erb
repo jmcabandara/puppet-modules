@@ -42,10 +42,7 @@
   <%- end -%>
 <% end -%>
 
-<%# If HTTPS is forced, access restriction should not be done here. Instead, -%>
-<%# we should redirect immediately, so any authentication can be done over   -%>
-<%# HTTPS                                                                    -%>
-<% if (@htpasswd || @authz_require) && !@https -%>
+<% if (@htpasswd || @authz_require) -%>
     <Location />
   <%- if @htpasswd -%>
         AuthType Basic
@@ -184,7 +181,7 @@
 <% end -%>
 
 <%# If HTTPS is forced, access restrictions should be done here -%>
-<% if (@htpasswd || @authz_require) && @https -%>
+<% if (@htpasswd || @authz_require) -%>
     <Location />
   <%- if @htpasswd -%>
         AuthType Basic

@@ -42,6 +42,9 @@
   <%- end -%>
 <% end -%>
 
+<%# If HTTPS is forced, access restriction should not be done here. Instead, -%>
+<%# we should redirect immediately, so any authentication can be done over   -%>
+<%# HTTPS                                                                    -%>
 <% if (@htpasswd || @authz_require) && @https != 'force' -%>
     <Location />
   <%- if @htpasswd -%>
@@ -66,6 +69,7 @@
 
         Require valid-user
   <%- end -%>
+
   <%- if @authz_require -%>
         Require <%= @authz_require %>
   <%- end -%>
@@ -179,24 +183,31 @@
     SSLCertificateChainFile <%= @sslcertificatechainfile %>
 <% end -%>
 
-<%# If HTTPS is forced, access restrictions should be done here to allow -%>
-<%# any reverse proxy caching.                                           -%>
-<% if @https == 'force' && (@htpasswd || @authz_require) -%>
+<%# If HTTPS is forced, access restrictions should be done here -%>
+<% if (@htpasswd || @authz_require) && @https == 'force' -%>
     <Location />
   <%- if @htpasswd -%>
         AuthType Basic
         AuthName "<%= @servername %>"
-        AuthBasicProvider file ldap
+        AuthBasicProvider <%= @authbasicprovider %>
 
         AuthUserFile /etc/apache2/htpasswd/<%= @servername %>
 
-        AuthLDAPURL ldap://ldap.lullabot.com/ou=people,dc=lullabot,dc=com?uid STARTTLS
-        AuthLDAPBindDN cn=apache,ou=DSA,dc=lullabot,dc=com
-        AuthLDAPBindPassword oa1Aezeel8ahbeun8aHeeb2ciax3peeh
-        AuthLDAPBindAuthoritative off
-
+    <%- if @authldapurl -%>
+        AuthLDAPURL <%= @authldapurl %>
+    <%- end -%>
+    <%- if @authldapbinddn -%>
+        AuthLDAPBindDN <%= @authldapbinddn %>
+    <%- end -%>
+    <%- if @authldapbindpassword -%>
+        AuthLDAPBindPassword <%= @authldapbindpassword %>
+    <%- end -%>
+    <%- if @authldapbindauthoritative -%>
+        AuthLDAPBindAuthoritative <%= @authldapbindauthoritative %>
+    <%- end -%>
         Require valid-user
   <%- end -%>
+
   <%- if @authz_require -%>
         Require <%= @authz_require %>
   <%- end -%>

@@ -1,10 +1,19 @@
-class docker {
+class docker (
+    $package = 'docker.io',
+) {
 
-    if !defined(Package['docker.io']) { package { 'docker.io': } }
+    apt::source { 'docker':
+        location    => 'https://get.docker.com/ubuntu/',
+        release     => 'docker',
+        repos       => 'main',
+        key         => 'A88D21E9',
+        key_server  => 'keyserver.ubuntu.com',
+        include_src => false,
+        before      => Package['docker'],
+    }
 
-    file { '/usr/bin/docker':
-        source  => '/usr/bin/docker.io',
-        require => Package['docker.io'],
+    package { 'docker':
+        name => $package,
     }
 
 }

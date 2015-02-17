@@ -16,4 +16,10 @@ class docker (
         name => $package,
     }
 
+    service { 'docker':
+        ensure  => running,
+        enable  => true,
+        require => Package['docker'],
+    }
+
 }

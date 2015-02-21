@@ -1,4 +1,5 @@
 class apache (
+    $port = 8888,
     $http_port = 80,
     $https_port = 443,
     $admin_port = 61709,

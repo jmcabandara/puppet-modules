@@ -1,5 +1,5 @@
 class varnish (
-    $address = ':80',
+    $address = ':6081',
     $management = 'localhost:6082',
     $storage = 'malloc,256m',
     $user = 'varnish',

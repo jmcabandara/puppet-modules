@@ -1,0 +1,8 @@
+<%- if @app =~ /^https/i -%>
+    SSLProxyEngine On
+<%- end -%>
+ProxyRequests Off
+ProxyPreserveHost On
+ProxyAddHeaders <%= @proxyaddheaders %>
+ProxyPass / <%= @app.gsub(/\/$/, '') %>/ retry=0 nocanon
+ProxyPassReverse / <%= @app.gsub(/\/$/, '') %>/

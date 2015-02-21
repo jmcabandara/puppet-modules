@@ -1,37 +1,68 @@
 define apache::vhost (
-    $template = undef,
     $priority = 200,
+    $template = undef,
+
+    $http_port = 80,
+
+    $https = false,
+    $https_port = 443,
+    $hsts = 15552000,
+    $sslcertificatefile = undef,
+    $sslcertificatekeyfile = undef,
+    $sslcertificatechainfile = undef, 
+    $sslusestapling = 'On',
+
+    $backend = false,
+    $backend_port = 8888,
+
+    $app = undef,
+
     $servername = $title,
     $serveralias = undef,
+    $normalize = true,
+
+    $customlog = undef,
+    $errorlog = undef,
+
     $documentroot = undef,
-    $errordocument = undef,
+    $virtualdocumentroot = false,
     $options = 'FollowSymLinks',
     $allowoverride = 'All',
     $directoryindex = 'index.html index.cgi index.pl index.php index.xhtml index.htm',
-    $proxy = undef,
-    $proxyaddheaders = 'On',
-    $authz_require = undef,
-    $http_port = 80,
-    $https_port = 443,
-    $normalize = true,
-    $rewrite = undef,
-    $modpagespeed = undef,
-    $https = true,
-    $hsts = 15552000,
+
     $htpasswd = false,
+    $authz_require = undef,
     $authbasicprovider = 'file',
     $authldapurl = undef,
     $authldapbinddn = undef,
     $authldapbindpassword = undef,
     $authldapbindauthoritative = undef,
+
     $php_value = undef,
     $php_flag = undef,
+
+    $rewrite = undef,
+    $custom = undef,
+
     $allowencodedslashes = undef,
-    $sslcertificatefile = undef,
-    $sslcertificatekeyfile = undef,
-    $sslcertificatechainfile = undef, 
-    $sslusestapling = 'On',
+    $proxyaddheaders = 'On',
 ) {
+
+    # Required modules
+    include ::apache::mod::rewrite
+
+    if $backend or $app {
+        include ::apache::mod::proxy_http
+    }
+
+    if $https {
+        include ::apache::mod::headers
+        include ::apache::mod::ssl
+    }
+
+    if $virtualdocumentroot {
+        include ::apache::mod::vhost_alias
+    }
 
     $docroot = $documentroot ? {
         undef   => "/var/www/${servername}/docroot",
@@ -41,6 +72,28 @@ define apache::vhost (
     $site = $priority ? {
         undef   => "${servername}",
         default => "${priority}-${title}",
+    }
+
+    $_customlog = $customlog ? {
+        undef   => "\${APACHE_LOG_DIR}/${servername}_access.log vhost_combined",
+        default => $customlog
+    }
+
+    $_errorlog = $errorlog ? {
+        undef   => "\${APACHE_LOG_DIR}/${servername}_error.log",
+        default => $errorlog
+    }
+
+    $_backend = $backend ? {
+        true    => "http://localhost:${backend_port}/",
+        default => $backend,
+    }
+
+    $_https = $https ? {
+        true    => '
+            # Force HTTPS
+            RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]',
+        default => $https,
     }
 
     $template_file = $template ? {
@@ -67,6 +120,13 @@ define apache::vhost (
     }
 
     if $htpasswd {
+        if !defined(File['/etc/apache2/htpasswd']) {
+            file { '/etc/apache2/htpasswd':
+                ensure  => directory,
+                require => Package['apache2'],
+            }
+        }
+
         file { "/etc/apache2/htpasswd/${servername}":
             ensure  => present,
             require => File['/etc/apache2/htpasswd'],

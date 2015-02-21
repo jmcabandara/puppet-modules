@@ -1,6 +1,7 @@
 class rsyslog::omrelp (
     $preservefqdn = 'on',
     $port = 514,
+    $template = 'RSYSLOG_ForwardFormat',
     $host,
 ) {
 

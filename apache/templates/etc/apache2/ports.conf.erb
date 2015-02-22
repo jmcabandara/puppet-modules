@@ -6,7 +6,10 @@
 # /etc/apache2/sites-enabled/000-default.conf
 
 Listen <%= @http_port %>
-Listen <%= @port %>
+
+<%- if @backend_port -%>
+Listen <%= @backend_port %>
+<%- end -%>
 
 <IfModule ssl_module>
         Listen <%= @https_port %>

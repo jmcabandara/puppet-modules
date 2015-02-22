@@ -1,7 +1,7 @@
 class apache (
-    $port = 8888,
     $http_port = 80,
     $https_port = 443,
+    $backend_port = 8888,
     $admin_port = 61709,
     $default_vhost = false,
     $servertokens = 'OS',

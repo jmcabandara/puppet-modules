@@ -23,8 +23,4 @@ define duply::profile (
         mode    => 0644,
     }
 
-    file { "/etc/duply/$profile/exclude":
-        mode => 0644,
-    }
-
 }

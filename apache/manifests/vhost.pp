@@ -55,6 +55,10 @@ define apache::vhost (
         include ::apache::mod::proxy_http
     }
 
+    if $app {
+        include ::apache::mod::proxy_wstunnel
+    }
+
     if $https {
         include ::apache::mod::headers
         include ::apache::mod::ssl

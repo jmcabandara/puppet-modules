@@ -38,6 +38,9 @@ define apache::vhost (
     $authldapbindpassword = undef,
     $authldapbindauthoritative = undef,
 
+    $limit = undef,
+    $limitexcept = undef,
+
     $php_value = undef,
     $php_flag = undef,
 

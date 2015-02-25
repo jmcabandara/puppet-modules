@@ -1,4 +1,4 @@
-<% if (@htpasswd || @authz_require) -%>
+<% if (@htpasswd || @authz_require || @limit || @limitexcept) -%>
     <%# Access Restrictions -%>
     <Location />
 
@@ -27,6 +27,22 @@
 
         <%- if @authz_require -%>
             Require <%= @authz_require %>
+        <%- end -%>
+
+        <%- if @limit -%>
+            <%- @limit.each_pair do |key, value| -%>
+                <Limit <%= key %>>
+                    <%= value %>
+                </Limit>
+            <%- end -%>
+        <%- end -%>
+
+        <%- if @limitexcept -%>
+            <%- @limitexcept.each_pair do |key, value| -%>
+                <LimitExcept <%= key %>>
+                    <%= value %>
+                </LimitExcept>
+            <%- end -%>
         <%- end -%>
 
     </Location>

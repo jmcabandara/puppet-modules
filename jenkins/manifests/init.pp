@@ -20,6 +20,7 @@ class jenkins (
     service { 'jenkins':
         ensure  => running,
         enable  => true,
+        restart => 'curl -X POST http://localhost:8080/safeRestart',
         require => Package['jenkins'],
     }
 

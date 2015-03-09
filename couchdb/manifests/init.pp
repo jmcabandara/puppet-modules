@@ -2,6 +2,7 @@ class couchdb (
     $httpd_port = 5984,
     $httpd_bind_address = '127.0.0.1',
     $httpd_enable_cors = false,
+    $cors_credentials = undef,
     $cors_origins = undef,
     $cors_methods = undef,
     $cors_headers = undef,

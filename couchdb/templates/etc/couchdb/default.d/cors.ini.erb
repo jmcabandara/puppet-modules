@@ -13,3 +13,7 @@ methods = <%= @cors_methods %>
 <% if @cors_headers -%>
 headers = <%= @cors_headers %>
 <% end -%>
+
+<%- if @cors_credentials -%>
+credentials = <%= @cors_credentials %>
+<% end -%>

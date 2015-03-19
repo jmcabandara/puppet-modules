@@ -23,6 +23,8 @@ class apache (
     $maxsparethreads = 75,
     $threadlimit = 64,
     $threadsperchild = 25,
+
+    $ensure = 'running',
 ) {
 
     File {
@@ -38,7 +40,7 @@ class apache (
     if !defined(Package['apache2-utils']) { package { 'apache2-utils': } }
 
     service { 'apache2':
-        ensure  => running,
+        ensure  => $ensure,
         enable  => true,
         require => Package['apache2'],
     }

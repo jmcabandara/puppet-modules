@@ -386,3 +386,19 @@
 # it unless you need it is recommended (it is disabled by default).
 #
 #http.jsonp.enable: true
+
+################################# CORS  ####################################
+
+http.cors.enabled: <%= @http_cors_enabled %>
+
+<% if @http_cors_allow_origin -%>
+http.cors.allow-origin: <%= @http_cors_allow_origin %>
+<% end -%>
+
+<% if @http_cors_allow_methods -%>
+http.cors.allow-methods: <%= @http_cors_allow_methods %>
+<% end -%>
+
+<% if @http_cors_allow_headers -%>
+http.cors.allow-headers: <%= @http_cors_allow_headers %>
+<% end -%>

@@ -1,4 +1,9 @@
-class elasticsearch {
+class elasticsearch (
+    $http_cors_enabled = false,
+    $http_cors_allow_origin = undef,
+    $http_cors_allow_methods = undef,
+    $http_cors_allow_headers = undef,
+) {
 
     require ::java::jdk
 
@@ -20,7 +25,7 @@ class elasticsearch {
         require => Package['elasticsearch'],
         notify  => Service['elasticsearch'],
     }
-        
+
     file { '/etc/elasticsearch/elasticsearch.yml':
         content => template('elasticsearch/etc/elasticsearch/elasticsearch.yml.erb'),
         require => Package['elasticsearch'],

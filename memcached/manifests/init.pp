@@ -1,4 +1,5 @@
 class memcached (
+    $daemon = true,
     $memory = 64,
     $port = 11211,
     $user = 'memcache',

@@ -9,7 +9,7 @@
 # Run memcached as a daemon. This command is implied, and is not needed for the
 # daemon to run. See the README.Debian that comes with this package for more
 # information.
--d
+<% if @daemon %>-d<% end %>
 
 # Log memcached's output to /var/log/memcached
 logfile /var/log/memcached.log

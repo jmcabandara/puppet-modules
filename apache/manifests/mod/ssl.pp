@@ -2,6 +2,9 @@ class apache::mod::ssl (
     $sslprotocol = 'all',
     $sslhonorcipherorder = 'Off',
     $sslciphersuite = 'HIGH:MEDIUM:!aNULL:!MD5',
+    $sslusestapling = 'On',
+    $sslstaplingfaketrylater = 'On',
+    $sslstaplingreturnrespondererrors = 'On',
 ) {
 
     exec { 'a2enmod ssl':

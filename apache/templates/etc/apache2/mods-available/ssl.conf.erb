@@ -87,11 +87,13 @@
 	#   Default: Off
 	#SSLStrictSNIVHostCheck On
 
-        #   Enables OCSP stapling, as defined by the "Certificate Status Request"
-        #   TLS extension specified in RFC 6066
-        #   Default: Off
-        SSLUseStapling On
-	SSLStaplingCache shmcb:${APACHE_RUN_DIR}/ssl_staplingcache(128000)
+    #   Enables OCSP stapling, as defined by the "Certificate Status Request"
+    #   TLS extension specified in RFC 6066
+    #   Default: Off
+    SSLUseStapling <%= @sslusestapling %>
+    SSLStaplingCache shmcb:${APACHE_RUN_DIR}/ssl_staplingcache(128000)
+    SSLStaplingFakeTryLater <%= @sslstaplingfaketrylater %>
+    SSLStaplingReturnResponderErrors <%= @sslstaplingreturnrespondererrors %>
 
         #    Location of CA certificates
         SSLCACertificatePath /etc/ssl/certs

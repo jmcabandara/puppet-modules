@@ -392,7 +392,7 @@
 http.cors.enabled: <%= @http_cors_enabled %>
 
 <% if @http_cors_allow_origin -%>
-http.cors.allow-origin: <%= @http_cors_allow_origin %>
+http.cors.allow-origin: '<%= @http_cors_allow_origin %>'
 <% end -%>
 
 <% if @http_cors_allow_methods -%>

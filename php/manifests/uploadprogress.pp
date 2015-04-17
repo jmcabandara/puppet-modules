@@ -1,12 +1,11 @@
 class php::uploadprogress {
 
-    if !defined(Package['php-pear']) { package { 'php-pear': } }
-    if !defined(Package['php5-dev']) { package { 'php5-dev': } }
+    include ::php::dev
 
     exec { 'php::uploadprogress':
         command => 'pecl install uploadprogress',
-        require => Package['php-pear', 'php5-dev'],
         unless  => 'pecl list uploadprogress',
+        require => Class['::php::dev'],
     }
 
     file { '/etc/php5/mods-available/uploadprogress.ini':

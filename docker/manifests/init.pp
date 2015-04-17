@@ -13,6 +13,14 @@ class docker (
         before      => Package['docker'],
     }
 
+    if !defined(Package['lvm2']) {
+        package { 'lvm2': }
+    }
+
+    if !defined(Package['xfsprogs']) {
+        package { 'xfsprogs': }
+    }
+
     package { 'docker':
         name => $package,
     }

@@ -3,6 +3,7 @@ class jenkins (
     $ajp_port = '-1',
     $prefix = undef,
     $java_args = '-Djava.awt.headless=true',
+    $enable = true,
 ) {
 
     apt::source { 'jenkins':
@@ -18,8 +19,11 @@ class jenkins (
     if !defined(Package['jenkins']) { package { 'jenkins': } }
 
     service { 'jenkins':
-        ensure  => running,
-        enable  => true,
+        ensure  => $enable ? {
+            false   => 'stopped',
+            default => 'running',
+        },
+        enable  => $enable,
         restart => 'curl -X POST http://localhost:8080/safeRestart',
         require => Package['jenkins'],
     }

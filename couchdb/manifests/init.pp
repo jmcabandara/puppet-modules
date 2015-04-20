@@ -15,11 +15,9 @@ class couchdb (
     }
 
     service { 'couchdb':
-        enable => $ensure ? {
-            'running' => true,
-            default   => false,
-        },
-        ensure => $ensure,
+        enable  => true,
+        ensure  => $ensure,
+	require => Package['couchdb'],
     }
 
     file { '/etc/couchdb/default.d/httpd.ini':

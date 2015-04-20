@@ -6,6 +6,8 @@ class couchdb (
     $cors_origins = undef,
     $cors_methods = undef,
     $cors_headers = undef,
+
+    $ensure = 'running',
 ) {
 
     if !defined(Package['couchdb']) {
@@ -13,8 +15,11 @@ class couchdb (
     }
 
     service { 'couchdb':
-        enable => true,
-        ensure => running,
+        enable => $ensure ? {
+            'running' => true,
+            default   => false,
+        },
+        ensure => $ensure,
     }
 
     file { '/etc/couchdb/default.d/httpd.ini':

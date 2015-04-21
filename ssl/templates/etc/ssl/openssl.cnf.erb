@@ -1,0 +1,47 @@
+#
+# OpenSSL example configuration file.
+# This is mostly being used for generation of certificate requests.
+#
+
+[ req ]
+prompt = no
+default_bits		= 2048
+default_keyfile 	= privkey.pem
+distinguished_name	= req_distinguished_name
+x509_extensions	= v3_ca	# The extentions to add to the self signed cert
+string_mask = utf8only
+
+<%- if @subjectAltName -%>
+req_extensions = v3_req # The extensions to add to a certificate request
+<%- end -%>
+
+[ req_distinguished_name ]
+countryName             = <%= @countryName %>
+stateOrProvinceName     = <%= @stateOrProvinceName %>
+localityName            = <%= @localityName %>
+organizationName        = <%= @organizationName %>
+organizationalUnitName  = <%= @organizationalUnitName %>
+commonName              = <%= @commonName %>
+emailAddress            = <%= @emailAddress %>
+
+
+[ v3_req ]
+
+# Extensions to add to a certificate request
+
+basicConstraints = CA:FALSE
+keyUsage = nonRepudiation, digitalSignature, keyEncipherment
+<%- if @subjectAltName -%>
+subjectAltName = @alt_names
+
+[alt_names]
+<%- @subjectAltName.each do |n| -%>
+<%= n %>
+<%- end -%>
+<%- end -%>
+
+
+[ v3_ca ]
+subjectKeyIdentifier=hash
+authorityKeyIdentifier=keyid:always,issuer
+basicConstraints = CA:true

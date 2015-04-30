@@ -55,7 +55,7 @@ class subway (
         cwd         => "${path}/subway",
         user        => 'subway',
         environment => "HOME=${path}/subway",
-        require     => Package['npm'],
+        require     => Package['nodejs'],
         notify      => Service['subway'],
         refreshonly => true,
     }

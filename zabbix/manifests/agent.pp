@@ -50,6 +50,12 @@ class zabbix::agent (
         notify  => Service['zabbix-agent'],
     }
 
+    file { '/etc/zabbix/zabbix_agentd.conf.d/docker.conf':
+        content => template('zabbix//etc/zabbix/zabbix_agentd.conf.d/docker.conf.erb'),
+        require => File['/etc/zabbix/zabbix_agentd.conf.d'],
+        notify  => Service['zabbix-agent'],
+    }
+
     file { '/etc/zabbix/zabbix_agentd.conf.d/dig.conf':
         content => template('zabbix//etc/zabbix/zabbix_agentd.conf.d/dig.conf.erb'),
         require => File['/etc/zabbix/zabbix_agentd.conf.d'],

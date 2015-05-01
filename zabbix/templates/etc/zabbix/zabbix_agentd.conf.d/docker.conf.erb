@@ -11,11 +11,11 @@ UserParameter=docker.memory_limit,sudo docker info | if grep -q "WARNING: No mem
 UserParameter=docker.swap_limit,sudo docker info | if grep -q "WARNING: No swap limit support"; then echo 0; else echo 1; fi
 
 # Data info
-UserParameter=docker.data_used,sudo docker info | awk -F : '/Data Space Used:/{print $NF}' | sed s/GB/*1024*1024*1024/ | sed s/MB/*1024*1024/ | sed s/KB/*1024/ | bc
-UserParameter=docker.data_total,sudo docker info | awk -F : '/Data Space Total:/{print $NF}' | sed s/GB/*1024*1024*1024/ | sed s/MB/*1024*1024/ | sed s/KB/*1024/ | bc
-UserParameter=docker.data_available,sudo docker info | awk -F : '/Data Space Available:/{print $NF}' | sed s/GB/*1024*1024*1024/ | sed s/MB/*1024*1024/ | sed s/KB/*1024/ | bc
+UserParameter=docker.data_used,sudo docker info | awk -F : '/Data Space Used:/{print $NF}' | sed s/GB/*1024*1024*1024/ | sed s/MB/*1024*1024/ | sed s/KB/*1024/ | bc | cut -d . -f 1
+UserParameter=docker.data_total,sudo docker info | awk -F : '/Data Space Total:/{print $NF}' | sed s/GB/*1024*1024*1024/ | sed s/MB/*1024*1024/ | sed s/KB/*1024/ | bc | cut -d . -f 1
+UserParameter=docker.data_available,sudo docker info | awk -F : '/Data Space Available:/{print $NF}' | sed s/GB/*1024*1024*1024/ | sed s/MB/*1024*1024/ | sed s/KB/*1024/ | bc | cut -d . -f 1
 
 # Metadata info
-UserParameter=docker.metadata_used,sudo docker info | awk -F : '/Metadata Space Used:/{print $NF}' | sed s/GB/*1024*1024*1024/ | sed s/MB/*1024*1024/ | sed s/KB/*1024/ | bc
-UserParameter=docker.metadata_total,sudo docker info | awk -F : '/Metadata Space Total:/{print $NF}' | sed s/GB/*1024*1024*1024/ | sed s/MB/*1024*1024/ | sed s/KB/*1024/ | bc
-UserParameter=docker.metadata_available,sudo docker info | awk -F : '/Metadata Space Available:/{print $NF}' | sed s/GB/*1024*1024*1024/ | sed s/MB/*1024*1024/ | sed s/KB/*1024/ | bc
+UserParameter=docker.metadata_used,sudo docker info | awk -F : '/Metadata Space Used:/{print $NF}' | sed s/GB/*1024*1024*1024/ | sed s/MB/*1024*1024/ | sed s/KB/*1024/ | bc | cut -d . -f 1
+UserParameter=docker.metadata_total,sudo docker info | awk -F : '/Metadata Space Total:/{print $NF}' | sed s/GB/*1024*1024*1024/ | sed s/MB/*1024*1024/ | sed s/KB/*1024/ | bc | cut -d . -f 1
+UserParameter=docker.metadata_available,sudo docker info | awk -F : '/Metadata Space Available:/{print $NF}' | sed s/GB/*1024*1024*1024/ | sed s/MB/*1024*1024/ | sed s/KB/*1024/ | bc | cut -d . -f 1

@@ -1,0 +1,21 @@
+## THIS FILE IS MANAGED BY PUPPET
+## modules<%= template_source.gsub(Regexp.new("^#{Puppet::Node::Environment.current[:modulepath].gsub(':','|')}"),"") %>
+
+# Docker container and image counts
+UserParameter=docker.containers,sudo docker info | awk '/^Containers:/{print $NF}'
+UserParameter=docker.images,sudo docker info | awk '/^Images:/{print $NF}'
+
+# Docker features
+UserParameter=docker.udev_sync,sudo docker info | grep Udev\ Sync\ Supported | awk '{print $NF}' | sed s/true/1/ | sed s/false/0/
+UserParameter=docker.memory_limit,sudo docker info | if grep -q "WARNING: No memory limit support"; then echo 0; else echo 1; fi
+UserParameter=docker.swap_limit,sudo docker info | if grep -q "WARNING: No swap limit support"; then echo 0; else echo 1; fi
+
+# Data info
+UserParameter=docker.data_used,sudo docker info | awk -F : '/Data Space Used:/{print $NF}' | sed s/GB/*1024*1024*1024/ | sed s/MB/*1024*1024/ | sed s/KB/*1024/ | bc
+UserParameter=docker.data_total,sudo docker info | awk -F : '/Data Space Total:/{print $NF}' | sed s/GB/*1024*1024*1024/ | sed s/MB/*1024*1024/ | sed s/KB/*1024/ | bc
+UserParameter=docker.data_available,sudo docker info | awk -F : '/Data Space Available:/{print $NF}' | sed s/GB/*1024*1024*1024/ | sed s/MB/*1024*1024/ | sed s/KB/*1024/ | bc
+
+# Metadata info
+UserParameter=docker.metadata_used,sudo docker info | awk -F : '/Metadata Space Used:/{print $NF}' | sed s/GB/*1024*1024*1024/ | sed s/MB/*1024*1024/ | sed s/KB/*1024/ | bc
+UserParameter=docker.metadata_total,sudo docker info | awk -F : '/Metadata Space Total:/{print $NF}' | sed s/GB/*1024*1024*1024/ | sed s/MB/*1024*1024/ | sed s/KB/*1024/ | bc
+UserParameter=docker.metadata_available,sudo docker info | awk -F : '/Metadata Space Available:/{print $NF}' | sed s/GB/*1024*1024*1024/ | sed s/MB/*1024*1024/ | sed s/KB/*1024/ | bc

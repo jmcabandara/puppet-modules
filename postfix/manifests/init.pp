@@ -2,6 +2,7 @@ class postfix (
     $mailname = $::fqdn,
     $myhostname = $::fqdn,
     $mydestination = "$::fqdn, localhost",
+    $mynetworks = '127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128',
     $canonical_maps = undef,
 ) {
 

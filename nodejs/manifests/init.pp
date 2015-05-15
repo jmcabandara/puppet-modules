@@ -10,6 +10,10 @@ class nodejs (
         before     => Package['nodejs'],
     }
 
-    if !defined(Package['nodejs']) { package { 'nodejs': } }
+    if !defined(Package['nodejs']) {
+        package { 'nodejs':
+            ensure => "$version*",
+        }
+    }
 
 }

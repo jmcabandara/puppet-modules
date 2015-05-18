@@ -6,6 +6,10 @@ class avahi (
         package { 'avahi-daemon': }
     }
 
+    if !defined(Package['avahi-utils']) {
+        package { 'avahi-utils': }
+    }
+
     file { '/etc/avahi/avahi-daemon.conf':
         content => template('avahi/etc/avahi/avahi-daemon.conf.erb'),
         require => Package['avahi-daemon'],

@@ -210,7 +210,7 @@ push "dhcp-option <%= d %>"
 # Ping every 10 seconds, assume that remote
 # peer is down if no ping received during
 # a 120 second time period.
-keepalive 10 120
+keepalive <%= @keepalive %>
 
 # For extra security beyond that provided
 # by SSL/TLS, create an "HMAC firewall"

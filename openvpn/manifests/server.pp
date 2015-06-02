@@ -10,6 +10,7 @@ define openvpn::server (
     $dhcp_option = [],
     $client_to_client = false,
     $duplicate_cn = false,
+    $keepalive = '10 120',
     $tls_auth = true,
     $tls_cipher = undef,
     $cipher = 'BF-CBC',

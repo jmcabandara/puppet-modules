@@ -3,6 +3,7 @@ class apache::mod::php5 (
     $post_max_size = '8M',
     $max_execution_time = 30,
     $max_input_time = 60,
+    $memory_limit = '128M',
     $timezone = undef,
 ) {
 

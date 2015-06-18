@@ -73,10 +73,16 @@ class docker (
             require => Package['build-essential', 'golang', 'golang-gosqlite-dev', 'libdevmapper-dev', 'lxc-docker'],
         }
 
+        exec { 'docker::fetch':
+            command => 'git fetch --all',
+            cwd     => '/usr/local/src/docker',
+            require => Exec['docker::download'],
+        }
+
         exec { 'docker::version':
             command  => 'git checkout v$(dpkg -s lxc-docker | grep Version | awk \'{print $2}\')',
             cwd      => '/usr/local/src/docker',
-            require  => Exec['docker::download'],
+            require  => Exec['docker::fetch'],
             unless  => 'git status | grep "HEAD detached at v$(dpkg -s lxc-docker | grep Version | awk \'{print $2}\')"',
         }
 

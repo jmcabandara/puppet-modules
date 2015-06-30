@@ -1,0 +1,3 @@
+class jq {
+    package { 'jq': }
+}

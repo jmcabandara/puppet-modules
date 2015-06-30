@@ -5,7 +5,11 @@ class zabbix::agent (
     $timeout = 3,
 ) {
 
-    if !defined(Package['zabbix-agent']) { package { 'zabbix-agent': } }
+    include ::jq
+
+    if !defined(Package['zabbix-agent']) {
+        package { 'zabbix-agent': }
+    }
 
     service { 'zabbix-agent':
         ensure  => running,

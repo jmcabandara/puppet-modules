@@ -25,82 +25,12 @@ class zabbix::agent (
     }
 
     # UserParameter Files
-
     file { '/etc/zabbix/zabbix_agentd.conf.d':
         ensure  => directory,
+        source  => 'puppet:///modules/zabbix/etc/zabbix/zabbix_agentd.conf.d',
         recurse => true,
         purge   => true,
         require => Package['zabbix-agent'],
-    }
-
-    file { '/etc/zabbix/zabbix_agentd.conf.d/README':
-        content => "## THIS DIRECTORY IS MANAGED BY PUPPET\n## Anything added here manually will automatically be deleted\n",
-        require => File['/etc/zabbix/zabbix_agentd.conf.d'],
-    }
-
-    file { '/etc/zabbix/zabbix_agentd.conf.d/apache.conf':
-        content => template('zabbix//etc/zabbix/zabbix_agentd.conf.d/apache.conf.erb'),
-        require => File['/etc/zabbix/zabbix_agentd.conf.d'],
-        notify  => Service['zabbix-agent'],
-    }
-
-    file { '/etc/zabbix/zabbix_agentd.conf.d/asterisk.conf':
-        content => template('zabbix//etc/zabbix/zabbix_agentd.conf.d/asterisk.conf.erb'),
-        require => File['/etc/zabbix/zabbix_agentd.conf.d'],
-        notify  => Service['zabbix-agent'],
-    }
-
-    file { '/etc/zabbix/zabbix_agentd.conf.d/docker.conf':
-        content => template('zabbix//etc/zabbix/zabbix_agentd.conf.d/docker.conf.erb'),
-        require => File['/etc/zabbix/zabbix_agentd.conf.d'],
-        notify  => Service['zabbix-agent'],
-    }
-
-    file { '/etc/zabbix/zabbix_agentd.conf.d/dig.conf':
-        content => template('zabbix//etc/zabbix/zabbix_agentd.conf.d/dig.conf.erb'),
-        require => File['/etc/zabbix/zabbix_agentd.conf.d'],
-        notify  => Service['zabbix-agent'],
-    }
-
-    file { '/etc/zabbix/zabbix_agentd.conf.d/memcached.conf':
-        content => template('zabbix//etc/zabbix/zabbix_agentd.conf.d/memcached.conf.erb'),
-        require => File['/etc/zabbix/zabbix_agentd.conf.d'],
-        notify  => Service['zabbix-agent'],
-    }
-
-    file { '/etc/zabbix/zabbix_agentd.conf.d/mysql.conf':
-        content => template('zabbix//etc/zabbix/zabbix_agentd.conf.d/mysql.conf.erb'),
-        require => File['/etc/zabbix/zabbix_agentd.conf.d'],
-        notify  => Service['zabbix-agent'],
-    }
-
-    file { '/etc/zabbix/zabbix_agentd.conf.d/opcache.conf':
-        content => template('zabbix//etc/zabbix/zabbix_agentd.conf.d/opcache.conf.erb'),
-        require => File['/etc/zabbix/zabbix_agentd.conf.d'],
-        notify  => Service['zabbix-agent'],
-    }
-
-    file { '/etc/zabbix/zabbix_agentd.conf.d/openvpn.conf':
-        content => template('zabbix//etc/zabbix/zabbix_agentd.conf.d/openvpn.conf.erb'),
-        require => File['/etc/zabbix/zabbix_agentd.conf.d'],
-        notify  => Service['zabbix-agent'],
-    }
-
-    file { '/etc/zabbix/zabbix_agentd.conf.d/postfix.conf':
-        content => template('zabbix//etc/zabbix/zabbix_agentd.conf.d/postfix.conf.erb'),
-        require => File['/etc/zabbix/zabbix_agentd.conf.d'],
-        notify  => Service['zabbix-agent'],
-    }
-
-    file { '/etc/zabbix/zabbix_agentd.conf.d/puppet.conf':
-        content => template('zabbix//etc/zabbix/zabbix_agentd.conf.d/puppet.conf.erb'),
-        require => File['/etc/zabbix/zabbix_agentd.conf.d'],
-        notify  => Service['zabbix-agent'],
-    }
-
-    file { '/etc/zabbix/zabbix_agentd.conf.d/varnish.conf':
-        content => template('zabbix//etc/zabbix/zabbix_agentd.conf.d/varnish.conf.erb'),
-        require => File['/etc/zabbix/zabbix_agentd.conf.d'],
         notify  => Service['zabbix-agent'],
     }
 

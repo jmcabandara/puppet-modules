@@ -1,6 +1,6 @@
 class docker (
-    $package = 'docker.io',
     $docker_opts = undef,
+    $version = '1.6.2',
 ) {
 
     apt::source { 'docker':
@@ -22,7 +22,7 @@ class docker (
     }
 
     package { 'docker':
-        name => $package,
+        name => 'lxc-docker',
     }
 
     file { '/etc/default/docker':
@@ -80,10 +80,10 @@ class docker (
         }
 
         exec { 'docker::version':
-            command  => 'git checkout v$(dpkg -s lxc-docker | grep Version | awk \'{print $2}\')',
+            command  => "git checkout v${version}",
             cwd      => '/usr/local/src/docker',
             require  => Exec['docker::fetch'],
-            unless  => 'git status | grep "HEAD detached at v$(dpkg -s lxc-docker | grep Version | awk \'{print $2}\')"',
+            unless  => "git status | grep \"HEAD detached at v${version}\"",
         }
 
         exec { 'docker::compile':
@@ -91,26 +91,26 @@ class docker (
             cwd         => '/usr/local/src/docker',
             environment => ['AUTO_GOPATH=1'],
             require     => Exec['docker::version'],
-            unless      => 'test -d /usr/local/src/docker/bundles/$(dpkg -s lxc-docker | grep Version | awk \'{print $2}\')',
+            unless      => "test -d /usr/local/src/docker/bundles/${version}",
         }
 
         exec { 'docker::install::docker':
-            command     => 'install -m 755 -o root -g root /usr/local/src/docker/bundles/$(dpkg -s lxc-docker | grep Version | awk \'{print $2}\')/dynbinary/docker-$(dpkg -s lxc-docker | grep Version | awk \'{print $2}\') /usr/bin/docker',
-            subscribe   => Exec['docker::compile'],
+            command     => "install -m 755 -o root -g root /usr/local/src/docker/bundles/${version}/dynbinary/docker-${version} /usr/bin/docker",
+            require     => Exec['docker::compile'],
             notify      => Service['docker'],
-            refreshonly => true,
+            unless      => "/usr/bin/docker --version | grep \"Docker version ${version},\"",
         }
 
         exec { 'docker::install::dockerinit-version':
-            command     => 'install -m 755 -o root -g root /usr/local/src/docker/bundles/$(dpkg -s lxc-docker | grep Version | awk \'{print $2}\')/dynbinary/dockerinit-$(dpkg -s lxc-docker | grep Version | awk \'{print $2}\') /var/lib/docker/init/dockerinit-$(dpkg -s lxc-docker | grep Version | awk \'{print $2}\')',
-            subscribe   => Exec['docker::compile'],
+            command     => "install -m 755 -o root -g root /usr/local/src/docker/bundles/${version}/dynbinary/dockerinit-${version} /var/lib/docker/init/dockerinit-${version}",
+            subscribe   => Exec['docker::install::docker'],
             notify      => Service['docker'],
             refreshonly => true,
         }
 
         exec { 'docker::install::dockerinit':
-            command     => 'install -m 755 -o root -g root /usr/local/src/docker/bundles/$(dpkg -s lxc-docker | grep Version | awk \'{print $2}\')/dynbinary/dockerinit-$(dpkg -s lxc-docker | grep Version | awk \'{print $2}\') /usr/bin/dockerinit',
-            subscribe   => Exec['docker::compile'],
+            command     => "install -m 755 -o root -g root /usr/local/src/docker/bundles/${version}/dynbinary/dockerinit-${version} /usr/bin/dockerinit",
+            subscribe   => Exec['docker::install::docker'],
             notify      => Service['docker'],
             refreshonly => true,
         }

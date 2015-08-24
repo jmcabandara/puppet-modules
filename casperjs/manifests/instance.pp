@@ -3,8 +3,8 @@ define casperjs::instance (
     $installdir = '/usr/local/share',
 ) {
 
-    if !defined(Package['phantomjs']) { package { 'phantomjs': } }
-    if !defined(Package['wget']) { package { 'wget': } }
+    require phantomjs
+    require wget
 
     if !defined(Exec["casperjs::install::${version}"]) {
         exec { "casperjs::install::${version}":

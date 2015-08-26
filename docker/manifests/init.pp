@@ -72,10 +72,16 @@ class docker (
         require => Package['build-essential', 'golang', 'golang-gosqlite-dev', 'libdevmapper-dev', 'lxc-docker'],
     }
 
+    exec { 'docker::prune':
+        command => 'git remote prune origin',
+        cwd     => '/usr/local/src/docker',
+        require => Exec['docker::download'],
+    }
+
     exec { 'docker::fetch':
         command => 'git fetch --all',
         cwd     => '/usr/local/src/docker',
-        require => Exec['docker::download'],
+        require => Exec['docker::prune'],
     }
 
     exec { 'docker::version':

@@ -1,5 +1,6 @@
 class nodejs (
     $version = '0.10',
+    $package = 'latest',
 ) {
 
     apt::source { 'nodesource':
@@ -12,7 +13,7 @@ class nodejs (
 
     if !defined(Package['nodejs']) {
         package { 'nodejs':
-            ensure => "$version*",
+            ensure => $package,
         }
     }
 

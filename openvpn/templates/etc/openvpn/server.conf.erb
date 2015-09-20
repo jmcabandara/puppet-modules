@@ -168,7 +168,11 @@ ifconfig-pool-persist <%= @title %>.ipp
 # (The OpenVPN server machine may need to NAT
 # or bridge the TUN/TAP interface to the internet
 # in order for this to work properly).
-<% if !@redirect_gateway %>;<% end %>push "redirect-gateway def1 bypass-dhcp"
+;push "redirect-gateway def1 bypass-dhcp"
+<%- if @redirect_gateway -%>
+push "redirect-gateway def1 bypass-dhcp"
+push "redirect-gateway ipv6"
+<%- end -%>
 
 # Certain Windows-specific network settings
 # can be pushed to clients, such as DNS

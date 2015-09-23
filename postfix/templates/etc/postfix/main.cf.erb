@@ -41,5 +41,10 @@ mynetworks = <%= @mynetworks %>
 mailbox_size_limit = 0
 recipient_delimiter = +
 inet_interfaces = all
-<% if @canonical_maps %>canonical_maps=<%= @canonical_maps %><% end -%>
 
+<% if @canonical_maps -%>
+canonical_maps=<%= @canonical_maps %>
+<% end -%>
+<% if @mailbox_command -%>
+mailbox_command=<%= @mailbox_command %>
+<% end -%>

@@ -1,0 +1,26 @@
+# Authentication for passwd-file users. Included from 10-auth.conf.
+#
+# passwd-like file with specified location.
+# <doc/wiki/AuthDatabase.PasswdFile.txt>
+
+passdb {
+  driver = passwd-file
+  args = <%= @passwdfile_passdb_args %>
+}
+
+userdb {
+  driver = passwd-file
+  args = <%= @passwdfile_userdb_args %>
+
+  # Default fields that can be overridden by passwd-file
+  #default_fields = quota_rule=*:storage=1G
+  <%- if @passwdfile_userdb_default_fields -%>
+      default_fields = <%= @passwdfile_userdb_default_fields %>
+  <%- end -%>
+
+  # Override fields from passwd-file
+  #override_fields = home=/home/virtual/%u
+  <%- if @passwdfile_userdb_override_fields -%>
+      override_fields = <%= @passwdfile_userdb_override_fields %>
+  <%- end -%>
+}

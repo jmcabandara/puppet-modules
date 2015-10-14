@@ -1,6 +1,8 @@
 class nodejs (
     $version = '0.10',
-    $package = 'latest',
+    $ensure = 'present',
+    $provider = $title,
+    $source = undef,
 ) {
 
     apt::source { 'nodesource':
@@ -11,9 +13,16 @@ class nodejs (
         before     => Package['nodejs'],
     }
 
+    if !defined(Package['rlwrap']) {
+        package { 'rlwrap': }
+    }
+
     if !defined(Package['nodejs']) {
         package { 'nodejs':
-            ensure => $package,
+            ensure   => $ensure,
+            provider => $provider,
+            source   => $source,
+            require  => Package['rlwrap'],
         }
     }
 

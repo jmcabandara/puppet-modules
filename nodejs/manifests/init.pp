@@ -1,7 +1,7 @@
 class nodejs (
     $version = '0.10',
     $ensure = 'present',
-    $provider = $title,
+    $provider = undef,
     $source = undef,
 ) {
 

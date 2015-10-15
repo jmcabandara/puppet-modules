@@ -14,6 +14,9 @@ class mysql::server (
     $innodb_log_file_size           = '256M',
     $innodb_file_per_table          = true,
     $innodb_buffer_pool_size        = undef,
+    $log_slow_queries               = undef,
+    $long_query_time                = undef,
+    $log_queries_not_using_indexes  = false,
     $root_password                  = mypwgen(32),
 ) {
 

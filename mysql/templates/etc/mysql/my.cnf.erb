@@ -82,9 +82,19 @@ query_cache_size        = <%= @query_cache_size %>
 log_error = /var/log/mysql/error.log
 #
 # Here you can see queries with especially long duration
-#log_slow_queries	= /var/log/mysql/mysql-slow.log
-#long_query_time = 2
-#log-queries-not-using-indexes
+
+<%- if @log_slow_queries -%>
+log_slow_queries	= <%= @log_slow_queries %>
+<%- end -%>
+
+<%- if @long_query_time -%>
+long_query_time	= <%= @long_query_time %>
+<%- end -%>
+
+<%- if @log_queries_not_using_indexes -%>
+log-queries-not-using-indexes
+<%- end -%>
+
 #
 # The following can be used as easy to replay backup logs or for replication.
 # note: if you are setting up a replication slave, see README.Debian about

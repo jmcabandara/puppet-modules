@@ -42,9 +42,12 @@ mailbox_size_limit = 0
 recipient_delimiter = +
 inet_interfaces = all
 
-<% if @canonical_maps -%>
+<%- if @canonical_maps -%>
 canonical_maps=<%= @canonical_maps %>
-<% end -%>
-<% if @mailbox_command -%>
+<%- end -%>
+<%- if @smtpd_client_restrictions -%>
+smtpd_client_restrictions=<%= @smtpd_client_restrictions %>
+<%- end -%>
+<%- if @mailbox_command -%>
 mailbox_command=<%= @mailbox_command %>
-<% end -%>
+<%- end -%>

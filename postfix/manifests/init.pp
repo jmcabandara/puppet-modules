@@ -1,4 +1,5 @@
 class postfix (
+    $smtpd_arguments = undef,
     $mailname = $::fqdn,
     $myhostname = $::fqdn,
     $mydestination = "$::fqdn, localhost",
@@ -6,6 +7,10 @@ class postfix (
     $canonical_maps = undef,
     $mailbox_command = undef,
     $smtpd_client_restrictions = undef,
+    $milter_default_action = undef,
+    $milter_protocol = undef,
+    $smtpd_milters = undef,
+    $non_smtpd_milters = undef,
 ) {
 
     File {
@@ -17,7 +22,9 @@ class postfix (
         mode    => '0644',
     }
 
-    if !defined(Package['postfix']) { package { 'postfix': } }
+    if !defined(Package['postfix']) {
+        package { 'postfix': }
+    }
 
     service { 'postfix':
         ensure  => running,
@@ -27,6 +34,10 @@ class postfix (
 
     file { '/etc/postfix/main.cf':
         content => template('postfix/etc/postfix/main.cf.erb'),
+    }
+
+    file { '/etc/postfix/master.cf':
+        content => template('postfix/etc/postfix/master.cf.erb'),
     }
 
     file { '/etc/mailname':

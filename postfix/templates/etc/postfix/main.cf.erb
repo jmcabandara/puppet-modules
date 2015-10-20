@@ -1,5 +1,4 @@
 ## THIS FILE IS MANAGED BY PUPPET
-## modules<%= template_source.gsub(Regexp.new("^#{Puppet::Node::Environment.current[:modulepath].gsub(':','|')}"),"") %>
 
 # See /usr/share/postfix/main.cf.dist for a commented, more complete version
 
@@ -50,4 +49,17 @@ smtpd_client_restrictions=<%= @smtpd_client_restrictions %>
 <%- end -%>
 <%- if @mailbox_command -%>
 mailbox_command=<%= @mailbox_command %>
+<%- end -%>
+
+<%- if @milter_default_action -%>
+milter_default_action = <%= @milter_default_action %>
+<%- end -%>
+<%- if @milter_protocol -%>
+milter_protocol = <%= @milter_protocol %>
+<%- end -%>
+<%- if @smtpd_milters -%>
+smtpd_milters = <%= @smtpd_milters %>
+<%- end -%>
+<%- if @non_smtpd_milters -%>
+non_smtpd_milters = <%= @non_smtpd_milters %>
 <%- end -%>

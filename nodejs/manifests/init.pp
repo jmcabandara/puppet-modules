@@ -13,6 +13,10 @@ class nodejs (
         before     => Package['nodejs'],
     }
 
+    if !defined(Package['build-essential']) {
+        package { 'build-essential': }
+    }
+
     if !defined(Package['rlwrap']) {
         package { 'rlwrap': }
     }
@@ -22,7 +26,7 @@ class nodejs (
             ensure   => $ensure,
             provider => $provider,
             source   => $source,
-            require  => Package['rlwrap'],
+            require  => Package['build-essential', 'rlwrap'],
         }
     }
 

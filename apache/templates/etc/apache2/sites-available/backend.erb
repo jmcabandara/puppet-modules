@@ -9,10 +9,8 @@ ProxyAddHeaders <%= @proxyaddheaders %>
 <%- if @app -%>
     <%# Proxy websockets directly to the app -%>
     RewriteEngine On
-    RewriteCond %{REQUEST_URI} ^/socket.io [NC]
-    RewriteCond %{QUERY_STRING} transport=websocket [NC]
+    RewriteCond %{HTTP:Upgrade} websocket [NC]
     RewriteRule /(.*) <%= @app.gsub(/^https?/,'ws').gsub(/\/$/,'') %>/$1 [P,L]
-    ProxyPass /socket.io/1/websocket/ <%= @app.gsub(/^https?/,'ws').gsub(/\/$/,'') %>/socket.io/1/websocket/ retry=0
 <%- end -%>
 
 <%# Proxy to Backend -%>

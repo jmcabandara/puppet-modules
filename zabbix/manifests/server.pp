@@ -10,6 +10,7 @@ class zabbix::server (
     $timeout = 3,
     $fpinglocation = '/usr/bin/fping',
     $fping6location = undef,
+    $cachesize = '8M',
 ) {
 
     if !defined(Package['zabbix-frontend-php']) { package { 'zabbix-frontend-php': } }

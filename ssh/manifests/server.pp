@@ -4,6 +4,8 @@ class ssh::server (
     $rsaauthentication = 'yes',
     $pubkeyauthentication = 'yes',
     $authorizedkeysfile = '%h/.ssh/authorized_keys',
+    $authorizedkeyscommand = undef,
+    $authorizedkeyscommanduser = undef,
     $passwordauthentication = 'yes',
     $usedns = 'no',
     $gatewayports = 'no',

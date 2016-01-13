@@ -1,6 +1,7 @@
 class mongodb (
     $bind_ip = '127.0.0.1',
     $syslog = false,
+    $smallfiles = false,
 ) {
 
     include apt
@@ -30,6 +31,6 @@ class mongodb (
     service { 'mongod':
         ensure  => running,
         enable  => true,
-        require => Package['mongodb'],
+        require => [File['/etc/mongod.conf'], Package['mongodb']],
     }
 }

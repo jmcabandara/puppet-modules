@@ -76,3 +76,7 @@ bind_ip = <%= @bind_ip %>
 # path to a key file storing authentication info for connections
 # between replica set members
 #keyFile=/path/to/keyfile
+
+<%- if @smallfiles -%>
+smallfiles = true
+<%- end -%>

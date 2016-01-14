@@ -1,5 +1,8 @@
 [program:<%= @program %>]
 command = <%= @command %>
+redirect_stderr = <%= @redirect_stderr %>
+stdout_logfile = <%= @stdout_logfile %>
+
 <%- if @user -%>
-    user = <%= @user %>
+user = <%= @user %>
 <%- end -%>

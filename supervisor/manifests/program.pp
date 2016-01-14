@@ -1,6 +1,8 @@
 define supervisor::program (
     $program = $title,
     $user = undef,
+    $redirect_stderr = false,
+    $stdout_logfile = 'AUTO',
     $command
 ) {
 

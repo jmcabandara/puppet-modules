@@ -2,12 +2,12 @@ define ssl::certificate (
     $commonName = $title,
     $subjectAltName = undef,
 
-    $countryName,
-    $stateOrProvinceName,
-    $localityName,
-    $organizationName,
-    $organizationalUnitName,
-    $emailAddress,
+    $countryName = undef,
+    $stateOrProvinceName = undef,
+    $localityName = undef,
+    $organizationName = undef,
+    $organizationalUnitName = undef,
+    $emailAddress = undef,
 ) {
 
     require ::ssl

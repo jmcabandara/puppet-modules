@@ -16,14 +16,26 @@ req_extensions = v3_req # The extensions to add to a certificate request
 <%- end -%>
 
 [ req_distinguished_name ]
+<%- if @countryName -%>
 countryName             = <%= @countryName %>
+<%- end -%>
+<%- if @stateOrProvidenceName -%>
 stateOrProvinceName     = <%= @stateOrProvinceName %>
+<%- end -%>
+<%- if @localityName -%>
 localityName            = <%= @localityName %>
+<%- end -%>
+<%- if @organizationName -%>
 organizationName        = <%= @organizationName %>
+<%- end -%>
+<%- if @organizationalUnitName -%>
 organizationalUnitName  = <%= @organizationalUnitName %>
-commonName              = <%= @commonName %>
+<%- end -%>
+<%- if @emailAddress -%>
 emailAddress            = <%= @emailAddress %>
+<%- end -%>
 
+commonName              = <%= @commonName %>
 
 [ v3_req ]
 

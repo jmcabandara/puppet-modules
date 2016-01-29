@@ -2,39 +2,51 @@
 // modules<%= template_source.gsub(Regexp.new("^#{Puppet::Node::Environment.current[:modulepath].gsub(':','|')}"),"") %>
 
 options {
-	directory "/var/cache/bind";
+    directory "<%= @directory %>";
 
-	// If there is a firewall between you and nameservers you want
-	// to talk to, you may need to fix the firewall to allow multiple
-	// ports to talk.  See http://www.kb.cert.org/vuls/id/800113
+    // If there is a firewall between you and nameservers you want
+    // to talk to, you may need to fix the firewall to allow multiple
+    // ports to talk.  See http://www.kb.cert.org/vuls/id/800113
 
-	// If your ISP provided one or more IP addresses for stable 
-	// nameservers, you probably want to use them as forwarders.  
-	// Uncomment the following block, and insert the addresses replacing 
-	// the all-0's placeholder.
+    // If your ISP provided one or more IP addresses for stable
+    // nameservers, you probably want to use them as forwarders.
+    // Uncomment the following block, and insert the addresses replacing
+    // the all-0's placeholder.
+
+    // forwarders {
+    //      0.0.0.0;
+    // };
 
     <%- if @forwarders.size > 0 -%>
-	forwarders {
-            <%- @forwarders.each do |f| -%>
-                <%= f %>;
+        forwarders {
+            <%- @forwarders.each do |ip| -%>
+                <%= ip %>;
             <%- end -%>
-	};
+        };
     <%- end -%>
 
-	//========================================================================
-	// If BIND logs error messages about the root key being expired,
-	// you will need to update your keys.  See https://www.isc.org/bind-keys
-	//========================================================================
-	dnssec-validation auto;
+    //========================================================================
+    // If BIND logs error messages about the root key being expired,
+    // you will need to update your keys.  See https://www.isc.org/bind-keys
+    //========================================================================
+    dnssec-validation auto;
 
-	auth-nxdomain no;    # conform to RFC1035
-	listen-on-v6 { any; };
+    auth-nxdomain no;    # conform to RFC1035
+    listen-on-v6 { any; };
 
-    <%- if @allow_new_zones -%>
-        allow-new-zones yes;
+    <%- if @zone_notify.size > 0 -%>
+        notify {
+            <%- @zone_notify.each do |ip| -%>
+                <%= ip %>;
+            <%- end -%>
+        };
     <%- end -%>
 
-    <%- if @response_policy -%>
-        response-policy { <%= @response_policy %> };
+    <%- if @also_notify.size > 0 -%>
+        also-notify {
+            <%- @also_notify.each do |ip| -%>
+                <%= ip %>;
+            <%- end -%>
+        };
     <%- end -%>
 };

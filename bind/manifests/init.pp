@@ -1,7 +1,7 @@
 class bind (
     $directory = '/var/cache/bind',
     $forwarders = [],
-    $zone_notify = [],
+    $zone_notify = 'yes',
     $also_notify = [],
 ) {
 

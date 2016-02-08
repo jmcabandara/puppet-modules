@@ -3,6 +3,7 @@ class bind (
     $forwarders = [],
     $zone_notify = 'yes',
     $also_notify = [],
+    $recursion = 'yes',
 ) {
 
     if !defined(Package['bind9']) {

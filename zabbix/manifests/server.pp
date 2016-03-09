@@ -33,4 +33,14 @@ class zabbix::server (
         require => Package['zabbix-server-mysql'],
         notify  => Service['zabbix-server'],
     }
+
+    file { '/etc/sysctl.d/60-zabbix-server.conf':
+        content => template('zabbix/etc/sysctl.d/60-zabbix-server.conf.erb'),
+        notify  => Exec['zabbix::server::procps'],
+    }
+
+    exec { 'zabbix::server::procps':
+        command     => 'service procps start',
+        refreshonly => true,
+    }
 }

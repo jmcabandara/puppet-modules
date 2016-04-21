@@ -3,6 +3,7 @@ define supervisor::program (
     $user = undef,
     $redirect_stderr = false,
     $stdout_logfile = 'AUTO',
+    $directory = undef,
     $command
 ) {
 

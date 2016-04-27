@@ -1,5 +1,6 @@
 class php::xdebug (
     $max_nesting_level = 100,
+    $xdebug_config = undef,
 ) {
 
     if !defined(Package['php5-xdebug']) { package { 'php5-xdebug': require => Package['php5-cli'] } }

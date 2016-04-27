@@ -5,3 +5,9 @@
 zend_extension=xdebug.so
 
 xdebug.max_nesting_level=<%= @max_nesting_level %>
+
+<%- if @xdebug_config -%>
+  <%- @xdebug_config.each do |value| -%>
+    <%= value[0] %>=<%= value[1] %>
+  <%- end -%>
+<%- end -%>

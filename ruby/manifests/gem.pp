@@ -1,4 +1,7 @@
-define ruby::gem ($gem = $title) {
+define ruby::gem (
+    $gem = $title,
+    $version = 'present',
+) {
 
     if !defined(Package['build-essential']) { package { 'build-essential': } }
     if !defined(Package['ruby']) { package { 'ruby': } }
@@ -8,6 +11,7 @@ define ruby::gem ($gem = $title) {
         package { "ruby::gem::${gem}":
             name     => $gem,
             provider => gem,
+            ensure   => $version,
             require  => Package['ruby', 'ruby-dev', 'build-essential'],
         }
     }

@@ -13,4 +13,8 @@ define supervisor::program (
         notify  => Exec['supervisor::reload'],
     }
 
+    exec { "supervisor::restart::${program}":
+        command     => "supervisorctl restart ${program}",
+        refreshonly => true,
+    }
 }

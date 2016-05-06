@@ -24,4 +24,7 @@ class supervisor {
         refreshonly => true,
     }
 
+    file { '/usr/local/bin/sv':
+        ensure => '/usr/bin/supervisorctl',
+    }
 }

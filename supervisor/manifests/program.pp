@@ -4,6 +4,7 @@ define supervisor::program (
     $redirect_stderr = false,
     $stdout_logfile = 'AUTO',
     $directory = undef,
+    $environment = undef,
     $command
 ) {
 

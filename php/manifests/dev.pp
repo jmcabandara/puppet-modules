@@ -1,7 +1,11 @@
-class php::dev {
+class php::dev (
+    $version = '5',
+) {
 
     include ::php
 
-    if !defined(Package['php5-dev']) { package { 'php5-dev': } }
+    if !defined(Package["php${version}-dev"]) {
+        package { "php${version}-dev": }
+    }
 
 }

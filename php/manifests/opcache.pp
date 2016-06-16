@@ -25,11 +25,12 @@ class php::opcache (
     $preferred_memory_model = undef,
     $protect_memory = undef,
     $mmap_base = undef,
+    $version = '5',
 ) {
 
     file { '/etc/php5/mods-available/opcache.ini':
         content => template('php/etc/php5/mods-available/opcache.ini.erb'),
-        require => Package['php5-cli'],
+        require => Package["php${version}-cli"],
         notify  => Exec['php::restart'],
     }
 

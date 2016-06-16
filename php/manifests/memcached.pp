@@ -12,13 +12,18 @@ class php::memcached (
     $compression_threshold = undef,
     $serializer = undef,
     $use_sasl = undef,
+    $version = '5',
 ) {
 
-    if !defined(Package['php5-memcached']) { package { 'php5-memcached': require => Package['php5-cli'] } }
+    if !defined(Package["php${version}-memcached"]) {
+        package { "php${version}-memcached":
+            require => Package["php${version}-cli"],
+        }
+    }
 
     file { '/etc/php5/mods-available/memcached.ini':
         content => template('php/etc/php5/mods-available/memcached.ini.erb'),
-        require => Package['php5-memcached'],
+        require => Package["php${version}-memcached"],
         notify  => Exec['php::restart'],
     }
 

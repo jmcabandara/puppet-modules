@@ -1,12 +1,17 @@
 class php::ldap (
     $max_links = undef,
+    $version = '5',
 ) {
 
-    if !defined(Package['php5-ldap']) { package { 'php5-ldap': require => Package['php5-cli'] } }
+    if !defined(Package["php${version}-ldap"]) {
+        package { "php${version}-ldap":
+            require => Package["php${version}-cli"],
+        }
+    }
 
     file { '/etc/php5/mods-available/ldap.ini':
         content => template('php/etc/php5/mods-available/ldap.ini.erb'),
-        require => Package['php5-ldap'],
+        require => Package["php${version}-ldap"],
         notify  => Exec['php::restart'],
     }
 

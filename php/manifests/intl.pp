@@ -2,13 +2,18 @@ class php::intl (
     $default_locale = undef,
     $error_level = undef,
     $use_exceptions = undef,
+    $version = '5',
 ) {
 
-    if !defined(Package['php5-intl']) { package { 'php5-intl': require => Package['php5-cli'] } }
+    if !defined(Package["php${version}-intl"]) {
+        package { "php${version}-intl":
+            require => Package["php${version}-cli"],
+        }
+    }
 
     file { '/etc/php5/mods-available/intl.ini':
         content => template('php/etc/php5/mods-available/intl.ini.erb'),
-        require => Package['php5-intl'],
+        require => Package["php${version}-intl"],
         notify  => Exec['php::restart'],
     }
 

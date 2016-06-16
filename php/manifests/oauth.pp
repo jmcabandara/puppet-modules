@@ -1,10 +1,16 @@
-class php::oauth {
+class php::oauth (
+    $version = '5',
+) {
 
-    if !defined(Package['php5-oauth']) { package { 'php5-oauth': require => Package['php5-cli'] } }
+    if !defined(Package["php${version}-oauth"]) {
+        package { "php${version}-oauth":
+            require => Package["php${version}-cli"],
+        }
+    }
 
     file { '/etc/php5/mods-available/oauth.ini':
         content => template('php/etc/php5/mods-available/oauth.ini.erb'),
-        require => Package['php5-oauth'],
+        require => Package["php${version}-oauth"],
         notify  => Exec['php::restart'],
     }
 

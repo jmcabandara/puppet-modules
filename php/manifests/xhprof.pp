@@ -1,12 +1,17 @@
 class php::xhprof (
     $output_dir = undef,
+    $version = '5',
 ) {
 
-    if !defined(Package['php5-xhprof']) { package { 'php5-xhprof': require => Package['php5-cli'] } }
+    if !defined(Package["php${version}-xhprof"]) {
+        package { "php${version}-xhprof":
+            require => Package["php${version}-cli"],
+        }
+    }
 
     file { '/etc/php5/mods-available/xhprof.ini':
         content => template('php/etc/php5/mods-available/xhprof.ini.erb'),
-        require => Package['php5-xhprof'],
+        require => Package["php${version}-xhprof"],
         notify  => Exec['php::restart'],
     }
 

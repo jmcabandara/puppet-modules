@@ -1,10 +1,16 @@
-class php::xmlrpc {
+class php::xmlrpc (
+    $version = '5',
+) {
 
-    if !defined(Package['php5-xmlrpc']) { package { 'php5-xmlrpc': require => Package['php5-cli'] } }
+    if !defined(Package["php${version}-xmlrpc"]) {
+        package { "php${version}-xmlrpc":
+            require => Package["php${version}-cli"],
+        }
+    }
 
     file { '/etc/php5/mods-available/xmlrpc.ini':
         content => template('php/etc/php5/mods-available/xmlrpc.ini.erb'),
-        require => Package['php5-xmlrpc'],
+        require => Package["php${version}-xmlrpc"],
         notify  => Exec['php::restart'],
     }
 

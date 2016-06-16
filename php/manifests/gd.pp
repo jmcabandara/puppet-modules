@@ -1,12 +1,17 @@
 class php::gd (
     $jpeg_ignore_warning = undef,
+    $version = '5',
 ) {
 
-    if !defined(Package['php5-gd']) { package { 'php5-gd': require => Package['php5-cli'] } }
+    if !defined(Package["php${version}-gd"]) {
+        package { "php${version}-gd":
+            require => Package["php${version}-cli"],
+        }
+    }
 
     file { '/etc/php5/mods-available/gd.ini':
         content => template('php/etc/php5/mods-available/gd.ini.erb'),
-        require => Package['php5-gd'],
+        require => Package["php${version}-gd"],
         notify  => Exec['php::restart'],
     }
 

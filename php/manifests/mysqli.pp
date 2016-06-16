@@ -10,13 +10,18 @@ class php::mysqli (
     $default_pw = undef,
     $reconnect = undef,
     $cache_size = undef,
+    $version = '5',
 ) {
 
-    if !defined(Package['php5-mysql']) { package { 'php5-mysql': require => Package['php5-cli'] } }
+    if !defined(Package["php${version}-mysql"]) {
+        package { "php${version}-mysql":
+            require => Package["php${version}-cli"],
+        }
+    }
 
     file { '/etc/php5/mods-available/mysqli.ini':
         content => template('php/etc/php5/mods-available/mysqli.ini.erb'),
-        require => Package['php5-mysql'],
+        require => Package["php${version}-mysql"],
         notify  => Exec['php::restart'],
     }
 

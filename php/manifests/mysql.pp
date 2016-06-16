@@ -10,13 +10,18 @@ class php::mysql (
     $default_user = undef,
     $default_password = undef,
     $connect_timeout = undef,
+    $version = '5',
 ) {
 
-    if !defined(Package['php5-mysql']) { package { 'php5-mysql': require => Package['php5-cli'] } }
+    if !defined(Package["php${version}-mysql"]) {
+        package { "php${version}-mysql":
+            require => Package["php${version}-cli"],
+        }
+    }
 
     file { '/etc/php5/mods-available/mysql.ini':
         content => template('php/etc/php5/mods-available/mysql.ini.erb'),
-        require => Package['php5-mysql'],
+        require => Package["php${version}-mysql"],
         notify  => Exec['php::restart'],
     }
 

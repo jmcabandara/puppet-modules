@@ -1,12 +1,17 @@
 class php::curl (
     $cainfo = undef,
+    $version = '5',
 ) {
 
-    if !defined(Package['php5-curl']) { package { 'php5-curl': require => Package['php5-cli'] } }
+    if !defined(Package["php${version}-curl"]) {
+        package { "php${version}-curl":
+            require => Package["php${version}-cli"]
+        }
+    }
 
     file { '/etc/php5/mods-available/curl.ini':
         content => template('php/etc/php5/mods-available/curl.ini.erb'),
-        require => Package['php5-curl'],
+        require => Package["php${version}-curl"],
         notify  => Exec['php::restart'],
     }
 

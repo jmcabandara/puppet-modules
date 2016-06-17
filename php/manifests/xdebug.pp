@@ -18,8 +18,8 @@ class php::xdebug (
 
     exec { 'php::xdebug::enable':
         provider => 'shell',
-        command  => 'php5enmod -s ALL xdebug',
-        onlyif   => 'for x in `php5query -S`; do if [ ! -f /etc/php5/$x/conf.d/20-xdebug.ini ]; then echo "onlyif"; fi; done | grep onlyif',
+        command  => 'for x in `php5query -S | grep -v cli`; do php5enmod -s $x xdebug; done',
+        onlyif   => 'for x in `php5query -S | grep -v cli`; do if [ ! -f /etc/php5/$x/conf.d/20-xdebug.ini ]; then echo "onlyif"; fi; done | grep onlyif',
         require  => File['/etc/php5/mods-available/xdebug.ini'],
         notify   => Exec['php::restart'],
     }

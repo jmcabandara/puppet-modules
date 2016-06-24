@@ -48,7 +48,7 @@
         <%- end -%>
 
         <%- if @hsts -%>
-            Header add Strict-Transport-Security "max-age=<%= @hsts %>"
+            Header always set Strict-Transport-Security "max-age=<%= @hsts %>"
         <%- end -%>
 
         <%-# Frontend virtualhost configuration -%>

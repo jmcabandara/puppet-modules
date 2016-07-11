@@ -1,12 +1,13 @@
 class docker (
     $docker_opts = undef,
     $ensure = 'present',
+    $repo = 'main',
 ) {
 
     apt::source { 'docker':
         location    => 'https://apt.dockerproject.org/repo',
         release     => 'ubuntu-trusty',
-        repos       => 'main',
+        repos       => $repo,
         key         => '58118E89F3A912897C070ADBF76221572C52609D',
         key_server  => 'pgp.mit.edu',
         include_src => false,
@@ -19,11 +20,6 @@ class docker (
 
     if !defined(Package['xfsprogs']) {
         package { 'xfsprogs': }
-    }
-
-    package { 'lxc-docker':
-        ensure => absent,
-        before => Package['docker-engine'],
     }
 
     package { 'docker-engine':

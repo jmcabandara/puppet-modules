@@ -139,6 +139,9 @@ tls-auth <%= @tls_auth %> 1
 # If the cipher option is used on the server
 # then you must also specify it here.
 ;cipher x
+<% if @cipher -%>
+cipher <%= @cipher %>
+<% end -%>
 
 <% if @auth -%>
 auth <%= @auth %>

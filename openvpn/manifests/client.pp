@@ -1,6 +1,7 @@
 define openvpn::client (
     $proto = 'udp',
     $remote = [],
+    $cipher = undef,
     $auth = undef,
     $inline = true,
     $ca = undef,

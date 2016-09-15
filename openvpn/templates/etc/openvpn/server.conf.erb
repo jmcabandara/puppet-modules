@@ -229,6 +229,14 @@ keepalive <%= @keepalive %>
 # on the server and '1' on the clients.
 <% if !@tls_auth %>;<% end %>tls-auth <%= @title %>.ta 0 # This file is secret
 
+<% if @tls_cipher -%>
+tls-cipher <%= @tls_cipher %>
+<% end -%>
+
+<% if @tls_version_min -%>
+tls-version-min <%= @tls_version_min %>
+<% end -%>
+
 # Select a cryptographic cipher.
 # This config item must be copied to
 # the client config file as well.
@@ -239,14 +247,6 @@ cipher <%= @cipher %>
 
 <% if @auth -%>
 auth <%= @auth %>
-<% end -%>
-
-<% if @tls_cipher -%>
-tls-cipher <%= @tls_cipher %>
-<% end -%>
-
-<% if @tls_version_min -%>
-tls-version-min <%= @tls_version_min %>
 <% end -%>
 
 <% if @comp_lzo -%>

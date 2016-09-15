@@ -135,6 +135,10 @@ tls-auth <%= @tls_auth %> 1
 <% end -%>
 <% end -%>
 
+<% if @tls_version_min -%>
+tls-version-min <%= @tls_version_min %>
+<% end -%>
+
 # Select a cryptographic cipher.
 # If the cipher option is used on the server
 # then you must also specify it here.

@@ -140,6 +140,10 @@ tls-auth <%= @tls_auth %> 1
 # then you must also specify it here.
 ;cipher x
 
+<% if @auth -%>
+auth <%= @auth %>
+<% end -%>
+
 # Disable compression by default. If the server
 # requires compression, it should push the config
 # out to its clients

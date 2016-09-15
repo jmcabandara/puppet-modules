@@ -237,8 +237,16 @@ keepalive <%= @keepalive %>
 ;cipher DES-EDE3-CBC  # Triple-DES
 cipher <%= @cipher %>
 
+<% if @auth -%>
+auth <%= @auth %>
+<% end -%>
+
 <% if @tls_cipher -%>
 tls-cipher <%= @tls_cipher %>
+<% end -%>
+
+<% if @tls_version_min -%>
+tls-version-min <%= @tls_version_min %>
 <% end -%>
 
 <% if @comp_lzo -%>

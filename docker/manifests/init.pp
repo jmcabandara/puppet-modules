@@ -32,10 +32,13 @@ class docker (
         notify  => Service['docker']
     }
 
+    file { '/etc/apt/preferences.d/docker-engine':
+        content => template('docker/etc/apt/preferences.d/docker-engine.erb'),
+    }
+
     service { 'docker':
         ensure  => running,
         enable  => true,
         require => Package['docker-engine'],
     }
-
 }

@@ -15,8 +15,6 @@ class varnish (
     $timeout_idle = 5,
     $timeout_req = 2,
     $varnishncsa = true,
-    $varnishncsa_logformat = '%h %l %u %t "%r" %s %b "%{Referer}i" "%{User-agent}i"',
-    $varnishlog  = false,
 ) {
 
     File {
@@ -43,22 +41,11 @@ class varnish (
         before  => Service['varnish'],
     }
 
-    file { '/etc/default/varnishlog':
-        content => template('varnish/etc/default/varnishlog.erb'),
-        notify  => Service['varnishlog'],
-    }
-
     file { '/etc/default/varnishncsa':
         content => template('varnish/etc/default/varnishncsa.erb'),
         notify  => Service['varnishncsa'],
     }
 
-    file { '/etc/init.d/varnishncsa':
-        content => template('varnish/etc/init.d/varnishncsa.erb'),
-        notify  => Service['varnishncsa'],
-    }
-
     service { 'varnish': }
-    service { 'varnishlog': }
     service { 'varnishncsa': }
 }

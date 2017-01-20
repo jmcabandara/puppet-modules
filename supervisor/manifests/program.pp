@@ -5,7 +5,7 @@ define supervisor::program (
     $stdout_logfile = 'AUTO',
     $directory = undef,
     $environment = undef,
-    $autorestert = undef,
+    $autorestart = undef,
     $command
 ) {
 

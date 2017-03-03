@@ -9,6 +9,13 @@
     CustomLog <%= @_customlog %>
     ErrorLog <%= @_errorlog %>
 
+    <%- if @serveralias && @normalize -%>
+        # Normalize URLs to <%= @servername %>
+        RewriteEngine On
+        RewriteCond %{HTTP_HOST} !^<%= @servername.gsub(/\./, "\\.") %>$ [NC]
+        RewriteRule ^ %{REQUEST_SCHEME}://<%= @servername %>%{REQUEST_URI} [L,R=301]
+    <%- end -%>
+
     <%- if @https -%>
         RewriteEngine On
         <%= @_https %>

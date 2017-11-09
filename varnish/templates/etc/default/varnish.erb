@@ -22,8 +22,6 @@ MEMLOCK=<%= @memlock %>
 
 DAEMON_OPTS="-a <%= @address %> \
              -T <%= @management %> \
-             -u <%= @user %> \
-             -g <%= @group %> \
              -f /etc/varnish/default.vcl \
              -S /etc/varnish/secret \
              -p between_bytes_timeout=<%= @between_bytes_timeout %> \
@@ -33,5 +31,4 @@ DAEMON_OPTS="-a <%= @address %> \
              -p pipe_timeout=<%= @pipe_timeout %> \
              -p send_timeout=<%= @send_timeout %> \
              -p timeout_idle=<%= @timeout_idle %> \
-             -p timeout_req=<%= @timeout_req %> \
              -s <%= @storage %>"
